@@ -5,10 +5,64 @@
  */
 package codeplayer;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import javazoom.jl.player.Player;
+
 /**
  *
  * @author Gabriel
  */
-public class Mp3Buf {
+public final class Mp3Buf {
+
+
+   private static Mp3Buf INSTANCE = null;
+
+   public static Mp3Buf getInstance(){
+      return((INSTANCE == null)?INSTANCE = new Mp3Buf():INSTANCE);
+   }    
+      
+   public boolean isPlaying=false;
+
+    public boolean isIsPlaying() {
+        return isPlaying;
+    }
+
+    public void setIsPlaying(boolean isPlaying) {
+        this.isPlaying = isPlaying;
+    }
     
+    String pathMusic=null;
+
+    public String getPathMusic() {
+        return pathMusic;
+    }
+
+    public void setPathMusic(String pathMusic) {
+        this.pathMusic = pathMusic;
+    }
+    
+    public Player player;
+   
+    public void criaPlayer(){
+        try{
+        pathMusic="res/musica.mp3";
+        File mp3File = new File(pathMusic);
+	FileInputStream fis = new FileInputStream(mp3File);
+	BufferedInputStream bis = new BufferedInputStream(fis);
+        this.player = new Player(bis);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+   }
+    public Player getPlayer(){
+        if(isIsPlaying()==false){
+            isPlaying=true;
+            criaPlayer();
+        }
+        return this.player;
+    }   
+   
 }

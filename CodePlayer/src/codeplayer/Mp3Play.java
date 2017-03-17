@@ -9,6 +9,19 @@ package codeplayer;
  *
  * @author Gabriel
  */
-public class Mp3Play {
+public class Mp3Play implements Runnable{
+    
+    @Override
+    public void run(){
+        try{
+            if(Mp3Buf.getInstance().isIsPlaying()==false){
+                Mp3Buf.getInstance().getPlayer().play();
+                Mp3Buf.getInstance().setIsPlaying(false);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
     
 }

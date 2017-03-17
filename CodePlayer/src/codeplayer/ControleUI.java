@@ -6,17 +6,20 @@
 package codeplayer;
 
 import java.io.IOException;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
  * @author Gabriel
  */
 public final class ControleUI{
-
 
    private ControleUI(){};
 
@@ -44,7 +47,15 @@ public final class ControleUI{
       mainStage.centerOnScreen();
       mainStage.setTitle("CodePlayer 2017");
       secondStage= new Stage();
+      
+      mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
 
+        });
       try {
          playerFXML = FXMLLoader.load(getClass().getResource("FXML/Player.fxml")); //Carrega o arquivo FXML na classe pai
         
