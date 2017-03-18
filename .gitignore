@@ -8,3 +8,5 @@
 *.png
 *.gif
 *.js
+/CodePlayer/build/
+/CodePlayer/dist/

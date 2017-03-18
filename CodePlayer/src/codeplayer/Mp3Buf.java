@@ -29,7 +29,7 @@ public final class Mp3Buf {
         this.isPlaying = isPlaying;
     }
     
-    String pathMusic=new File("C:\\Users\\Gabriel\\Documents\\NetBeansProjects\\FXPlayerTest\\res\\musica.mp3").toURI().toString();
+    String pathMusic=new File("C:\\Users\\ecsan\\Dropbox\\GitHub\\PDS\\pdsoficina2\\CodePlayer\\res\\musica.mp3").toURI().toString();
 
     public String getPathMusic() {
         return pathMusic;
