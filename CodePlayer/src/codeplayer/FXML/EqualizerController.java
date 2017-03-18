@@ -5,10 +5,12 @@
  */
 package codeplayer.FXML;
 
+import codeplayer.Mp3Buf;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.media.AudioEqualizer;
 
 /**
  * FXML Controller class
@@ -19,7 +21,6 @@ public class EqualizerController implements Initializable {
 
     @FXML
     public void equalizar(){
-     
     }
     /**
      * Initializes the controller class.
