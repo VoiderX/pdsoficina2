@@ -9,9 +9,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javazoom.jl.decoder.Decoder;
-import javazoom.jl.decoder.Equalizer;
-import javazoom.jl.player.AudioDeviceBase;
 
 /**
  * FXML Controller class
@@ -20,22 +17,15 @@ import javazoom.jl.player.AudioDeviceBase;
  */
 public class EqualizerController implements Initializable {
 
-    Equalizer eq;
     @FXML
     public void equalizar(){
-      System.out.println(eq.getBandCount());
-     for(int i=0;i<31;i++){
-          eq.setBand(i, -1);
-          System.out.println(eq.getBand(i));
-      }
+     
     }
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-       eq= new Equalizer();
-       
+    public void initialize(URL url, ResourceBundle rb) {       
       
     }    
     

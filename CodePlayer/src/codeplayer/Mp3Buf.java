@@ -5,11 +5,7 @@
  */
 package codeplayer;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import javazoom.jl.player.Player;
-
 /**
  *
  * @author Gabriel
@@ -33,7 +29,7 @@ public final class Mp3Buf {
         this.isPlaying = isPlaying;
     }
     
-    String pathMusic=null;
+    String pathMusic=new File("C:\\Users\\Gabriel\\Documents\\NetBeansProjects\\FXPlayerTest\\res\\musica.mp3").toURI().toString();
 
     public String getPathMusic() {
         return pathMusic;
@@ -43,26 +39,4 @@ public final class Mp3Buf {
         this.pathMusic = pathMusic;
     }
     
-    public Player player;
-   
-    public void criaPlayer(){
-        try{
-        pathMusic="res/musica.mp3";
-        File mp3File = new File(pathMusic);
-	FileInputStream fis = new FileInputStream(mp3File);
-	BufferedInputStream bis = new BufferedInputStream(fis);
-        this.player = new Player(bis);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-   }
-    public Player getPlayer(){
-        if(isIsPlaying()==false){
-            isPlaying=true;
-            criaPlayer();
-        }
-        return this.player;
-    }   
-   
 }
