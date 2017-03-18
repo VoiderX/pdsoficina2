@@ -6,6 +6,8 @@
 package codeplayer;
 
 import java.io.File;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 /**
  *
  * @author Gabriel
@@ -29,14 +31,44 @@ public final class Mp3Buf {
         this.isPlaying = isPlaying;
     }
     
+    public boolean checkInstance=false;
+
+    public boolean isCheckInstance() {
+        return checkInstance;
+    }
+
+    public void setCheckInstance(boolean checkInstance) {
+        this.checkInstance = checkInstance;
+    }    
+        
     String pathMusic=new File("C:\\Users\\Gabriel\\Documents\\NetBeansProjects\\FXPlayerTest\\res\\musica.mp3").toURI().toString();
 
-    public String getPathMusic() {
+    public String getPathMusic(){
         return pathMusic;
     }
 
     public void setPathMusic(String pathMusic) {
         this.pathMusic = pathMusic;
     }
-    
+
+     Media media;
+     MediaPlayer mp;
+
+    public MediaPlayer getMp(){
+        if(checkInstance==false){
+            checkInstance=true;
+            carregaMusica();
+        }
+        return mp;
+    }
+
+    public void setMp(MediaPlayer mp) {
+        this.mp = mp;
+    }
+     
+    public void carregaMusica(){
+        pathMusic = codeplayer.Mp3Buf.getInstance().getPathMusic();
+        media = new Media(pathMusic);
+        mp = new MediaPlayer(media);
+    }
 }

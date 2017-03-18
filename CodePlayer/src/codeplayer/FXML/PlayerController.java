@@ -6,6 +6,7 @@
 package codeplayer.FXML;
 
 import codeplayer.ControleUI;
+import codeplayer.Mp3Buf;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,8 +22,6 @@ import javafx.scene.text.Text;
  * @author Gabriel
  */
 public class PlayerController implements Initializable {
-    Thread mpplay;
-    boolean Pausado=false;
     @FXML
     Text Faixa;
     @FXML
@@ -33,21 +32,17 @@ public class PlayerController implements Initializable {
     Text Album;
     @FXML
     Text Ano;
-    MediaPlayer mp;
     @FXML
      public void play(){
-        String path = codeplayer.Mp3Buf.getInstance().getPathMusic();
-        Media media = new Media(path);
-        mp = new MediaPlayer(media);
-        mp.play();
+        Mp3Buf.getInstance().getMp().play();
      }
      @FXML
      public void stop(){
-         mp.stop();
+        Mp3Buf.getInstance().getMp().stop();
      }
      @FXML
      public void pause(){
-      mp.pause();
+        Mp3Buf.getInstance().getMp().pause();
      }
      @FXML
      public void exibeEqualizer(){
