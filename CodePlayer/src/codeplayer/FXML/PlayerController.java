@@ -5,6 +5,7 @@
  */
 package codeplayer.FXML;
 
+import codeplayer.ControleUI;
 import codeplayer.Mp3Buf;
 import codeplayer.Mp3Play;
 import codeplayer.Mp3Stop;
@@ -81,6 +82,10 @@ public class PlayerController implements Initializable {
      public void pause(){
          Pausado=true;
          mpplay.suspend();         
+     }
+     @FXML
+     public void exibeEqualizer(){
+         ControleUI.getInstance().mostraEqualizer();
      }
     /**
      * Initializes the controller class.

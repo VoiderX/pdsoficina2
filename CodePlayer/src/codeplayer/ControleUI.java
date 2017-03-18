@@ -35,13 +35,14 @@ public final class ControleUI{
    }
 
    private static Parent playerFXML; //Classes parent para manipulação do Fxml
+   private static Parent equalizerFXML;
 
    private static Scene playerScene;
+   private static Scene equalizerScene;
    
    private static Stage mainStage;
    private static Stage secondStage;
 
-   private static String stagein;
 
    private void initUI(){ //Metódo inicializador
       mainStage.centerOnScreen();
@@ -58,14 +59,14 @@ public final class ControleUI{
         });
       try {
          playerFXML = FXMLLoader.load(getClass().getResource("FXML/Player.fxml")); //Carrega o arquivo FXML na classe pai
-        
+         equalizerFXML=FXMLLoader.load(getClass().getResource("FXML/Equalizer.fxml"));
 
       } catch (IOException ex) {
          //fazer algo para mostrar erro
          System.out.println("Erro" + ex);
       }
         playerScene = new Scene(playerFXML); //Transforma a classe parent em um objeto do tipo Scene
-      
+        equalizerScene=new Scene(equalizerFXML);
       mostraPlayer();
    }
 
@@ -73,6 +74,9 @@ public final class ControleUI{
       mainStage.setScene(playerScene);
       mainStage.show();
    }
-
+   public void mostraEqualizer(){
+      secondStage.setScene(equalizerScene);
+      secondStage.show();
+   }
    
 }
