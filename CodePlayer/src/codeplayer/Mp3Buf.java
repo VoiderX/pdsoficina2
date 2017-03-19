@@ -6,6 +6,7 @@
 package codeplayer;
 
 import java.io.File;
+import javafx.beans.value.ObservableMapValue;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 /**
@@ -41,7 +42,7 @@ public final class Mp3Buf {
         this.checkInstance = checkInstance;
     }    
         
-    String pathMusic=new File("C:\\Users\\Gabriel\\Documents\\GitHub\\pdsoficina2\\CodePlayer\\res\\musica2.mp3").toURI().toString();
+    String pathMusic=new File("C:\\MusicTest\\musica.mp3").toURI().toString();
 
     public String getPathMusic(){
         return pathMusic;
@@ -52,6 +53,17 @@ public final class Mp3Buf {
     }
 
      Media media;
+
+    public Media getMedia() {
+        return media;
+    }
+
+    public void setMedia(Media media) {
+        this.media = media;
+    }
+    
+    
+     
      MediaPlayer mp;
 
     public MediaPlayer getMp(){

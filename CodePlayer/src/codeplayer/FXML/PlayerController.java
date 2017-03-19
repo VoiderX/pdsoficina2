@@ -10,6 +10,7 @@ import codeplayer.Mp3Buf;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.media.Media;
@@ -33,8 +34,24 @@ public class PlayerController implements Initializable {
     @FXML
     Text Ano;
     @FXML
-     public void play(){
+     public void play(){        
         Mp3Buf.getInstance().getMp().play();
+        ObservableMap<String,Object> metadata= Mp3Buf.getInstance().getMedia().getMetadata();
+        if(metadata.get("artist")!=null){
+            Artista.setText(metadata.get("artist").toString());
+        }
+        if(metadata.get("title")!=null){
+            Titulo.setText(metadata.get("title").toString());
+        }
+        if(metadata.get("album")!=null){
+            Album.setText(metadata.get("album").toString());
+        }
+        if(metadata.get("year")!=null){
+            Ano.setText(metadata.get("year").toString());
+        }
+        if(metadata.get("track")!=null){
+            Faixa.setText(metadata.get("track").toString());
+        }
      }
      @FXML
      public void stop(){
