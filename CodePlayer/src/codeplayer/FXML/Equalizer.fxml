@@ -8,7 +8,17 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codeplayer.FXML.EqualizerController">
    <children>
-      <Button layoutX="210.0" layoutY="25.0" mnemonicParsing="false" onAction="#equalizar" text="Equalizar 1" />
-      <Button layoutX="210.0" layoutY="76.0" mnemonicParsing="false" onAction="#equalizar2" text="Equalizar 2" />
+      <Button layoutX="480.0" layoutY="32.0" mnemonicParsing="false" onAction="#equalizar" text="Equalizar 1" />
+      <Button layoutX="480.0" layoutY="84.0" mnemonicParsing="false" onAction="#equalizar2" text="Equalizar 2" />
+      <Slider fx:id="Slider0" layoutX="58.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
+      <Slider fx:id="Slider1" layoutX="83.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" prefHeight="140.0" prefWidth="14.0" />
+      <Slider fx:id="Slider2" layoutX="113.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
+      <Slider fx:id="Slider3" layoutX="145.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
+      <Slider fx:id="Slider4" layoutX="178.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
+      <Slider fx:id="Slider5" layoutX="203.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
+      <Slider fx:id="Slider6" layoutX="233.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
+      <Slider fx:id="Slider7" layoutX="259.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
+      <Slider fx:id="Slider8" layoutX="286.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
+      <Slider fx:id="Slider9" layoutX="310.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
    </children>
 </AnchorPane>
