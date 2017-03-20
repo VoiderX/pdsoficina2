@@ -86,6 +86,7 @@ public class EqualizerController implements Initializable {
         for(int i=0;i<Sliders.size();i++){
             if(e.getSource()==Sliders.get(i)){
                 System.out.println("Slider "+i+": "+Sliders.get(i).getValue());
+                bands.get(i).setGain(Sliders.get(i).getValue());
             }
         }
     }
