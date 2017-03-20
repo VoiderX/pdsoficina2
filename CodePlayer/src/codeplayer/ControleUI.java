@@ -41,6 +41,10 @@ public final class ControleUI{
    
    private static Stage mainStage;
    private static Stage secondStage;
+   
+   public Stage getSecondStage(){
+       return secondStage;
+   }
 
 
    private void initUI(){ //Metódo inicializador

@@ -9,6 +9,7 @@ import java.io.File;
 import javafx.beans.value.ObservableMapValue;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.FileChooser;
 /**
  *
  * @author Gabriel
@@ -42,7 +43,7 @@ public final class Mp3Buf {
         this.checkInstance = checkInstance;
     }    
         
-    String pathMusic=new File("C:\\MusicTest\\musica.mp3").toURI().toString();
+    String pathMusic;
 
     public String getPathMusic(){
         return pathMusic;
@@ -79,6 +80,8 @@ public final class Mp3Buf {
     }
      
     public void carregaMusica(){
+        FileChooser fc= new FileChooser();
+        pathMusic=fc.showOpenDialog(ControleUI.getInstance().getSecondStage()).toURI().toString();
         pathMusic = codeplayer.Mp3Buf.getInstance().getPathMusic();
         media = new Media(pathMusic);
         mp = new MediaPlayer(media);
