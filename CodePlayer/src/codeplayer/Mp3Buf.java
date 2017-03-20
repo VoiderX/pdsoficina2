@@ -42,7 +42,7 @@ public final class Mp3Buf {
         this.checkInstance = checkInstance;
     }    
         
-    String pathMusic=new File("C:\\MusicTest\\musica.mp3").toURI().toString();
+    String pathMusic=new File("C:\\MusicTest\\musica2.mp3").toURI().toString();
 
     public String getPathMusic(){
         return pathMusic;

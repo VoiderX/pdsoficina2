@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -8,17 +9,27 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codeplayer.FXML.EqualizerController">
    <children>
-      <Button layoutX="480.0" layoutY="32.0" mnemonicParsing="false" onAction="#equalizar" text="Equalizar 1" />
-      <Button layoutX="480.0" layoutY="84.0" mnemonicParsing="false" onAction="#equalizar2" text="Equalizar 2" />
-      <Slider fx:id="Slider0" layoutX="58.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
-      <Slider fx:id="Slider1" layoutX="83.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" prefHeight="140.0" prefWidth="14.0" />
-      <Slider fx:id="Slider2" layoutX="113.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
-      <Slider fx:id="Slider3" layoutX="145.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
-      <Slider fx:id="Slider4" layoutX="178.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
-      <Slider fx:id="Slider5" layoutX="203.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
-      <Slider fx:id="Slider6" layoutX="233.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
-      <Slider fx:id="Slider7" layoutX="259.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
-      <Slider fx:id="Slider8" layoutX="286.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
-      <Slider fx:id="Slider9" layoutX="310.0" layoutY="60.0" onMouseReleased="#changeSlider" orientation="VERTICAL" />
+      <Button layoutX="383.0" layoutY="346.0" mnemonicParsing="false" onAction="#equalizar" text="Equalizar 1" />
+      <Button layoutX="160.0" layoutY="346.0" mnemonicParsing="false" onAction="#equalizar2" text="Equalizar 2" />
+      <Slider fx:id="Slider0" blockIncrement="1.0" layoutX="14.0" layoutY="18.0" majorTickUnit="2.0" max="12.0" min="-24.0" minorTickCount="1" onMouseReleased="#changeSlider" orientation="VERTICAL" prefHeight="294.0" prefWidth="39.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Slider fx:id="Slider1" blockIncrement="1.0" layoutX="81.0" layoutY="18.0" majorTickUnit="2.0" max="12.0" min="-24.0" minorTickCount="1" onMouseReleased="#changeSlider" orientation="VERTICAL" prefHeight="294.0" prefWidth="14.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Slider fx:id="Slider3" blockIncrement="1.0" layoutX="176.0" layoutY="18.0" majorTickUnit="2.0" max="12.0" min="-24.0" minorTickCount="1" onMouseReleased="#changeSlider" orientation="VERTICAL" prefHeight="294.0" prefWidth="41.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Slider fx:id="Slider4" blockIncrement="1.0" layoutX="233.0" layoutY="18.0" majorTickUnit="2.0" max="12.0" min="-24.0" minorTickCount="1" onMouseReleased="#changeSlider" orientation="VERTICAL" prefHeight="294.0" prefWidth="41.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Slider fx:id="Slider5" blockIncrement="1.0" layoutX="280.0" layoutY="18.0" majorTickUnit="2.0" max="12.0" min="-24.0" minorTickCount="1" onMouseReleased="#changeSlider" orientation="VERTICAL" prefHeight="294.0" prefWidth="41.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Slider fx:id="Slider6" blockIncrement="1.0" layoutX="332.0" layoutY="18.0" majorTickUnit="2.0" max="12.0" min="-24.0" minorTickCount="1" onMouseReleased="#changeSlider" orientation="VERTICAL" prefHeight="294.0" prefWidth="41.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Slider fx:id="Slider7" blockIncrement="1.0" layoutX="389.0" layoutY="18.0" majorTickUnit="2.0" max="12.0" min="-24.0" minorTickCount="1" onMouseReleased="#changeSlider" orientation="VERTICAL" prefHeight="294.0" prefWidth="41.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Slider fx:id="Slider8" blockIncrement="1.0" layoutX="436.0" layoutY="18.0" majorTickUnit="2.0" max="12.0" min="-24.0" minorTickCount="1" onMouseReleased="#changeSlider" orientation="VERTICAL" prefHeight="294.0" prefWidth="41.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Slider fx:id="Slider9" blockIncrement="1.0" layoutX="484.0" layoutY="18.0" majorTickUnit="2.0" max="12.0" min="-24.0" minorTickCount="1" onMouseReleased="#changeSlider" orientation="VERTICAL" prefHeight="294.0" prefWidth="41.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Slider fx:id="Slider2" blockIncrement="1.0" layoutX="136.0" layoutY="18.0" majorTickUnit="2.0" max="12.0" min="-24.0" minorTickCount="1" onMouseReleased="#changeSlider" orientation="VERTICAL" prefHeight="294.0" prefWidth="14.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Text fx:id="freq1" layoutX="70.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="freq0" layoutX="14.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="freq2" layoutX="125.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="freq3" layoutX="176.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="freq4" layoutX="234.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="freq5" layoutX="280.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="freq6" layoutX="332.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="freq7" layoutX="389.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="freq8" layoutX="436.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="freq9" layoutX="484.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
    </children>
 </AnchorPane>

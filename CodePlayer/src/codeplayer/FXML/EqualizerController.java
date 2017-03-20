@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Slider;
 import javafx.scene.media.AudioEqualizer;
 import javafx.scene.media.EqualizerBand;
+import javafx.scene.text.Text;
 
 /**
  * FXML Controller class
@@ -26,6 +27,8 @@ public class EqualizerController implements Initializable {
     ObservableList<EqualizerBand> bands;
     @FXML
     ArrayList<Slider> Sliders=new ArrayList<>();
+    @FXML
+    ArrayList<Text> Freqs = new ArrayList<>();
     @FXML
     Slider Slider0;
     @FXML
@@ -46,9 +49,28 @@ public class EqualizerController implements Initializable {
     Slider Slider8;
    @FXML
     Slider Slider9;
- 
-    @FXML
-    public void equalizar(){
+   @FXML
+   Text freq0;
+   @FXML
+   Text freq1;
+   @FXML
+   Text freq2;
+   @FXML
+   Text freq3;
+   @FXML
+   Text freq4;
+   @FXML
+   Text freq5;
+   @FXML
+   Text freq6;
+   @FXML
+   Text freq7;
+   @FXML
+   Text freq8;
+   @FXML
+   Text freq9;
+   @FXML
+   public void equalizar(){
         for(int i=0;i<bands.size();i++){
             bands.get(i).setGain(EqualizerBand.MAX_GAIN);
         }
@@ -61,36 +83,11 @@ public class EqualizerController implements Initializable {
         
     }
     public void changeSlider(Event e){
-        if(e.getSource().equals(Sliders.get(0))){
-            System.out.println("Slider 0");
+        for(int i=0;i<Sliders.size();i++){
+            if(e.getSource()==Sliders.get(i)){
+                System.out.println("Slider "+i+": "+Sliders.get(i).getValue());
+            }
         }
-        if(e.getSource().equals(Sliders.get(1))){
-            System.out.println("Slider 1");
-        }        
-        if(e.getSource().equals(Sliders.get(2))){
-            System.out.println("Slider 2");
-        }
-        if(e.getSource().equals(Sliders.get(3))){
-            System.out.println("Slider 3");
-        }
-        if(e.getSource().equals(Sliders.get(4))){
-            System.out.println("Slider 4");
-        }        
-        if(e.getSource().equals(Sliders.get(5))){
-            System.out.println("Slider 5");
-        }
-        if(e.getSource().equals(Sliders.get(6))){
-            System.out.println("Slider 6");
-        }
-        if(e.getSource().equals(Sliders.get(7))){
-            System.out.println("Slider 7");
-        }        
-        if(e.getSource().equals(Sliders.get(8))){
-            System.out.println("Slider 8");
-        }
-        if(e.getSource().equals(Sliders.get(9))){
-            System.out.println("Slider 9");
-        }        
     }
     /**
      * Initializes the controller class.
@@ -100,15 +97,40 @@ public class EqualizerController implements Initializable {
       bands=Mp3Buf.getInstance().getMp().getAudioEqualizer().getBands();
       System.out.println(bands.size());
       Sliders.add(Slider0);
+      Freqs.add(freq0);
+      
       Sliders.add(Slider1);
+      Freqs.add(freq1);
+      
       Sliders.add(Slider2);
+      Freqs.add(freq2);
+      
       Sliders.add(Slider3);
+      Freqs.add(freq3);
+      
       Sliders.add(Slider4);
+      Freqs.add(freq4);
+      
       Sliders.add(Slider5);
+      Freqs.add(freq5);
+      
       Sliders.add(Slider6);
+      Freqs.add(freq6);
+      
       Sliders.add(Slider7);
+      Freqs.add(freq7);
+      
       Sliders.add(Slider8);
+      Freqs.add(freq8);
+      
       Sliders.add(Slider9);
+      Freqs.add(freq9);
+      
+      for(int i=0;i<Sliders.size();i++){
+       Freqs.get(i).setText(Double.toString(bands.get(i).getBandwidth()));
+      }
+      System.out.println(EqualizerBand.MAX_GAIN);
+      System.out.println(EqualizerBand.MIN_GAIN);
     }    
     
 }
