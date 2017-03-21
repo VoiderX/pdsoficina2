@@ -24,6 +24,7 @@
       <Text fx:id="Album" layoutX="120.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nenhum" wrappingWidth="205.13671875" />
       <Text fx:id="Ano" layoutX="120.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nenhum" wrappingWidth="205.13671875" />
       <Text fx:id="Faixa" layoutX="120.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nenhum" wrappingWidth="205.13671875" />
-      <Button layoutX="481.0" layoutY="49.0" mnemonicParsing="false" onAction="#exibeEqualizer" text="Equalizar" />
+      <Button layoutX="462.0" layoutY="54.0" mnemonicParsing="false" onAction="#exibeEqualizer" prefHeight="25.0" prefWidth="102.0" text="Equalizar" />
+      <Button layoutX="462.0" layoutY="96.0" mnemonicParsing="false" onAction="#loadMusicDialog" text="Carregar Música" />
    </children>
 </AnchorPane>

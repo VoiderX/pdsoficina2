@@ -32,18 +32,8 @@ public final class Mp3Buf {
     public void setIsPlaying(boolean isPlaying) {
         this.isPlaying = isPlaying;
     }
-    
-    public boolean checkInstance=false;
-
-    public boolean isCheckInstance() {
-        return checkInstance;
-    }
-
-    public void setCheckInstance(boolean checkInstance) {
-        this.checkInstance = checkInstance;
-    }    
-        
-    String pathMusic;
+            
+    String pathMusic=null;
 
     public String getPathMusic(){
         return pathMusic;
@@ -53,7 +43,7 @@ public final class Mp3Buf {
         this.pathMusic = pathMusic;
     }
 
-     Media media;
+     Media media=null;
 
     public Media getMedia() {
         return media;
@@ -63,13 +53,12 @@ public final class Mp3Buf {
         this.media = media;
     }
     
-    
+    public boolean metadataReady=false;
      
-     MediaPlayer mp;
+     MediaPlayer mp=null;
 
     public MediaPlayer getMp(){
-        if(checkInstance==false){
-            checkInstance=true;
+        if(mp==null){
             carregaMusica();
         }
         return mp;
@@ -80,10 +69,8 @@ public final class Mp3Buf {
     }
      
     public void carregaMusica(){
-        FileChooser fc= new FileChooser();
-        pathMusic=fc.showOpenDialog(ControleUI.getInstance().getSecondStage()).toURI().toString();
-        pathMusic = codeplayer.Mp3Buf.getInstance().getPathMusic();
         media = new Media(pathMusic);
         mp = new MediaPlayer(media);
+        
     }
 }

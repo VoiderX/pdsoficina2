@@ -5,6 +5,7 @@
  */
 package codeplayer;
 
+import codeplayer.FXML.PlayerController;
 import java.io.IOException;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -41,6 +42,10 @@ public final class ControleUI{
    
    private static Stage mainStage;
    private static Stage secondStage;
+   public PlayerController playControl;
+   public PlayerController getPlayerController(){
+       return playControl;
+   }
    
    public Stage getSecondStage(){
        return secondStage;
@@ -61,15 +66,17 @@ public final class ControleUI{
 
         });
       try {
-         playerFXML = FXMLLoader.load(getClass().getResource("FXML/Player.fxml")); //Carrega o arquivo FXML na classe pai
-         equalizerFXML=FXMLLoader.load(getClass().getResource("FXML/Equalizer.fxml"));
+          FXMLLoader loader=new FXMLLoader();
+          loader.setLocation(getClass().getResource("FXML/Player.fxml"));
+          playerFXML = (Parent)loader.load(); //Carrega o arquivo FXML na classe pai
+          playControl=loader.getController();
 
       } catch (IOException ex) {
          //fazer algo para mostrar erro
          System.out.println("Erro" + ex);
       }
         playerScene = new Scene(playerFXML); //Transforma a classe parent em um objeto do tipo Scene
-        equalizerScene=new Scene(equalizerFXML);
+       
       mostraPlayer();
    }
 
@@ -78,6 +85,13 @@ public final class ControleUI{
       mainStage.show();
    }
    public void mostraEqualizer(){
+       try{
+        equalizerFXML=FXMLLoader.load(getClass().getResource("FXML/Equalizer.fxml"));
+        equalizerScene=new Scene(equalizerFXML);
+       }
+       catch(Exception e){
+           
+       }
       secondStage.setScene(equalizerScene);
       secondStage.show();
    }
