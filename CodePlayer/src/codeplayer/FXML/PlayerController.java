@@ -34,17 +34,24 @@ public class PlayerController implements Initializable {
     Text Ano;
     @FXML
      public void play(){ 
-         Thread tr=new Thread(new CheckMetadata());
-         Mp3Buf.getInstance().getMp().play();
-         tr.start();
+         if(Mp3Buf.getInstance().getMp()==null){
+         }else{
+            Thread tr=new Thread(new CheckMetadata());
+            Mp3Buf.getInstance().getMp().play();
+            tr.start();
+         }
      }
      @FXML
      public void stop(){
-        Mp3Buf.getInstance().getMp().stop();
+        if(Mp3Buf.getInstance().getMp()!=null){
+            Mp3Buf.getInstance().getMp().stop();
+        }
      }
      @FXML
      public void pause(){
-        Mp3Buf.getInstance().getMp().pause();
+         if(Mp3Buf.getInstance().getMp()!=null){
+             Mp3Buf.getInstance().getMp().pause();
+         }
      }
      @FXML
      public void exibeEqualizer(){
@@ -53,11 +60,16 @@ public class PlayerController implements Initializable {
      @FXML
      public void loadMusicDialog(){
         FileChooser fc= new FileChooser();
+        try{
         Mp3Buf.getInstance().setPathMusic(fc.showOpenDialog(ControleUI.getInstance().getSecondStage()).toURI().toString());
-        if(Mp3Buf.getInstance().getMp()!=null){
+        if(Mp3Buf.getInstance().getMp()!=null && Mp3Buf.getInstance().getPathMusic()!=null){
             Mp3Buf.getInstance().getMp().dispose();
             Mp3Buf.getInstance().setMp(null);
             play();
+        }
+        }
+        catch(Exception e){
+            //e.printStackTrace();
         }
      }
      public void setInfos(ObservableMap<String,Object> metadata){

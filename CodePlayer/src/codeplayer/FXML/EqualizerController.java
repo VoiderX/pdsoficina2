@@ -14,7 +14,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Slider;
-import javafx.scene.media.AudioEqualizer;
 import javafx.scene.media.EqualizerBand;
 import javafx.scene.text.Text;
 
@@ -74,12 +73,14 @@ public class EqualizerController implements Initializable {
         for(int i=0;i<bands.size();i++){
             bands.get(i).setGain(EqualizerBand.MAX_GAIN);
         }
+        atualizaSlider();
     }
     @FXML
     public void equalizar2(){
         for(int i=0;i<bands.size();i++){
             bands.get(i).setGain(EqualizerBand.MIN_GAIN);
         }
+        atualizaSlider();
         
     }
     public void changeSlider(Event e){
@@ -89,6 +90,19 @@ public class EqualizerController implements Initializable {
                 bands.get(i).setGain(Sliders.get(i).getValue());
             }
         }
+    }
+    public void atualizaSlider(){
+         for(int i=0;i<Sliders.size();i++){
+          Sliders.get(i).setValue(bands.get(i).getGain());
+         }
+    }
+    @FXML
+    public void zeroAll(){
+        for(int i=0;i<Sliders.size();i++){
+          Sliders.get(i).setValue(0);
+          bands.get(i).setGain(Sliders.get(i).getValue());
+        }
+        
     }
     /**
      * Initializes the controller class.
@@ -128,10 +142,9 @@ public class EqualizerController implements Initializable {
       Freqs.add(freq9);
       
       for(int i=0;i<Sliders.size();i++){
+       Sliders.get(i).setValue(bands.get(i).getGain());
        Freqs.get(i).setText(Double.toString(bands.get(i).getBandwidth()));
       }
-      System.out.println(EqualizerBand.MAX_GAIN);
-      System.out.println(EqualizerBand.MIN_GAIN);
     }    
     
 }

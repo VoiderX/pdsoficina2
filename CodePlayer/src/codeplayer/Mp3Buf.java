@@ -5,11 +5,9 @@
  */
 package codeplayer;
 
-import java.io.File;
-import javafx.beans.value.ObservableMapValue;
+
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.FileChooser;
 /**
  *
  * @author Gabriel
@@ -59,7 +57,9 @@ public final class Mp3Buf {
 
     public MediaPlayer getMp(){
         if(mp==null){
+            if(pathMusic!=null){
             carregaMusica();
+            }
         }
         return mp;
     }
