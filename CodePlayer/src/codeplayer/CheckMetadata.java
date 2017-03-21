@@ -14,6 +14,12 @@ import static javafx.scene.media.MediaPlayer.Status.PLAYING;
 public class CheckMetadata implements Runnable{
     public void run(){
         while(Mp3Buf.getInstance().getMp().getStatus()!=PLAYING){
+            try{
+                this.wait(1000);
+            }
+            catch(Exception e){
+                
+            }
         }
        ControleUI.getInstance().getPlayerController().setInfos(Mp3Buf.getInstance().getMedia().getMetadata());
     }
