@@ -6,15 +6,12 @@
 package codeplayer.FXML;
 
 import codeplayer.CheckMetadata;
-import codeplayer.CodePlayer;
 import codeplayer.ControleUI;
 import codeplayer.Mp3Buf;
 import codeplayer.Musica;
 import java.io.File;
 import java.net.URL;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -50,6 +47,10 @@ public class PlayerController implements Initializable {
     TableColumn<codeplayer.Musica,String> ColunaNome;
     @FXML
     TableColumn<codeplayer.Musica,String> ColunaPath;
+    @FXML
+    TableColumn<codeplayer.Musica,Integer> ColunaIndice;
+    //Metodo para preparação da musica
+    //Caso esteja tocando e uma nova musica seja carregada encerra o MediaPlayer atual
     public void prepararMusica(){
         if(Mp3Buf.getInstance().getMp()!=null && Mp3Buf.getInstance().getPathMusic()!=null){
             Mp3Buf.getInstance().getMp().dispose();
@@ -57,64 +58,75 @@ public class PlayerController implements Initializable {
             play();
         }
     }
+    //Metodo play, inicia a reprodução e a busca dos metadados
     @FXML
      public void play(){
          if(Mp3Buf.getInstance().getMp()==null){
          }else{
+             //Recepção de metadadados atraves da Thread pois as informações chegam de forma Assincrona
             Thread tr=new Thread(new CheckMetadata());
             Mp3Buf.getInstance().getMp().play();
             tr.start();
          }
      }
+     //Metodo para dar stop na musica
      @FXML
      public void stop(){
         if(Mp3Buf.getInstance().getMp()!=null){
             Mp3Buf.getInstance().getMp().stop();
         }
      }
+     //Metodo para dar pause na musica
      @FXML
      public void pause(){
          if(Mp3Buf.getInstance().getMp()!=null){
              Mp3Buf.getInstance().getMp().pause();
          }
      }
+     //Metodo para chamar a proxima musica
      @FXML
      public void next(){
+         //Seta a posição para a próxima musica
          Mp3Buf.getInstance().setPosTocando(Mp3Buf.getInstance().getPosTocando() + 1);
+         //Musica deve ser carregada
          prepararMusica();
+         //Inicia a música
          play();
      }
      public void last(){
+         //Idem  ao metodo next, no entanto seta a música anterior
          Mp3Buf.getInstance().setPosTocando(Mp3Buf.getInstance().getPosTocando() - 1);
          prepararMusica();
          play();
      }
+     //Metodo para chamar a classe de exibição do equalizador
      @FXML
      public void exibeEqualizer(){
          ControleUI.getInstance().mostraEqualizer();
      }
+     //Chama o File Chooser para carregar as músicas
      @FXML
      public void loadMusicDialog(){
         FileChooser fc= new FileChooser();
         try{
-        List musicas = fc.showOpenMultipleDialog(null);
-        
-        ArrayList<Musica> temp= new ArrayList<>();
-            for (Iterator it = musicas.iterator(); it.hasNext();) {
-                Object musica = it.next();
-                Musica tempmusic;
-                tempmusic = new Musica((File)musica);
-                temp.add(tempmusic);
+            List musicas = fc.showOpenMultipleDialog(null); //Chama o FileChooser e armazena os FIles num list
+            Musica aux;//Objeto Musica para auxiliar a inserção
+            ArrayList<Musica> temp= new ArrayList<>();
+            for(int i=0;i<musicas.size();i++){//Enquanto houver File's carrega as músicas
+                //Criando o ArrayList de músicas
+                aux=new Musica((File)musicas.get(i),i);
+                temp.add(aux);
             }
-        Mp3Buf.getInstance().setMusicas(temp);
-        Mp3Buf.getInstance().setPosTocando(0);
-        carregarTabela();
-        prepararMusica();
+            Mp3Buf.getInstance().setMusicas(temp); //Enviando o Array para a Mp3Buf
+            Mp3Buf.getInstance().setPosTocando(0);//Inicia na posição 0
+            carregarTabela(); //Carrega a tabela de exibição de músicas
+            prepararMusica();//Prepara a primeira música
         }
-        catch(Exception e){
-            e.printStackTrace();
+        catch(Exception e){ //Caso venha vazio(sem seleção) não faz nada
+            System.out.println("Sem musicas selecionadas!");
         }
      }
+     //Metodo chamado dentro da CheckMetada para exibir os metadados
      public void setInfos(ObservableMap<String,Object> metadata){
          if(metadata.get("artist")!=null){
                 Artista.setText(metadata.get("artist").toString());
@@ -132,18 +144,32 @@ public class PlayerController implements Initializable {
                 Faixa.setText(metadata.get("track").toString());
             }
      }
-     
+     //Carrega a tabela a para exibição
      public void carregarTabela(){
+         //Array temporário para armazenar os  dados
          ArrayList<Musica> tempdados = Mp3Buf.getInstance().getMusicas();
+         //ObservableList para carregar os dados na tabela
          ObservableList<Musica> temp2dados= FXCollections.observableArrayList();
+         //Transfere os dados do array para o ObservableList
          for(int i=0;i<tempdados.size();i++){
-             System.out.println("Teste:"+i+" "+tempdados.get(i).getPathMusic());
              temp2dados.add(tempdados.get(i));
          }
-         
+         //Binda as colunas da tabela nos componentes da Classe Musica
          ColunaNome.setCellValueFactory(new PropertyValueFactory<codeplayer.Musica,String>("Nome"));
          ColunaPath.setCellValueFactory(new PropertyValueFactory<codeplayer.Musica,String>("PathMusic"));
-         Tabelamusicas.setItems(temp2dados);
+         ColunaIndice.setCellValueFactory(new PropertyValueFactory<codeplayer.Musica,Integer>("Index"));
+         Tabelamusicas.setItems(temp2dados);//Seta o ObservableList na tabela
+     }
+     @FXML
+     public void selecionaMusica(){//Metodo para reproduzir uma música selecionada na tabela a partir do Index
+        try{
+        Mp3Buf.getInstance().setPosTocando(Tabelamusicas.getSelectionModel().getSelectedItem().getIndex());
+        }
+        catch(Exception e){
+            
+        }
+        prepararMusica();//Musica deve ser preparada 
+        play();//Inicia a música
      }
     /**
      * Initializes the controller class.

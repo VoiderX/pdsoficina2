@@ -19,13 +19,15 @@ import javafx.stage.WindowEvent;
  *
  * @author Gabriel
  */
+//Classe para controle geral das interfaces em singleton
 public final class ControleUI{
 
-   private ControleUI(){};
+   private ControleUI(){}; //Declaração de método construtor privado
 
-   private static ControleUI INSTANCE = null;
+   private static ControleUI INSTANCE = null; //Declaração de uma intanscia para a classe
 
-   public static ControleUI getInstance(){
+   public static ControleUI getInstance(){//Verifica se já possui instancia ativa
+       //Caso não possua inicia uma caso contrário chama a instancia já aberta
       return((INSTANCE == null)?INSTANCE = new ControleUI():INSTANCE);
    }
 
@@ -37,17 +39,21 @@ public final class ControleUI{
    private static Parent playerFXML; //Classes parent para manipulação do Fxml
    private static Parent equalizerFXML;
 
-   private static Scene playerScene;
+   private static Scene playerScene; //Scenes (Interfaces já construídas)
    private static Scene equalizerScene;
    
-   private static Stage mainStage;
+   private static Stage mainStage; //Stages: Janelas Abertas
    private static Stage secondStage;
-   public PlayerController playControl;
-   public PlayerController getPlayerController(){
+   
+   public PlayerController playControl; //Instanciação da classe controller do player para mudanças de interface
+   //Em tempo real
+   
+   public PlayerController getPlayerController(){ //Metodo get permitir que o controller seja modificado em
+       //outras classes
        return playControl;
    }
    
-   public Stage getSecondStage(){
+   public Stage getSecondStage(){ //Metodo para permitir a chama de uma segunda janela por outros stages
        return secondStage;
    }
 
@@ -57,7 +63,7 @@ public final class ControleUI{
       mainStage.setTitle("CodePlayer 2017");
       secondStage= new Stage();
       
-      mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+      mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {//Metodo para finalizar tudo ao apertar o "x"
             @Override
             public void handle(WindowEvent t) {
                 Platform.exit();
@@ -66,10 +72,10 @@ public final class ControleUI{
 
         });
       try {
-          FXMLLoader loader=new FXMLLoader();
-          loader.setLocation(getClass().getResource("FXML/Player.fxml"));
+          FXMLLoader loader=new FXMLLoader();//Prepara um loader para o arquivo fxml
+          loader.setLocation(getClass().getResource("FXML/Player.fxml"));//Puxa o arquivo fxml
           playerFXML = (Parent)loader.load(); //Carrega o arquivo FXML na classe pai
-          playControl=loader.getController();
+          playControl=loader.getController();//Puxa o o controller para o determinado FXMl
 
       } catch (IOException ex) {
          //fazer algo para mostrar erro
@@ -81,8 +87,8 @@ public final class ControleUI{
    }
 
    public void mostraPlayer(){ //Método para chamar o login
-      mainStage.setScene(playerScene);
-      mainStage.show();
+      mainStage.setScene(playerScene); //Coloca a scene no stage
+      mainStage.show();//Exibe o stage
    }
    public void mostraEqualizer(){
        try{

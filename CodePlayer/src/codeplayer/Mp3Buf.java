@@ -13,6 +13,7 @@ import javafx.scene.media.MediaPlayer;
  *
  * @author Gabriel
  */
+//Classe para manipulação do player MP3 também em singleton
 public final class Mp3Buf {
 
 
@@ -22,17 +23,8 @@ public final class Mp3Buf {
       return((INSTANCE == null)?INSTANCE = new Mp3Buf():INSTANCE);
    }    
       
-   public boolean isPlaying=false;
-
-    public boolean isIsPlaying() {
-        return isPlaying;
-    }
-
-    public void setIsPlaying(boolean isPlaying) {
-        this.isPlaying = isPlaying;
-    }
             
-    ArrayList<Musica> Musicas;
+    ArrayList<Musica> Musicas; //ArrayList para guardar os caminhos das musicas a serem reproduzidas
 
     public ArrayList<Musica> getMusicas() {
         return Musicas;
@@ -42,7 +34,7 @@ public final class Mp3Buf {
         this.Musicas = Musicas;
     }
     
-    String pathMusic;
+    String pathMusic;//Caminho da música a ser reproduzida no momento
     public String getPathMusic(){
         return pathMusic;
     }
@@ -51,7 +43,7 @@ public final class Mp3Buf {
         this.pathMusic = pathMusic;
     }
 
-     Media media=null;
+     Media media=null;//Classe Media uitlizada para iniciar o MediaPlayer e também para puxar os metadados
 
     public Media getMedia() {
         return media;
@@ -59,11 +51,9 @@ public final class Mp3Buf {
 
     public void setMedia(Media media) {
         this.media = media;
-    }
-    
-    public boolean metadataReady=false;
+    }   
      
-     MediaPlayer mp=null;
+     MediaPlayer mp=null; //MediaPlayer, classe responsável pela reprodução em si
 
     public MediaPlayer getMp(){
         if(mp==null){
@@ -76,7 +66,7 @@ public final class Mp3Buf {
         this.mp = mp;
     }
     
-    int PosTocando;
+    int PosTocando;//Indica a posição que está sendo reproduzida na playlist
 
     public int getPosTocando() {
         return PosTocando;
@@ -86,16 +76,16 @@ public final class Mp3Buf {
         this.PosTocando = PosTocando;
     }
     
-    public void carregaMusica(){
-        if(PosTocando>=Musicas.size()){
+    public void carregaMusica(){//Classe para carregar a música no Media e no MediaPlayer
+        if(PosTocando>=Musicas.size()){ //Caso chegue na ultima música retorna ao inicio
             PosTocando=0;
         }
-        if(PosTocando<0){
+        if(PosTocando<0){ //Caso o usuário esteja na ultima música e aperta o anterior vai para a  ultima da lista
             PosTocando=Musicas.size()-1;
         }
-        pathMusic= Musicas.get(PosTocando).getPathMusic();
-        media = new Media(pathMusic);
-        mp = new MediaPlayer(media);
+        pathMusic= Musicas.get(PosTocando).getPathMusic();//Puxa o pathmusic da musica a ser tocada
+        media = new Media(pathMusic); //Carrega a Media
+        mp = new MediaPlayer(media); //Carrega o mediaplayer
         
     }
 }

@@ -12,6 +12,7 @@ import javafx.stage.Stage;
  *
  * @author Gabriel
  */
+//Classe de inicialização
 public class CodePlayer extends Application {
     public static void main(String[] args) {
       CodePlayer.launch(args);
