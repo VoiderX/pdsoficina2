@@ -6,13 +6,25 @@
 package codeplayer.FXML;
 
 import codeplayer.CheckMetadata;
+import codeplayer.CodePlayer;
 import codeplayer.ControleUI;
 import codeplayer.Mp3Buf;
+import codeplayer.Musica;
+import java.io.File;
 import java.net.URL;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
@@ -33,7 +45,20 @@ public class PlayerController implements Initializable {
     @FXML
     Text Ano;
     @FXML
-     public void play(){ 
+    TableView<codeplayer.Musica> Tabelamusicas;
+    @FXML
+    TableColumn<codeplayer.Musica,String> ColunaNome;
+    @FXML
+    TableColumn<codeplayer.Musica,String> ColunaPath;
+    public void prepararMusica(){
+        if(Mp3Buf.getInstance().getMp()!=null && Mp3Buf.getInstance().getPathMusic()!=null){
+            Mp3Buf.getInstance().getMp().dispose();
+            Mp3Buf.getInstance().setMp(null);
+            play();
+        }
+    }
+    @FXML
+     public void play(){
          if(Mp3Buf.getInstance().getMp()==null){
          }else{
             Thread tr=new Thread(new CheckMetadata());
@@ -54,6 +79,17 @@ public class PlayerController implements Initializable {
          }
      }
      @FXML
+     public void next(){
+         Mp3Buf.getInstance().setPosTocando(Mp3Buf.getInstance().getPosTocando() + 1);
+         prepararMusica();
+         play();
+     }
+     public void last(){
+         Mp3Buf.getInstance().setPosTocando(Mp3Buf.getInstance().getPosTocando() - 1);
+         prepararMusica();
+         play();
+     }
+     @FXML
      public void exibeEqualizer(){
          ControleUI.getInstance().mostraEqualizer();
      }
@@ -61,15 +97,22 @@ public class PlayerController implements Initializable {
      public void loadMusicDialog(){
         FileChooser fc= new FileChooser();
         try{
-        Mp3Buf.getInstance().setPathMusic(fc.showOpenDialog(ControleUI.getInstance().getSecondStage()).toURI().toString());
-        if(Mp3Buf.getInstance().getMp()!=null && Mp3Buf.getInstance().getPathMusic()!=null){
-            Mp3Buf.getInstance().getMp().dispose();
-            Mp3Buf.getInstance().setMp(null);
-            play();
-        }
+        List musicas = fc.showOpenMultipleDialog(null);
+        
+        ArrayList<Musica> temp= new ArrayList<>();
+            for (Iterator it = musicas.iterator(); it.hasNext();) {
+                Object musica = it.next();
+                Musica tempmusic;
+                tempmusic = new Musica((File)musica);
+                temp.add(tempmusic);
+            }
+        Mp3Buf.getInstance().setMusicas(temp);
+        Mp3Buf.getInstance().setPosTocando(0);
+        carregarTabela();
+        prepararMusica();
         }
         catch(Exception e){
-            //e.printStackTrace();
+            e.printStackTrace();
         }
      }
      public void setInfos(ObservableMap<String,Object> metadata){
@@ -88,6 +131,19 @@ public class PlayerController implements Initializable {
             if(metadata.get("track")!=null){
                 Faixa.setText(metadata.get("track").toString());
             }
+     }
+     
+     public void carregarTabela(){
+         ArrayList<Musica> tempdados = Mp3Buf.getInstance().getMusicas();
+         ObservableList<Musica> temp2dados= FXCollections.observableArrayList();
+         for(int i=0;i<tempdados.size();i++){
+             System.out.println("Teste:"+i+" "+tempdados.get(i).getPathMusic());
+             temp2dados.add(tempdados.get(i));
+         }
+         
+         ColunaNome.setCellValueFactory(new PropertyValueFactory<codeplayer.Musica,String>("Nome"));
+         ColunaPath.setCellValueFactory(new PropertyValueFactory<codeplayer.Musica,String>("PathMusic"));
+         Tabelamusicas.setItems(temp2dados);
      }
     /**
      * Initializes the controller class.

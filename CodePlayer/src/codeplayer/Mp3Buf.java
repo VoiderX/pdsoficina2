@@ -6,6 +6,7 @@
 package codeplayer;
 
 
+import java.util.ArrayList;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 /**
@@ -31,8 +32,17 @@ public final class Mp3Buf {
         this.isPlaying = isPlaying;
     }
             
-    String pathMusic=null;
+    ArrayList<Musica> Musicas;
 
+    public ArrayList<Musica> getMusicas() {
+        return Musicas;
+    }
+
+    public void setMusicas(ArrayList<Musica> Musicas) {
+        this.Musicas = Musicas;
+    }
+    
+    String pathMusic;
     public String getPathMusic(){
         return pathMusic;
     }
@@ -57,9 +67,7 @@ public final class Mp3Buf {
 
     public MediaPlayer getMp(){
         if(mp==null){
-            if(pathMusic!=null){
-            carregaMusica();
-            }
+         carregaMusica();
         }
         return mp;
     }
@@ -67,8 +75,25 @@ public final class Mp3Buf {
     public void setMp(MediaPlayer mp) {
         this.mp = mp;
     }
-     
+    
+    int PosTocando;
+
+    public int getPosTocando() {
+        return PosTocando;
+    }
+
+    public void setPosTocando(int PosTocando) {
+        this.PosTocando = PosTocando;
+    }
+    
     public void carregaMusica(){
+        if(PosTocando>=Musicas.size()){
+            PosTocando=0;
+        }
+        if(PosTocando<0){
+            PosTocando=Musicas.size()-1;
+        }
+        pathMusic= Musicas.get(PosTocando).getPathMusic();
         media = new Media(pathMusic);
         mp = new MediaPlayer(media);
         
