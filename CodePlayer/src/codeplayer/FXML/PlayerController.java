@@ -22,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
@@ -161,15 +162,23 @@ public class PlayerController implements Initializable {
          Tabelamusicas.setItems(temp2dados);//Seta o ObservableList na tabela
      }
      @FXML
-     public void selecionaMusica(){//Metodo para reproduzir uma música selecionada na tabela a partir do Index
+     public void selecionaMusica(MouseEvent evt){//Metodo para reproduzir uma música selecionada na tabela a partir do Index
+        int aux;
         try{
-        Mp3Buf.getInstance().setPosTocando(Tabelamusicas.getSelectionModel().getSelectedItem().getIndex());
+            if(evt.getClickCount()==2){
+                aux= Tabelamusicas.getSelectionModel().getSelectedItem().getIndex();
+
+               if(aux!=Mp3Buf.getInstance().getPosTocando()){ //Verifica se a música já está tocando
+                   Mp3Buf.getInstance().setPosTocando(aux);//Seta a posição a ser tocada
+                   prepararMusica();//Musica deve ser preparada 
+                   play();//Inicia a música
+               }else{
+                   //Faz nada
+               }
+           }
+        }catch(Exception e){
+            //
         }
-        catch(Exception e){
-            
-        }
-        prepararMusica();//Musica deve ser preparada 
-        play();//Inicia a música
      }
     /**
      * Initializes the controller class.
