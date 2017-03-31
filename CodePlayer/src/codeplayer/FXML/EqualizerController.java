@@ -5,6 +5,7 @@
  */
 package codeplayer.FXML;
 
+import codeplayer.Banda;
 import codeplayer.Mp3Buf;
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,14 +23,13 @@ import javafx.scene.text.Text;
  *
  * @author Gabriel
  */
-public class EqualizerController implements Initializable {
-    ObservableList<EqualizerBand> bands;
+public class EqualizerController implements Initializable {    
     @FXML
     ArrayList<Slider> Sliders=new ArrayList<>();
     @FXML
     ArrayList<Text> Freqs = new ArrayList<>();
     @FXML
-    Slider Slider0;
+    Slider Slider0; //Inicialização de Sliders
     @FXML
     Slider Slider1;
    @FXML
@@ -49,7 +49,7 @@ public class EqualizerController implements Initializable {
    @FXML
     Slider Slider9;
    @FXML
-   Text freq0;
+   Text freq0; //Texto para mostrar as faixas de frequencias
    @FXML
    Text freq1;
    @FXML
@@ -69,48 +69,63 @@ public class EqualizerController implements Initializable {
    @FXML
    Text freq9;
    @FXML
-   public void equalizar(){
-        for(int i=0;i<bands.size();i++){
-            bands.get(i).setGain(EqualizerBand.MAX_GAIN);
+   public void equalizar(){ //Metodo para setar a equalização para o máximo
+        for(int i=0;i<Mp3Buf.getInstance().getBandas().size();i++){
+            Mp3Buf.getInstance().getBandas().get(i).setValor(12);
         }
-        atualizaSlider();
-    }
+        atualizaSlider(); //Metodo para atualizar a visualização dos sliders
+        atualizaEqualizer();//Metodo para atualizar o equalizador do Media Player
+   }
     @FXML
-    public void equalizar2(){
-        for(int i=0;i<bands.size();i++){
-            bands.get(i).setGain(EqualizerBand.MIN_GAIN);
+    public void equalizar2(){//Metodo para equalizar ao minimo
+        for(int i=0;i<Mp3Buf.getInstance().getBandas().size();i++){
+            Mp3Buf.getInstance().getBandas().get(i).setValor(-24);
         }
         atualizaSlider();
+        atualizaEqualizer();
         
     }
-    public void changeSlider(Event e){
+    public void changeSlider(Event e){ //Metoodo para identificar caso o Slider seja alterado
         for(int i=0;i<Sliders.size();i++){
             if(e.getSource()==Sliders.get(i)){
                 System.out.println("Slider "+i+": "+Sliders.get(i).getValue());
-                bands.get(i).setGain(Sliders.get(i).getValue());
+                //Seta o valor do slider no array
+                Mp3Buf.getInstance().getBandas().get(i).setValor(Sliders.get(i).getValue());                
+            }
+        }
+        atualizaEqualizer();//Atualiza o equalizador
+    }
+    public void atualizaSlider(){//Metodo simples para mudar a visualização do Slider
+        for(int i=0;i<Sliders.size();i++){
+            Sliders.get(i).setValue(Mp3Buf.getInstance().getBandas().get(i).getValor());
+        }
+    }
+    public void atualizaEqualizer(){//Metodo para transferir os dados do array para o equalizador
+         ObservableList<EqualizerBand> bandseq;
+        if(Mp3Buf.getInstance().checkmp()!=null){
+            //Obtendo as bandas do equalizador
+             bandseq=Mp3Buf.getInstance().getMp().getAudioEqualizer().getBands();
+            for(int i=0;i<Mp3Buf.getInstance().getBandas().size();i++){
+                //Corre o ArrayList e seta os valores dos ganhos no equalizador diretamente
+                bandseq.get(i).setGain(Mp3Buf.getInstance().getBandas().get(i).getValor());
             }
         }
     }
-    public void atualizaSlider(){
-         for(int i=0;i<Sliders.size();i++){
-          Sliders.get(i).setValue(bands.get(i).getGain());
-         }
-    }
     @FXML
-    public void zeroAll(){
-        for(int i=0;i<Sliders.size();i++){
-          Sliders.get(i).setValue(0);
-          bands.get(i).setGain(Sliders.get(i).getValue());
+    public void zeroAll(){ //Metodo para retornar todas os ganhos nas faixas para zero
+        for(int i=0;i<Mp3Buf.getInstance().getBandas().size();i++){
+            Mp3Buf.getInstance().getBandas().get(i).setValor(0);
         }
-        
-    }
+        atualizaSlider();//Atualiza a visualização dos sliders
+        atualizaEqualizer();//Atualiza o equalizador
+    }     
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {       
-      bands=Mp3Buf.getInstance().getMp().getAudioEqualizer().getBands();
-      System.out.println(bands.size());
+    public void initialize(URL url, ResourceBundle rb){       
+      Mp3Buf.getInstance().setBandas(new ArrayList<Banda>());
+      //Adiciona os sliders nos Arrays
       Sliders.add(Slider0);
       Freqs.add(freq0);
       
@@ -141,9 +156,10 @@ public class EqualizerController implements Initializable {
       Sliders.add(Slider9);
       Freqs.add(freq9);
       
-      for(int i=0;i<Sliders.size();i++){
-       Sliders.get(i).setValue(bands.get(i).getGain());
-       Freqs.get(i).setText(Double.toString(bands.get(i).getBandwidth()));
+      for(int i=0;i<Sliders.size();i++){//Inicia todos os valores no array List com Zero
+          Banda aux=new Banda();
+          aux.setValor(0);
+          Mp3Buf.getInstance().getBandas().add(aux);
       }
     }    
     

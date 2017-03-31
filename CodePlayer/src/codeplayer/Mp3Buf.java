@@ -53,8 +53,10 @@ public final class Mp3Buf {
         this.media = media;
     }   
      
-     MediaPlayer mp=null; //MediaPlayer, classe responsável pela reprodução em si
-
+    MediaPlayer mp=null; //MediaPlayer, classe responsável pela reprodução em si
+    public MediaPlayer checkmp(){
+        return mp;
+    }
     public MediaPlayer getMp(){
         if(mp==null){
          carregaMusica();
@@ -75,6 +77,15 @@ public final class Mp3Buf {
     public void setPosTocando(int PosTocando) {
         this.PosTocando = PosTocando;
     }
+    ArrayList<Banda> bandas=null; //Array Contendo os valores das bandas
+
+    public ArrayList<Banda> getBandas() { 
+        return bandas;
+    }
+
+    public void setBandas(ArrayList<Banda> bandas) {
+        this.bandas = bandas;
+    }
     
     public void carregaMusica(){//Classe para carregar a música no Media e no MediaPlayer
         if(PosTocando>=Musicas.size()){ //Caso chegue na ultima música retorna ao inicio
@@ -86,6 +97,11 @@ public final class Mp3Buf {
         pathMusic= Musicas.get(PosTocando).getPathMusic();//Puxa o pathmusic da musica a ser tocada
         media = new Media(pathMusic); //Carrega a Media
         mp = new MediaPlayer(media); //Carrega o mediaplayer
+        if(bandas!=null){ //Verifica se o array já foi inicializado
+            for(int i=0;i<bandas.size();i++){// Carrega os dados no array
+                mp.getAudioEqualizer().getBands().get(i).setGain(bandas.get(i).getValor());
+            }
+        }
         
     }
 }
