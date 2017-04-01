@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.shape.*?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="781.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codeplayer.FXML.PlayerController">
+<AnchorPane id="AnchorPane" prefHeight="520.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codeplayer.FXML.PlayerController">
    <children>
       <Button layoutX="44.0" layoutY="438.0" mnemonicParsing="false" onAction="#play" prefHeight="25.0" prefWidth="93.0" text="Play" />
       <Button layoutX="391.0" layoutY="438.0" mnemonicParsing="false" onAction="#pause" prefHeight="25.0" prefWidth="93.0" text="Pause" />
@@ -24,16 +25,18 @@
       <Text fx:id="Album" layoutX="120.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nenhum" wrappingWidth="205.13671875" />
       <Text fx:id="Ano" layoutX="120.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nenhum" wrappingWidth="205.13671875" />
       <Text fx:id="Faixa" layoutX="120.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nenhum" wrappingWidth="205.13671875" />
-      <Button layoutX="462.0" layoutY="54.0" mnemonicParsing="false" onAction="#exibeEqualizer" prefHeight="25.0" prefWidth="102.0" text="Equalizar" />
-      <Button layoutX="462.0" layoutY="96.0" mnemonicParsing="false" onAction="#loadMusicDialog" text="Carregar Música" />
-      <TableView fx:id="Tabelamusicas" layoutX="34.0" layoutY="182.0" onMouseClicked="#selecionaMusica" prefHeight="200.0" prefWidth="726.0">
+      <Button layoutX="642.0" layoutY="54.0" mnemonicParsing="false" onAction="#exibeEqualizer" prefHeight="25.0" prefWidth="133.0" text="Equalizar" />
+      <Button layoutX="642.0" layoutY="122.0" mnemonicParsing="false" onAction="#loadMusicDialog" prefHeight="25.0" prefWidth="133.0" text="Carregar Música" />
+      <TableView fx:id="Tabelamusicas" layoutX="31.0" layoutY="244.0" onMouseClicked="#selecionaMusica" prefHeight="174.0" prefWidth="752.0">
         <columns>
           <TableColumn fx:id="ColunaIndice" prefWidth="113.0" text="Indice" />
           <TableColumn fx:id="ColunaNome" minWidth="2.0" prefWidth="359.0" text="Nome do Arquivo" />
             <TableColumn fx:id="ColunaPath" prefWidth="315.0" text="Caminho do Arquivo" />
         </columns>
       </TableView>
-      <Button layoutX="164.0" layoutY="438.0" mnemonicParsing="false" onAction="#next" prefHeight="25.0" prefWidth="93.0" text="Próxima" />
-      <Button layoutX="279.0" layoutY="438.0" mnemonicParsing="false" onAction="#last" prefHeight="25.0" prefWidth="93.0" text="Anterior" />
+      <Button fx:id="Btnext" layoutX="164.0" layoutY="438.0" mnemonicParsing="false" onAction="#next" prefHeight="25.0" prefWidth="93.0" text="Próxima" />
+      <Button fx:id="Btlast" layoutX="279.0" layoutY="438.0" mnemonicParsing="false" onAction="#last" prefHeight="25.0" prefWidth="93.0" text="Anterior" />
+      <ImageView fx:id="imagem" fitHeight="187.0" fitWidth="262.0" layoutX="326.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" />
+      <Slider fx:id="SlidVol" blockIncrement="1.0" layoutX="45.0" layoutY="481.0" onMouseReleased="#changeSliderVol" showTickLabels="true" showTickMarks="true" />
    </children>
 </AnchorPane>

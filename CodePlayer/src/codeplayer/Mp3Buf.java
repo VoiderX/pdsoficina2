@@ -7,6 +7,7 @@ package codeplayer;
 
 
 import java.util.ArrayList;
+import javafx.collections.MapChangeListener;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 /**
@@ -94,9 +95,22 @@ public final class Mp3Buf {
         if(PosTocando<0){ //Caso o usuário esteja na ultima música e aperta o anterior vai para a  ultima da lista
             PosTocando=Musicas.size()-1;
         }
+        mp=null;
+        media=null;
+        System.gc();
         pathMusic= Musicas.get(PosTocando).getPathMusic();//Puxa o pathmusic da musica a ser tocada
         media = new Media(pathMusic); //Carrega a Media
-        mp = new MediaPlayer(media); //Carrega o mediaplayer
+        mp=new MediaPlayer(media);
+        mp.setOnEndOfMedia(new CheckNextMusic());
+        //Metodo para verificar as alterações nos metadados
+        Mp3Buf.getInstance().getMp().getMedia().getMetadata().addListener(new MapChangeListener<String,Object>(){
+           @Override
+           public void onChanged(MapChangeListener.Change<? extends String, ? extends Object> change) {
+           ControleUI.getInstance().getPlayerController().setInfos(
+                   Mp3Buf.getInstance().getMedia().getMetadata());
+           }
+        });
+        //ControleUI.getInstance().getPlayerController().setInfos(media.getMetadata());
         if(bandas!=null){ //Verifica se o array já foi inicializado
             for(int i=0;i<bandas.size();i++){// Carrega os dados no array
                 mp.getAudioEqualizer().getBands().get(i).setGain(bandas.get(i).getValor());

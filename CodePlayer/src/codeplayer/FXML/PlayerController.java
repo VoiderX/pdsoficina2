@@ -5,7 +5,6 @@
  */
 package codeplayer.FXML;
 
-import codeplayer.CheckMetadata;
 import codeplayer.ControleUI;
 import codeplayer.Mp3Buf;
 import codeplayer.Musica;
@@ -19,9 +18,13 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -32,6 +35,7 @@ import javafx.stage.FileChooser;
  * @author Gabriel
  */
 public class PlayerController implements Initializable {
+
     @FXML
     Text Faixa;
     @FXML
@@ -42,6 +46,15 @@ public class PlayerController implements Initializable {
     Text Album;
     @FXML
     Text Ano;
+    Image CapaAlbum;
+    @FXML
+    ImageView imagem;
+    @FXML
+    Slider SlidVol;
+    @FXML
+    Button Btnext;
+    @FXML
+    Button Btlast;
     @FXML
     TableView<codeplayer.Musica> Tabelamusicas;
     @FXML
@@ -57,6 +70,7 @@ public class PlayerController implements Initializable {
             Mp3Buf.getInstance().getMp().dispose();
             Mp3Buf.getInstance().setMp(null);
             play();
+            changeSliderVol();
         }
     }
     //Metodo play, inicia a reprodução e a busca dos metadados
@@ -65,9 +79,7 @@ public class PlayerController implements Initializable {
          if(Mp3Buf.getInstance().getMp()==null){
          }else{
              //Recepção de metadadados atraves da Thread pois as informações chegam de forma Assincrona
-            Thread tr=new Thread(new CheckMetadata());
             Mp3Buf.getInstance().getMp().play();
-            tr.start();
          }
      }
      //Metodo para dar stop na musica
@@ -87,18 +99,22 @@ public class PlayerController implements Initializable {
      //Metodo para chamar a proxima musica
      @FXML
      public void next(){
+         Btnext.setDisable(true);
          //Seta a posição para a próxima musica
          Mp3Buf.getInstance().setPosTocando(Mp3Buf.getInstance().getPosTocando() + 1);
          //Musica deve ser carregada
          prepararMusica();
          //Inicia a música
          play();
+         Btnext.setDisable(false);
      }
      public void last(){
          //Idem  ao metodo next, no entanto seta a música anterior
+         Btlast.setDisable(true);
          Mp3Buf.getInstance().setPosTocando(Mp3Buf.getInstance().getPosTocando() - 1);
          prepararMusica();
          play();
+         Btlast.setDisable(false);
      }
      //Metodo para chamar a classe de exibição do equalizador
      @FXML
@@ -129,6 +145,13 @@ public class PlayerController implements Initializable {
      }
      //Metodo chamado dentro da CheckMetada para exibir os metadados
      public void setInfos(ObservableMap<String,Object> metadata){
+          Artista.setText("Nenhum");
+          Titulo.setText("Nenhum");
+          Album.setText("Nenhum");
+          Ano.setText("Nenhum");
+          Faixa.setText("Nenhum");
+          imagem.setImage(null);
+          
          if(metadata.get("artist")!=null){
                 Artista.setText(metadata.get("artist").toString());
             }
@@ -143,6 +166,10 @@ public class PlayerController implements Initializable {
             }
             if(metadata.get("track")!=null){
                 Faixa.setText(metadata.get("track").toString());
+            }
+            if(metadata.get("image")!=null){
+                CapaAlbum=(Image) metadata.get("image");
+                imagem.setImage(CapaAlbum);
             }
      }
      //Carrega a tabela a para exibição
@@ -180,12 +207,22 @@ public class PlayerController implements Initializable {
             //
         }
      }
+     @FXML
+     public void changeSliderVol(){ //Metodo para controle de volume
+         if(Mp3Buf.getInstance().checkmp()!=null){ //Verifica se o media player está instanciado
+            Double volume=SlidVol.getValue(); //Pega o valor do slider
+            volume=volume/100;//Divide por 100, pos o volume vai de 0 a 1;
+            Mp3Buf.getInstance().getMp().setVolume(volume);//Passa o volume para o media player
+         }
+     }
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        imagem.setSmooth(true);
+        SlidVol.setValue(100);
     }    
     
 }
