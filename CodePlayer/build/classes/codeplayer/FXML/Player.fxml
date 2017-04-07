@@ -38,5 +38,19 @@
       <Button fx:id="Btlast" layoutX="279.0" layoutY="438.0" mnemonicParsing="false" onAction="#last" prefHeight="25.0" prefWidth="93.0" text="Anterior" />
       <ImageView fx:id="imagem" fitHeight="187.0" fitWidth="262.0" layoutX="326.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" />
       <Slider fx:id="SlidVol" blockIncrement="1.0" layoutX="45.0" layoutY="481.0" onMouseReleased="#changeSliderVol" showTickLabels="true" showTickMarks="true" />
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="841.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Visualizações">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#carregaOsciloscope" text="Osciloscópio" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
    </children>
 </AnchorPane>

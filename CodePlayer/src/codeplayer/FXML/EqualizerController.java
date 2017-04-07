@@ -124,7 +124,6 @@ public class EqualizerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb){       
-      Mp3Buf.getInstance().setBandas(new ArrayList<Banda>());
       //Adiciona os sliders nos Arrays
       Sliders.add(Slider0);
       Freqs.add(freq0);
@@ -155,11 +154,17 @@ public class EqualizerController implements Initializable {
       
       Sliders.add(Slider9);
       Freqs.add(freq9);
-      
-      for(int i=0;i<Sliders.size();i++){//Inicia todos os valores no array List com Zero
-          Banda aux=new Banda();
-          aux.setValor(0);
-          Mp3Buf.getInstance().getBandas().add(aux);
+      if(Mp3Buf.getInstance().getBandas()==null){
+        Mp3Buf.getInstance().setBandas(new ArrayList<Banda>());
+        for(int i=0;i<Sliders.size();i++){//Inicia todos os valores nos sliders com os valores do 
+            Banda aux=new Banda();
+            aux.setValor(0);
+            Mp3Buf.getInstance().getBandas().add(aux);
+        }
+      }else{
+         for(int i=0;i<Sliders.size();i++){//Inicia todos os valores nos sliders com os valores do 
+            Sliders.get(i).setValue(Mp3Buf.getInstance().getBandas().get(i).getValor());
+        } 
       }
     }    
     

@@ -19,6 +19,7 @@ import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -28,6 +29,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  * FXML Controller class
@@ -214,6 +217,10 @@ public class PlayerController implements Initializable {
             volume=volume/100;//Divide por 100, pos o volume vai de 0 a 1;
             Mp3Buf.getInstance().getMp().setVolume(volume);//Passa o volume para o media player
          }
+     }
+     @FXML
+     public void carregaOsciloscope(){
+         ControleUI.getInstance().mostraOsciloscope();
      }
     /**
      * Initializes the controller class.

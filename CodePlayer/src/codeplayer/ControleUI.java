@@ -38,12 +38,15 @@ public final class ControleUI{
 
    private static Parent playerFXML; //Classes parent para manipulação do Fxml
    private static Parent equalizerFXML;
+   private static Parent osciloscopeFXML;
 
    private static Scene playerScene; //Scenes (Interfaces já construídas)
    private static Scene equalizerScene;
+   private static Scene osciloscopeScene;
    
    private static Stage mainStage; //Stages: Janelas Abertas
    private static Stage secondStage;
+   private static Stage thirdStage;
    
    public PlayerController playControl; //Instanciação da classe controller do player para mudanças de interface
    //Em tempo real
@@ -62,6 +65,7 @@ public final class ControleUI{
       mainStage.centerOnScreen();
       mainStage.setTitle("CodePlayer 2017");
       secondStage= new Stage();
+      thirdStage= new Stage();
       
       mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {//Metodo para finalizar tudo ao apertar o "x"
             @Override
@@ -91,15 +95,27 @@ public final class ControleUI{
       mainStage.show();//Exibe o stage
    }
    public void mostraEqualizer(){
-       try{
+    try{
         equalizerFXML=FXMLLoader.load(getClass().getResource("FXML/Equalizer.fxml"));
         equalizerScene=new Scene(equalizerFXML);
+    }
+    catch(Exception e){
+           
+    }
+      secondStage.setScene(equalizerScene);
+      secondStage.setTitle("Equalizador");
+      secondStage.show();
+   }
+   public void mostraOsciloscope(){
+        try{
+        osciloscopeFXML=FXMLLoader.load(getClass().getResource("visualizations/Osciloscope.fxml"));
+        osciloscopeScene=new Scene(osciloscopeFXML);
        }
        catch(Exception e){
            
        }
-      secondStage.setScene(equalizerScene);
-      secondStage.show();
+      thirdStage.setScene(osciloscopeScene);
+      thirdStage.setTitle(("Osciloscópio"));
+      thirdStage.show();
    }
-   
 }
