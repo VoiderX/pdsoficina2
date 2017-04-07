@@ -222,6 +222,10 @@ public class PlayerController implements Initializable {
      public void carregaOsciloscope(){
          ControleUI.getInstance().mostraOsciloscope();
      }
+     @FXML
+     public void carregaSpectrum(){
+         ControleUI.getInstance().mostraSpectrum();
+     }
     /**
      * Initializes the controller class.
      */

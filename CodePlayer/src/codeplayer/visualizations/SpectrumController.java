@@ -6,7 +6,6 @@
 package codeplayer.visualizations;
 
 import codeplayer.Mp3Buf;
-import com.sun.media.jfxmedia.events.AudioSpectrumEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -17,14 +16,14 @@ import javafx.scene.media.AudioSpectrumListener;
  *
  * @author Gabriel
  */
-public class OsciloscopeController implements Initializable {
+public class SpectrumController implements Initializable {
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        if(Mp3Buf.getInstance().checkmp()!=null){
+       if(Mp3Buf.getInstance().checkmp()!=null){
             Mp3Buf.getInstance().getMp().setAudioSpectrumNumBands(10);
             Mp3Buf.getInstance().getMp().setAudioSpectrumInterval(0.5);
             Mp3Buf.getInstance().getMp().setAudioSpectrumListener(new AudioSpectrumListener() {

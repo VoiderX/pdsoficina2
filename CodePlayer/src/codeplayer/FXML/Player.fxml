@@ -43,6 +43,7 @@
           <Menu mnemonicParsing="false" text="Visualizações">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#carregaOsciloscope" text="Osciloscópio" />
+                  <MenuItem mnemonicParsing="false" onAction="#carregaSpectrum" text="Espectro" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

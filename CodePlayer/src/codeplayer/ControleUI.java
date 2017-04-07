@@ -39,14 +39,17 @@ public final class ControleUI{
    private static Parent playerFXML; //Classes parent para manipulação do Fxml
    private static Parent equalizerFXML;
    private static Parent osciloscopeFXML;
+   private static Parent spectrumFXML;
 
    private static Scene playerScene; //Scenes (Interfaces já construídas)
    private static Scene equalizerScene;
    private static Scene osciloscopeScene;
+   private static Scene spectrumScene;
    
    private static Stage mainStage; //Stages: Janelas Abertas
    private static Stage secondStage;
    private static Stage thirdStage;
+   private static Stage fourthStage;
    
    public PlayerController playControl; //Instanciação da classe controller do player para mudanças de interface
    //Em tempo real
@@ -66,6 +69,7 @@ public final class ControleUI{
       mainStage.setTitle("CodePlayer 2017");
       secondStage= new Stage();
       thirdStage= new Stage();
+      fourthStage= new Stage();
       
       mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {//Metodo para finalizar tudo ao apertar o "x"
             @Override
@@ -102,20 +106,32 @@ public final class ControleUI{
     catch(Exception e){
            
     }
-      secondStage.setScene(equalizerScene);
-      secondStage.setTitle("Equalizador");
-      secondStage.show();
+    secondStage.setScene(equalizerScene);
+    secondStage.setTitle("Equalizador");
+    secondStage.show();
    }
    public void mostraOsciloscope(){
-        try{
+    try{
         osciloscopeFXML=FXMLLoader.load(getClass().getResource("visualizations/Osciloscope.fxml"));
         osciloscopeScene=new Scene(osciloscopeFXML);
        }
-       catch(Exception e){
+    catch(Exception e){
            
+    }
+    thirdStage.setScene(osciloscopeScene);
+    thirdStage.setTitle(("Osciloscópio"));
+    thirdStage.show();
+   }
+   public void mostraSpectrum(){
+    try{
+        spectrumFXML=FXMLLoader.load(getClass().getResource("visualizations/Spectrum.fxml"));
+        spectrumScene=new Scene(spectrumFXML);
        }
-      thirdStage.setScene(osciloscopeScene);
-      thirdStage.setTitle(("Osciloscópio"));
-      thirdStage.show();
+    catch(Exception e){
+           
+    }
+    fourthStage.setScene(spectrumScene);
+    fourthStage.setTitle(("Visualizador de Espectro"));
+    fourthStage.show();       
    }
 }
