@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codeplayer.visualizations.SpectrumController">
-    
+<AnchorPane id="AnchorPane" prefHeight="430.0" prefWidth="618.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codeplayer.visualizations.SpectrumController">
+   <children>
+      <BarChart fx:id="Spectrum" animated="false" layoutX="59.0" layoutY="15.0">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis animated="false" autoRanging="false" minorTickCount="0" side="LEFT" tickLength="10.0" tickUnit="15.0" upperBound="65.0" />
+        </yAxis>
+      </BarChart>
+   </children>
 </AnchorPane>
