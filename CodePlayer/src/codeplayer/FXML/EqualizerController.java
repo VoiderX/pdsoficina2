@@ -68,6 +68,7 @@ public class EqualizerController implements Initializable {
    Text freq8;
    @FXML
    Text freq9;
+   double freqn=50;
    @FXML
    public void equalizar(){ //Metodo para setar a equalização para o máximo
         for(int i=0;i<Mp3Buf.getInstance().getBandas().size();i++){
@@ -160,6 +161,8 @@ public class EqualizerController implements Initializable {
             Banda aux=new Banda();
             aux.setValor(0);
             Mp3Buf.getInstance().getBandas().add(aux);
+            Freqs.get(i).setText(Double.toString(freqn));
+            freqn*=2;
         }
       }else{
          for(int i=0;i<Sliders.size();i++){//Inicia todos os valores nos sliders com os valores do 

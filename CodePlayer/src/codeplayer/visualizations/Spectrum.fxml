@@ -14,7 +14,7 @@
           <CategoryAxis side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis animated="false" autoRanging="false" minorTickCount="0" side="LEFT" tickLength="10.0" tickUnit="15.0" upperBound="65.0" />
+          <NumberAxis animated="false" autoRanging="false" minorTickCount="0" side="LEFT" tickLength="10.0" tickUnit="15.0" />
         </yAxis>
       </BarChart>
    </children>

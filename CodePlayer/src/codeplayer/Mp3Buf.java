@@ -8,6 +8,7 @@ package codeplayer;
 
 import java.util.ArrayList;
 import javafx.collections.MapChangeListener;
+import javafx.scene.media.EqualizerBand;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 /**
@@ -110,9 +111,17 @@ public final class Mp3Buf {
                    Mp3Buf.getInstance().getMedia().getMetadata());
            }
         });
+        mp.getAudioEqualizer().getBands().clear();
+        double mid=(EqualizerBand.MAX_GAIN - EqualizerBand.MIN_GAIN)/2;
+        double freq=20;
+        for(int i=0;i<=9;i++){
+            Mp3Buf.getInstance().getMp().getAudioEqualizer().getBands().add(new EqualizerBand(freq,freq/2,0));
+            freq *= 2;
+        }
         //ControleUI.getInstance().getPlayerController().setInfos(media.getMetadata());
         if(bandas!=null){ //Verifica se o array já foi inicializado
             for(int i=0;i<bandas.size();i++){// Carrega os dados no array
+                
                 mp.getAudioEqualizer().getBands().get(i).setGain(bandas.get(i).getValor());
             }
         }
