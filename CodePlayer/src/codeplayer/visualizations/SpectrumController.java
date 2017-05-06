@@ -32,7 +32,7 @@ public class SpectrumController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        if(Mp3Buf.getInstance().checkmp()!=null){
-            Mp3Buf.getInstance().getMp().setAudioSpectrumThreshold(-130);
+            Mp3Buf.getInstance().getMp().setAudioSpectrumThreshold(-80);
             Mp3Buf.getInstance().getMp().setAudioSpectrumNumBands(10);
             Mp3Buf.getInstance().getMp().setAudioSpectrumInterval(0.1);
             Mp3Buf.getInstance().getMp().setAudioSpectrumListener(new AudioSpectrumListener() {
@@ -42,7 +42,7 @@ public class SpectrumController implements Initializable {
                     series1 = new XYChart.Series();
                     //series1.getData().add(new XYChart.Data("austria", -25));
                     for(int i=0;i<floats.length;i++){
-                        series1.getData().add(new XYChart.Data("freq"+i, -(floats[i])));
+                        series1.getData().add(new XYChart.Data("freq"+i,(floats[i])+80));
                          System.out.println(floats[i]);
                     }
                     Spectrum.getData().add(series1);

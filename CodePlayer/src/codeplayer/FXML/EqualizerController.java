@@ -10,10 +10,15 @@ import codeplayer.Mp3Buf;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.media.EqualizerBand;
 import javafx.scene.text.Text;
@@ -68,6 +73,8 @@ public class EqualizerController implements Initializable {
    Text freq8;
    @FXML
    Text freq9;
+   @FXML
+   ChoiceBox Seletor;        
    double freqn=50;
    @FXML
    public void equalizar(){ //Metodo para setar a equalização para o máximo
@@ -119,7 +126,11 @@ public class EqualizerController implements Initializable {
         }
         atualizaSlider();//Atualiza a visualização dos sliders
         atualizaEqualizer();//Atualiza o equalizador
-    }     
+    }
+    @FXML
+    public void selecionarPerfil(){
+        System.out.println("Ola mundo!");
+    }
     /**
      * Initializes the controller class.
      */
@@ -169,6 +180,27 @@ public class EqualizerController implements Initializable {
             Sliders.get(i).setValue(Mp3Buf.getInstance().getBandas().get(i).getValor());
         } 
       }
+      //Preaparação do choicebox para seleção de perfis
+      ObservableList itemselect=FXCollections.observableArrayList();
+      itemselect.add("Zerar");
+      itemselect.add("Maximizar");
+      itemselect.add("Minimizar");
+      Seletor.setItems(itemselect);
+      Seletor.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+          @Override
+          public void changed(ObservableValue<? extends String> ov, String t, String t1) {
+            if(Seletor.getValue().toString().equals("Maximizar")){
+                 equalizar();
+             }
+             else if(Seletor.getValue().toString().equals("Minimizar")){
+                 equalizar2();
+             }
+             else if(Seletor.getValue().toString().equals("Zerar")){
+                 zeroAll();
+             }
+          }
+      });
     }    
     
 }
