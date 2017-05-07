@@ -18,10 +18,11 @@ public class TesteXML {
      */
     public static void main(String[] args) {
         BandaXML banda=new BandaXML(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-        BandastoXML teste=new BandastoXML("Batatateste");
+        BandastoXML teste=new BandastoXML("Batate32131231");
         System.out.println(teste.geraXMLString(banda));
         teste.geraXMLfile(banda);
-       System.out.println(teste.geraXMLString(teste.xmltoBanda(new File("Batatateste.xml"))));
+    //   System.out.println(teste.geraXMLString(teste.xmltoBanda(new File("Batatateste.xml"))));
+       teste.procuraArquivosXML();
     }
     
 }

@@ -17,8 +17,7 @@ import javafx.scene.media.MediaPlayer;
  */
 //Classe para manipulação do player MP3 também em singleton
 public final class Mp3Buf {
-
-
+   
    private static Mp3Buf INSTANCE = null;
 
    public static Mp3Buf getInstance(){

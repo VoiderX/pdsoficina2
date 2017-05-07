@@ -31,5 +31,10 @@
       <Text fx:id="freq9" layoutX="484.0" layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
       <ChoiceBox fx:id="Seletor" layoutX="17.0" layoutY="387.0" prefWidth="150.0" />
       <Label layoutX="23.0" layoutY="363.0" text="Perfil" />
+      <Button layoutX="187.0" layoutY="387.0" mnemonicParsing="false" onAction="#salvarPerfil" text="Salvar Perfil" />
+      <Button layoutX="272.0" layoutY="387.0" mnemonicParsing="false" onAction="#excluirPerfil" text="Excluir Perfil" />
+      <TextField fx:id="NomePerfil" layoutX="362.0" layoutY="387.0" />
+      <Text fx:id="HelperNomePerfil" layoutX="362.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="205.0" />
+      <Button fx:id="BotaoOk" layoutX="479.0" layoutY="412.0" mnemonicParsing="false" onAction="#confirmaSalvarPerfil" text="OK" />
    </children>
 </AnchorPane>

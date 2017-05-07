@@ -10,18 +10,18 @@ package XMLGenerator;
  * @author Gabriel
  */
  public  class BandaXML {
-        private float ganho0;
-        private float ganho1;
-        private float ganho2;
-        private float ganho3;
-        private float ganho4;
-        private float ganho5;
-        private float ganho6;
-        private float ganho7;
-        private float ganho8;
-        private float ganho9;
+        private double ganho0;
+        private double ganho1;
+        private double ganho2;
+        private double ganho3;
+        private double ganho4;
+        private double ganho5;
+        private double ganho6;
+        private double ganho7;
+        private double ganho8;
+        private double ganho9;
 
-        public BandaXML(float ganho0, float ganho1, float ganho2, float ganho3, float ganho4, float ganho5, float ganho6, float ganho7, float ganho8, float ganho9) {
+        public BandaXML(double ganho0, double ganho1, double ganho2, double ganho3, double ganho4, double ganho5, double ganho6, double ganho7, double ganho8, double ganho9) {
             this.ganho0 = ganho0;
             this.ganho1 = ganho1;
             this.ganho2 = ganho2;
@@ -34,43 +34,43 @@ package XMLGenerator;
             this.ganho9 = ganho9;
         }
 
-        public float getGanho0() {
+        public double getGanho0() {
             return ganho0;
         }
 
-        public float getGanho1() {
+        public double getGanho1() {
             return ganho1;
         }
 
-        public float getGanho2() {
+        public double getGanho2() {
             return ganho2;
         }
 
-        public float getGanho3() {
+        public double getGanho3() {
             return ganho3;
         }
 
-        public float getGanho4() {
+        public double getGanho4() {
             return ganho4;
         }
 
-        public float getGanho5() {
+        public double getGanho5() {
             return ganho5;
         }
 
-        public float getGanho6() {
+        public double getGanho6() {
             return ganho6;
         }
 
-        public float getGanho7() {
+        public double getGanho7() {
             return ganho7;
         }
 
-        public float getGanho8() {
+        public double getGanho8() {
             return ganho8;
         }
 
-        public float getGanho9() {
+        public double getGanho9() {
             return ganho9;
         }       
         

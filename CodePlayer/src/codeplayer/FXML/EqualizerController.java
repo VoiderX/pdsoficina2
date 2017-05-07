@@ -5,8 +5,11 @@
  */
 package codeplayer.FXML;
 
+import XMLGenerator.BandaXML;
+import XMLGenerator.BandastoXML;
 import codeplayer.Banda;
 import codeplayer.Mp3Buf;
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -15,11 +18,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.media.EqualizerBand;
 import javafx.scene.text.Text;
 
@@ -74,8 +78,57 @@ public class EqualizerController implements Initializable {
    @FXML
    Text freq9;
    @FXML
-   ChoiceBox Seletor;        
+   ChoiceBox<String> Seletor;        
    double freqn=50;
+   @FXML
+   TextField NomePerfil;
+   @FXML
+   Text HelperNomePerfil;
+   @FXML
+   Button BotaoOk;
+   @FXML
+   public void salvarPerfil(){
+       HelperNomePerfil.setText("Digite um nome para o perfil:");
+       NomePerfil.setVisible(true);
+       NomePerfil.setDisable(false);
+       HelperNomePerfil.setVisible(true);
+       BotaoOk.setVisible(true);
+       BotaoOk.setDisable(false);      
+   }
+   @FXML
+   public void confirmaSalvarPerfil(){
+       BandaXML temp;
+       //Colocar algo para tratar se começar com número
+        if(NomePerfil.getText().isEmpty()){
+           HelperNomePerfil.setText("O nome não pode ser vazio!");
+       }else{
+            HelperNomePerfil.setText("Perfil salvo com sucesso!");
+            temp=new BandaXML(Slider0.getValue(),
+                        Slider1.getValue(),
+                        Slider2.getValue(),
+                        Slider3.getValue(),
+                        Slider4.getValue(), 
+                        Slider5.getValue(), 
+                        Slider6.getValue(), 
+                        Slider7.getValue(), 
+                        Slider8.getValue(),
+                        Slider9.getValue());
+            BandastoXML btx=new BandastoXML(NomePerfil.getText());
+            try{
+            btx.geraXMLfile(temp);
+            carregaPerfis();
+            Seletor.setValue(NomePerfil.getText());
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+   }
+   @FXML
+   public void excluirPerfil(){
+       System.out.println("ExcluirPerfil");
+       //Falta Fazer
+   }
    @FXML
    public void equalizar(){ //Metodo para setar a equalização para o máximo
         for(int i=0;i<Mp3Buf.getInstance().getBandas().size();i++){
@@ -96,7 +149,6 @@ public class EqualizerController implements Initializable {
     public void changeSlider(Event e){ //Metoodo para identificar caso o Slider seja alterado
         for(int i=0;i<Sliders.size();i++){
             if(e.getSource()==Sliders.get(i)){
-                System.out.println("Slider "+i+": "+Sliders.get(i).getValue());
                 //Seta o valor do slider no array
                 Mp3Buf.getInstance().getBandas().get(i).setValor(Sliders.get(i).getValue());                
             }
@@ -127,9 +179,58 @@ public class EqualizerController implements Initializable {
         atualizaSlider();//Atualiza a visualização dos sliders
         atualizaEqualizer();//Atualiza o equalizador
     }
-    @FXML
-    public void selecionarPerfil(){
-        System.out.println("Ola mundo!");
+    public void carregaPerfis(){ //Metodo para preparar o choicebox para seleção de perfis
+      ObservableList<String> itemselect=FXCollections.observableArrayList();
+      itemselect.add("Zerar");
+      itemselect.add("Maximizar");
+      itemselect.add("Minimizar");
+      ArrayList<String> nomesperfis=BandastoXML.procuraArquivosXML();
+
+      for(int i=0;i<nomesperfis.size();i++){
+          StringBuilder aux=new StringBuilder();
+          aux.insert(0, nomesperfis.get(i));
+          aux.replace(0, 6, "");
+          aux.reverse();
+          aux.replace(0, 4, "");
+          aux.reverse();
+          itemselect.add(aux.toString());
+      }
+      Seletor.setItems((ObservableList<String>)itemselect);
+      //Detectando alterações de estado no ChoiceBox
+     
+      Seletor.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+          @Override
+          public void changed(ObservableValue<? extends String> ov, String t, String t1) {
+             if(Seletor.getValue()==null){
+                 //Faz nada
+             }              
+             else if(Seletor.getValue().equals("Maximizar")){ //Estados Hardcoded
+                 equalizar();
+             }
+             else if(Seletor.getValue().equals("Minimizar")){
+                 equalizar2();
+             }
+             else if(Seletor.getValue().equals("Zerar")){
+                 zeroAll();
+             }
+             else{  //Obtendo valores do XML
+              BandaXML bxml= new BandastoXML(Seletor.getValue()).xmltoBanda(new File("PerfEQ"+Seletor.getValue()+".xml"));
+              Mp3Buf.getInstance().getBandas().get(0).setValor(bxml.getGanho0());
+              Mp3Buf.getInstance().getBandas().get(1).setValor(bxml.getGanho1());
+              Mp3Buf.getInstance().getBandas().get(2).setValor(bxml.getGanho2());
+              Mp3Buf.getInstance().getBandas().get(3).setValor(bxml.getGanho3());
+              Mp3Buf.getInstance().getBandas().get(4).setValor(bxml.getGanho4());
+              Mp3Buf.getInstance().getBandas().get(5).setValor(bxml.getGanho5());
+              Mp3Buf.getInstance().getBandas().get(6).setValor(bxml.getGanho6());
+              Mp3Buf.getInstance().getBandas().get(7).setValor(bxml.getGanho7());
+              Mp3Buf.getInstance().getBandas().get(8).setValor(bxml.getGanho8());
+              Mp3Buf.getInstance().getBandas().get(9).setValor(bxml.getGanho9());              
+              atualizaSlider(); //Metodo para atualizar a visualização dos sliders
+              atualizaEqualizer();//Metodo para atualizar o equalizador do Media Player                
+             }
+          }
+      });
     }
     /**
      * Initializes the controller class.
@@ -181,26 +282,13 @@ public class EqualizerController implements Initializable {
         } 
       }
       //Preaparação do choicebox para seleção de perfis
-      ObservableList itemselect=FXCollections.observableArrayList();
-      itemselect.add("Zerar");
-      itemselect.add("Maximizar");
-      itemselect.add("Minimizar");
-      Seletor.setItems(itemselect);
-      Seletor.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-
-          @Override
-          public void changed(ObservableValue<? extends String> ov, String t, String t1) {
-            if(Seletor.getValue().toString().equals("Maximizar")){
-                 equalizar();
-             }
-             else if(Seletor.getValue().toString().equals("Minimizar")){
-                 equalizar2();
-             }
-             else if(Seletor.getValue().toString().equals("Zerar")){
-                 zeroAll();
-             }
-          }
-      });
+      carregaPerfis();      
+     //Preparação do TextField
+      NomePerfil.setDisable(true);
+      NomePerfil.setVisible(false);      
+      HelperNomePerfil.setVisible(false);
+      BotaoOk.setDisable(true);
+      BotaoOk.setVisible(false);
     }    
     
 }

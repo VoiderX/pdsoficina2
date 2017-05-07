@@ -25,7 +25,7 @@ import javafx.scene.media.AudioSpectrumListener;
 public class SpectrumController implements Initializable {
     @FXML
     BarChart<String,Number> Spectrum;
-    XYChart.Series series1;
+    XYChart.Series<String,Number> series1;
     /**
      * Initializes the controller class.
      */
@@ -39,13 +39,13 @@ public class SpectrumController implements Initializable {
                 @Override
                 public void spectrumDataUpdate(double d, double d1, float[] floats, float[] floats1) {
                     Spectrum.getData().clear();
-                    series1 = new XYChart.Series();
+                    series1 = new XYChart.Series<String,Number>();
                     //series1.getData().add(new XYChart.Data("austria", -25));
                     for(int i=0;i<floats.length;i++){
-                        series1.getData().add(new XYChart.Data("freq"+i,(floats[i])+80));
+                        series1.getData().add(new XYChart.Data<String,Number>("freq"+i,(floats[i])+80));
                          System.out.println(floats[i]);
                     }
-                    Spectrum.getData().add(series1);
+                    Spectrum.getData().add((XYChart.Series<String,Number>)series1);
                 }
             });
         }
