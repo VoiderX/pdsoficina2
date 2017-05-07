@@ -6,7 +6,6 @@
 package codeplayer.visualizations;
 
 import codeplayer.Mp3Buf;
-import com.sun.media.jfxmedia.events.AudioSpectrumEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;

@@ -8,11 +8,8 @@ package codeplayer.visualizations;
 import codeplayer.Mp3Buf;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Side;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.media.AudioSpectrumListener;
@@ -43,7 +40,6 @@ public class SpectrumController implements Initializable {
                     //series1.getData().add(new XYChart.Data("austria", -25));
                     for(int i=0;i<floats.length;i++){
                         series1.getData().add(new XYChart.Data<String,Number>("freq"+i,(floats[i])+80));
-                         System.out.println(floats[i]);
                     }
                     Spectrum.getData().add((XYChart.Series<String,Number>)series1);
                 }

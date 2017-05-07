@@ -98,11 +98,25 @@ public class EqualizerController implements Initializable {
    @FXML
    public void confirmaSalvarPerfil(){
        BandaXML temp;
-       //Colocar algo para tratar se começar com número
+       //Deve-se verificar se a strig começa com um número
+       StringBuilder builderaux=new StringBuilder();
+       builderaux.insert(0, NomePerfil.getText());
+       String aux=builderaux.substring(0,1);
+       System.out.println(aux);
+       boolean auxverif;
+       try{
+           Integer.parseInt(aux);
+           auxverif=true;
+       }
+       catch(Exception e){
+           auxverif=false;
+       }
         if(NomePerfil.getText().isEmpty()){
            HelperNomePerfil.setText("O nome não pode ser vazio!");
+        }
+       else if(auxverif){
+           HelperNomePerfil.setText("O nome não pode começar com número");        
        }else{
-            HelperNomePerfil.setText("Perfil salvo com sucesso!");
             temp=new BandaXML(Slider0.getValue(),
                         Slider1.getValue(),
                         Slider2.getValue(),
@@ -118,6 +132,12 @@ public class EqualizerController implements Initializable {
             btx.geraXMLfile(temp);
             carregaPerfis();
             Seletor.setValue(NomePerfil.getText());
+            HelperNomePerfil.setText("Perfil salvo com sucesso!");
+            NomePerfil.setDisable(true);
+            NomePerfil.clear();
+            NomePerfil.setVisible(false);
+            BotaoOk.setDisable(true);
+            BotaoOk.setVisible(false);
             }
             catch(Exception e){
                 e.printStackTrace();
@@ -127,7 +147,14 @@ public class EqualizerController implements Initializable {
    @FXML
    public void excluirPerfil(){
        System.out.println("ExcluirPerfil");
-       //Falta Fazer
+       try{
+        new File("PerfEQ"+Seletor.getValue()+".xml").delete();
+        carregaPerfis();
+        Seletor.setValue("Zerar");
+       }
+       catch(Exception e){
+           e.printStackTrace();
+       }
    }
    @FXML
    public void equalizar(){ //Metodo para setar a equalização para o máximo
@@ -181,12 +208,12 @@ public class EqualizerController implements Initializable {
     }
     public void carregaPerfis(){ //Metodo para preparar o choicebox para seleção de perfis
       ObservableList<String> itemselect=FXCollections.observableArrayList();
-      itemselect.add("Zerar");
+      itemselect.add("Zerar"); //Valores hardcoded
       itemselect.add("Maximizar");
       itemselect.add("Minimizar");
       ArrayList<String> nomesperfis=BandastoXML.procuraArquivosXML();
 
-      for(int i=0;i<nomesperfis.size();i++){
+      for(int i=0;i<nomesperfis.size();i++){ //Limpa o nome do arquivo e deixa só o nome do pefil
           StringBuilder aux=new StringBuilder();
           aux.insert(0, nomesperfis.get(i));
           aux.replace(0, 6, "");
@@ -199,7 +226,7 @@ public class EqualizerController implements Initializable {
       //Detectando alterações de estado no ChoiceBox
      
       Seletor.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-
+          //Listener identifica mudanças na seleção
           @Override
           public void changed(ObservableValue<? extends String> ov, String t, String t1) {
              if(Seletor.getValue()==null){
@@ -214,7 +241,7 @@ public class EqualizerController implements Initializable {
              else if(Seletor.getValue().equals("Zerar")){
                  zeroAll();
              }
-             else{  //Obtendo valores do XML
+             else{  //Obtendo valores do XML e passando para o Array de bandas na classe da Mp3
               BandaXML bxml= new BandastoXML(Seletor.getValue()).xmltoBanda(new File("PerfEQ"+Seletor.getValue()+".xml"));
               Mp3Buf.getInstance().getBandas().get(0).setValor(bxml.getGanho0());
               Mp3Buf.getInstance().getBandas().get(1).setValor(bxml.getGanho1());
@@ -269,7 +296,7 @@ public class EqualizerController implements Initializable {
       Freqs.add(freq9);
       if(Mp3Buf.getInstance().getBandas()==null){
         Mp3Buf.getInstance().setBandas(new ArrayList<Banda>());
-        for(int i=0;i<Sliders.size();i++){//Inicia todos os valores nos sliders com os valores do 
+        for(int i=0;i<Sliders.size();i++){//Inicia todos os valores nos sliders com os valores do array de bandas
             Banda aux=new Banda();
             aux.setValor(0);
             Mp3Buf.getInstance().getBandas().add(aux);
