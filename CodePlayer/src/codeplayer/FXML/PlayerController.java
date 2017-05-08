@@ -77,11 +77,17 @@ public class PlayerController implements Initializable {
     //Metodo play, inicia a reprodução e a busca dos metadados
     @FXML
      public void play(){
-         if(Mp3Buf.getInstance().getMp()==null){
-         }else{
-             //Recepção de metadadados atraves da Thread pois as informações chegam de forma Assincrona
-            Mp3Buf.getInstance().getMp().play();
-         }
+        try{
+            if(Mp3Buf.getInstance().getMp()==null){
+            }else{
+                //Recepção de metadadados atraves da Thread pois as informações chegam de forma Assincrona
+               Mp3Buf.getInstance().getMp().play();
+               if(ControleUI.getInstance().getFourthStage().isShowing()){
+                   ControleUI.getInstance().mostraSpectrum();
+               }
+           }
+        }catch(Exception e){
+        }
      }
      //Metodo para dar stop na musica
      @FXML
