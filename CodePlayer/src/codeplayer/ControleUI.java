@@ -50,19 +50,29 @@ public final class ControleUI{
    private static Stage secondStage;
    private static Stage thirdStage;
    private static Stage fourthStage;
+
+    
    
    public PlayerController playControl; //Instanciação da classe controller do player para mudanças de interface
    //Em tempo real
    
-   public PlayerController getPlayerController(){ //Metodo get permitir que o controller seja modificado em
+    public PlayerController getPlayerController(){ //Metodo get permitir que o controller seja modificado em
        //outras classes
        return playControl;
-   }
+    }
    
-   public Stage getSecondStage(){ //Metodo para permitir a chama de uma segunda janela por outros stages
+    public Stage getSecondStage(){ //Metodo para permitir a chama de uma segunda janela por outros stages
        return secondStage;
-   }
+    }
+   
+    public Stage getThirdStage() {
+        return thirdStage;
+    }
 
+    public Stage getFourthStage() {
+        return fourthStage;
+    }
+   
 
    private void initUI(){ //Metódo inicializador
       mainStage.centerOnScreen();
@@ -132,6 +142,6 @@ public final class ControleUI{
     }
     fourthStage.setScene(spectrumScene);
     fourthStage.setTitle(("Visualizador de Espectro"));
-    fourthStage.show();       
+    fourthStage.show();
    }
 }

@@ -5,14 +5,17 @@
  */
 package codeplayer.visualizations;
 
+import codeplayer.ControleUI;
 import codeplayer.Mp3Buf;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioSpectrumListener;
+import javafx.scene.paint.Color;
 
 /**
  * FXML Controller class
@@ -21,31 +24,65 @@ import javafx.scene.media.AudioSpectrumListener;
  */
 public class SpectrumController implements Initializable {
     @FXML
-    BarChart<String,Number> Spectrum;
-    XYChart.Series<String,Number> series1;
+    Canvas spec;
+    @FXML
+    Pane pane;
+    
+    private final int spaceX = 50,spaceY = 50,bands = 80,strokeW = 2,tresh=-80,treshfx=-tresh;
+    private final double inter=0.02;
     /**
      * Initializes the controller class.
      */
+    
+    public void staticElements(GraphicsContext gc){
+        //linha vertical
+        gc.strokeLine(spaceX, 0, spaceX, (spec.getHeight()-spaceY));
+        //linha horizontal
+        gc.strokeLine(spaceX,(spec.getHeight()-spaceY),(spec.getWidth()),(spec.getHeight()-spaceY));
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       if(Mp3Buf.getInstance().checkmp()!=null){
-            Mp3Buf.getInstance().getMp().setAudioSpectrumThreshold(-80);
-            Mp3Buf.getInstance().getMp().setAudioSpectrumNumBands(10);
-            Mp3Buf.getInstance().getMp().setAudioSpectrumInterval(0.1);
+        GraphicsContext gc = spec.getGraphicsContext2D();
+        gc.setFill(Color.ROYALBLUE);
+        gc.setStroke(Color.BLACK);
+        gc.setLineWidth(strokeW);
+        pane.widthProperty().addListener(event -> teste());
+        pane.heightProperty().addListener(event -> teste());
+        start(gc);
+    }
+
+    private void teste(){
+        System.out.println("width: "+pane.getWidth());
+        System.out.println("height: "+pane.getHeight());
+    }
+    
+    public double prop(float mag){
+        return ((mag/(treshfx))*(spec.getHeight()-spaceY));
+    }
+    
+    private void start(GraphicsContext gc){
+        staticElements(gc);
+        
+        if(Mp3Buf.getInstance().checkmp()!=null){
+            Mp3Buf.getInstance().getMp().setAudioSpectrumThreshold(tresh);
+            Mp3Buf.getInstance().getMp().setAudioSpectrumNumBands(bands);
+            Mp3Buf.getInstance().getMp().setAudioSpectrumInterval(inter);
             Mp3Buf.getInstance().getMp().setAudioSpectrumListener(new AudioSpectrumListener() {
                 @Override
-                public void spectrumDataUpdate(double d, double d1, float[] floats, float[] floats1) {
-                    Spectrum.getData().clear();
-                    series1 = new XYChart.Series<String,Number>();
-                    //series1.getData().add(new XYChart.Data("austria", -25));
-                    for(int i=0;i<floats.length;i++){
-                        series1.getData().add(new XYChart.Data<String,Number>("freq"+i,(floats[i])+80));
+                public void spectrumDataUpdate(double d, double d1, float[] mag, float[] phase) {
+                    int displaceX=spaceX+strokeW;
+                    gc.clearRect(0, 0, spec.getWidth(), spec.getHeight());
+                    staticElements(gc);
+                    for(int i=0;i<bands;i++){
+                        gc.fillRect((displaceX),((spec.getHeight()-strokeW)-(prop(mag[i]+treshfx))),(spec.getWidth()/bands),(prop(mag[i]+treshfx)-spaceY));
+                        displaceX+=(spec.getWidth()-spaceX-strokeW)/bands;
+                        
                     }
-                    Spectrum.getData().add((XYChart.Series<String,Number>)series1);
                 }
             });
         }
-        Spectrum.setLegendVisible(false);
-    }    
+        
+    }
     
 }
