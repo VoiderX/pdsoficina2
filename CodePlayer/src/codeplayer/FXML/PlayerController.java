@@ -67,11 +67,15 @@ public class PlayerController implements Initializable {
     //Metodo para preparação da musica
     //Caso esteja tocando e uma nova musica seja carregada encerra o MediaPlayer atual
     public void prepararMusica(){
-        if(Mp3Buf.getInstance().getMp()!=null && Mp3Buf.getInstance().getPathMusic()!=null){
-            Mp3Buf.getInstance().getMp().dispose();
-            Mp3Buf.getInstance().setMp(null);
-            play();
-            changeSliderVol();
+        try{
+            if(Mp3Buf.getInstance().getMp()!=null && Mp3Buf.getInstance().getPathMusic()!=null){
+                Mp3Buf.getInstance().getMp().dispose();
+                Mp3Buf.getInstance().setMp(null);
+                play();
+                changeSliderVol();
+            }
+        }catch(Exception e){
+            // NOTHING TO DO HERE
         }
     }
     //Metodo play, inicia a reprodução e a busca dos metadados
@@ -92,16 +96,24 @@ public class PlayerController implements Initializable {
      //Metodo para dar stop na musica
      @FXML
      public void stop(){
-        if(Mp3Buf.getInstance().getMp()!=null){
-            Mp3Buf.getInstance().getMp().stop();
+        try{    
+             if(Mp3Buf.getInstance().getMp()!=null){
+                Mp3Buf.getInstance().getMp().stop();
+            }
+        }catch(Exception e){
+            // NOTHING TO DO HERE
         }
      }
      //Metodo para dar pause na musica
      @FXML
      public void pause(){
+        try{
          if(Mp3Buf.getInstance().getMp()!=null){
              Mp3Buf.getInstance().getMp().pause();
          }
+        }catch(Exception e){
+            // NOTHING DO TO HERE
+        }
      }
      //Metodo para chamar a proxima musica
      @FXML

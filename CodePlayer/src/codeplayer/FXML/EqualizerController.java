@@ -95,55 +95,59 @@ public class EqualizerController implements Initializable {
        BotaoOk.setVisible(true);
        BotaoOk.setDisable(false);      
    }
+   
    @FXML
    public void confirmaSalvarPerfil(){
        BandaXML temp;
-       //Deve-se verificar se a strig começa com um número
-       StringBuilder builderaux=new StringBuilder();
-       builderaux.insert(0, NomePerfil.getText());
-       String aux=builderaux.substring(0,1);
-       System.out.println(aux);
-       boolean auxverif;
-       try{
-           Integer.parseInt(aux);
-           auxverif=true;
-       }
-       catch(Exception e){
-           auxverif=false;
-       }
+       
         if(NomePerfil.getText().isEmpty()){
            HelperNomePerfil.setText("O nome não pode ser vazio!");
-        }
-       else if(auxverif){
-           HelperNomePerfil.setText("O nome não pode começar com número");        
-       }else{
-            temp=new BandaXML(Slider0.getValue(),
-                        Slider1.getValue(),
-                        Slider2.getValue(),
-                        Slider3.getValue(),
-                        Slider4.getValue(), 
-                        Slider5.getValue(), 
-                        Slider6.getValue(), 
-                        Slider7.getValue(), 
-                        Slider8.getValue(),
-                        Slider9.getValue());
-            BandastoXML btx=new BandastoXML(NomePerfil.getText());
+        }else{
+            //Deve-se verificar se a strig começa com um número
+            StringBuilder builderaux=new StringBuilder();
+            builderaux.insert(0, NomePerfil.getText());
+            String aux=builderaux.substring(0,1);
+            System.out.println(aux);
+            boolean auxverif;
             try{
-            btx.geraXMLfile(temp);
-            carregaPerfis();
-            Seletor.setValue(NomePerfil.getText());
-            HelperNomePerfil.setText("Perfil salvo com sucesso!");
-            NomePerfil.setDisable(true);
-            NomePerfil.clear();
-            NomePerfil.setVisible(false);
-            BotaoOk.setDisable(true);
-            BotaoOk.setVisible(false);
-            }
+                Integer.parseInt(aux);
+                auxverif=true;
+             }
             catch(Exception e){
-                e.printStackTrace();
+                auxverif=false;
+            }
+            if(auxverif){
+                HelperNomePerfil.setText("O nome não pode começar com número");        
+            }else{
+                 temp=new BandaXML(Slider0.getValue(),
+                             Slider1.getValue(),
+                             Slider2.getValue(),
+                             Slider3.getValue(),
+                             Slider4.getValue(), 
+                             Slider5.getValue(), 
+                             Slider6.getValue(), 
+                             Slider7.getValue(), 
+                             Slider8.getValue(),
+                             Slider9.getValue());
+                 BandastoXML btx=new BandastoXML(NomePerfil.getText());
+                 try{
+                    btx.geraXMLfile(temp);
+                    carregaPerfis();
+                    Seletor.setValue(NomePerfil.getText());
+                    HelperNomePerfil.setText("Perfil salvo com sucesso!");
+                    NomePerfil.setDisable(true);
+                    NomePerfil.clear();
+                    NomePerfil.setVisible(false);
+                    BotaoOk.setDisable(true);
+                    BotaoOk.setVisible(false);
+                    }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
             }
         }
    }
+   
    @FXML
    public void excluirPerfil(){
        System.out.println("ExcluirPerfil");
