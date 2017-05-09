@@ -41,20 +41,21 @@ public final class ControleUI{
    private static Parent osciloscopeFXML;
    private static Parent spectrumFXML;
    private static Parent infoFXML;
+   private static Parent spectrumcfgFXML;
 
    private static Scene playerScene; //Scenes (Interfaces já construídas)
    private static Scene equalizerScene;
    private static Scene osciloscopeScene;
    private static Scene spectrumScene;
    private static Scene infoScene;
+   private static Scene spectrumcfgScene;
    
    private static Stage mainStage; //Stages: Janelas Abertas
    private static Stage secondStage;
    private static Stage thirdStage;
    private static Stage fourthStage;
    private static Stage fifthStage;
-
-    
+   private static Stage sixthStage;    
    
    public PlayerController playControl; //Instanciação da classe controller do player para mudanças de interface
    //Em tempo real
@@ -84,7 +85,7 @@ public final class ControleUI{
       thirdStage= new Stage();
       fourthStage= new Stage();
       fifthStage=new Stage();
-      
+      sixthStage= new Stage();
       mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {//Metodo para finalizar tudo ao apertar o "x"
             @Override
             public void handle(WindowEvent t) {
@@ -161,5 +162,17 @@ public final class ControleUI{
     catch(Exception e){
            e.printStackTrace();
     }
-   }   
+   }
+   public void mostraSpectrumCfg(){
+    try{
+        spectrumcfgFXML=FXMLLoader.load(getClass().getResource("misc/Infos.fxml"));
+        spectrumcfgScene=new Scene(spectrumcfgFXML);
+        sixthStage.setScene(spectrumcfgScene);
+        sixthStage.setTitle(("Informações sobre o programa"));
+        sixthStage.show();
+    }
+    catch(Exception e){
+           e.printStackTrace();
+    }
+   }      
 }

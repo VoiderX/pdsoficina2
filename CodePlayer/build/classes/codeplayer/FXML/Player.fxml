@@ -50,7 +50,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Configurações">
               <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" onAction="#mostraSpectrumCfg" text="Configurações do visualizador de espectro" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Ajuda">
