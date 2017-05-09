@@ -238,12 +238,15 @@ public class EqualizerController implements Initializable {
              }              
              else if(Seletor.getValue().equals("Maximizar")){ //Estados Hardcoded
                  equalizar();
+                 codeplayer.ExchangeInfos.getInstance().setPerfilEq("Maximizar");
              }
              else if(Seletor.getValue().equals("Minimizar")){
                  equalizar2();
+                 codeplayer.ExchangeInfos.getInstance().setPerfilEq("Minimizar");
              }
              else if(Seletor.getValue().equals("Zerar")){
                  zeroAll();
+                 codeplayer.ExchangeInfos.getInstance().setPerfilEq("Zerar");
              }
              else{  //Obtendo valores do XML e passando para o Array de bandas na classe da Mp3
               BandaXML bxml= new BandastoXML(Seletor.getValue()).xmltoBanda(new File("PerfEQ"+Seletor.getValue()+".xml"));
@@ -258,7 +261,8 @@ public class EqualizerController implements Initializable {
               Mp3Buf.getInstance().getBandas().get(8).setValor(bxml.getGanho8());
               Mp3Buf.getInstance().getBandas().get(9).setValor(bxml.getGanho9());              
               atualizaSlider(); //Metodo para atualizar a visualização dos sliders
-              atualizaEqualizer();//Metodo para atualizar o equalizador do Media Player                
+              atualizaEqualizer();//Metodo para atualizar o equalizador do Media Player
+              codeplayer.ExchangeInfos.getInstance().setPerfilEq(Seletor.getValue());
              }
           }
       });
@@ -320,7 +324,7 @@ public class EqualizerController implements Initializable {
       HelperNomePerfil.setVisible(false);
       BotaoOk.setDisable(true);
       BotaoOk.setVisible(false);
-      Seletor.setValue("Zerar");
+      Seletor.setValue(codeplayer.ExchangeInfos.getInstance().getPerfilEq());
     }    
     
 }

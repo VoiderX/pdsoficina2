@@ -162,6 +162,7 @@ public class SpecCfgController implements Initializable {
                     setBack();
                     setLabel();
                     setBar();
+                    codeplayer.ExchangeInfos.getInstance().setSpecCfg("Default");
               }else{
                 SpectrumCfg aux=
                         new SpectrumXML(Perfil.getValue()).xmltoSpec(new File("PerfSpec"+Perfil.getValue()+".xml"));
@@ -176,6 +177,7 @@ public class SpecCfgController implements Initializable {
                 BarColor.setValue(Color.web(aux.getBarColor()));
                 setBar();
                 NomePerfil.setText(Perfil.getValue());
+                codeplayer.ExchangeInfos.getInstance().setSpecCfg(Perfil.getValue());
               }
               }
           }
@@ -194,7 +196,7 @@ public class SpecCfgController implements Initializable {
        BarColor.setValue(Color.web("4169E1"));
        Intervalo.setValue(1/0.02);
        Numbands.setValue(64);
-       Perfil.setValue("Default");
+       Perfil.setValue(codeplayer.ExchangeInfos.getInstance().getSpecCfg());
     }    
     
 }
