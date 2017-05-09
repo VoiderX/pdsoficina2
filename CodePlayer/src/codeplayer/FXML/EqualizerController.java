@@ -107,7 +107,6 @@ public class EqualizerController implements Initializable {
             StringBuilder builderaux=new StringBuilder();
             builderaux.insert(0, NomePerfil.getText());
             String aux=builderaux.substring(0,1);
-            System.out.println(aux);
             boolean auxverif;
             try{
                 Integer.parseInt(aux);

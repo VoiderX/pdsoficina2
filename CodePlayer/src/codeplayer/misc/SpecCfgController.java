@@ -26,6 +26,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
@@ -49,11 +50,126 @@ public class SpecCfgController implements Initializable {
     @FXML
     private TextField NomePerfil;
     @FXML
+    private ChoiceBox<String> TipoCor;
+    @FXML
+    private ChoiceBox<String> TipoDesenho;
+    @FXML
+    private ChoiceBox<Integer> NumeroGradiente;
+    @FXML
+    private ColorPicker CorGrad2;
+    @FXML
+    private ColorPicker CorGrad3;
+    @FXML
+    private Pane CorGrad;
+    @FXML
+    public void setTipoCor(){
+        int aux=1;
+        if(TipoCor.getValue()==null){
+            //
+        }
+        else if(TipoCor.getValue().equals("Solid")){
+            CorGrad.setDisable(true);
+            NumeroGradiente.setDisable(true);
+            aux=0;
+
+        }
+        else if(TipoCor.getValue().equals("Gradiente")){
+            CorGrad.setDisable(false);
+            NumeroGradiente.setDisable(false);
+            aux=1;
+        }
+        if(ControleUI.getInstance().getSpectrumControl()!=null){
+            try{
+                ControleUI.getInstance().getSpectrumControl().setTypeFill(aux);
+                ControleUI.getInstance().getSpectrumControl().start(
+                    ControleUI.getInstance().getSpectrumControl().getGc());
+            }
+            catch(Exception e){
+               //vazio
+            }
+        }
+    }
+    @FXML
+    public void setNumGrad(){
+        int aux=3;
+        if(NumeroGradiente.getValue()==null){    
+            //
+        }
+        else if(NumeroGradiente.getValue()==2){
+            aux=2;
+            CorGrad3.setDisable(true);
+        }
+        else if(NumeroGradiente.getValue()==3){
+            aux=3;
+            CorGrad3.setDisable(false);
+        }
+        if(ControleUI.getInstance().getSpectrumControl()!=null){
+            try{
+                ControleUI.getInstance().getSpectrumControl().setNumC(aux);
+                ControleUI.getInstance().getSpectrumControl().start(
+                    ControleUI.getInstance().getSpectrumControl().getGc());
+            }
+            catch(Exception e){
+                
+            }
+        }
+    }
+    @FXML
+    public void setTipoDes(){
+        int aux=0;
+        if(TipoDesenho.getValue()==null){
+            //
+        }
+        else if(TipoDesenho.getValue().equals("Barras")){
+            aux=0;
+        }
+        else if(TipoDesenho.getValue().equals("Suave")){
+            aux=1;
+        }
+        if(ControleUI.getInstance().getSpectrumControl()!=null){
+            try{
+              ControleUI.getInstance().getSpectrumControl().setTypeDraw(aux);
+               ControleUI.getInstance().getSpectrumControl().start(
+                ControleUI.getInstance().getSpectrumControl().getGc());
+            }
+            catch(Exception e){
+               //vazio
+            }
+        }
+    }
+    @FXML
+    public void setGrad2(){
+         if(ControleUI.getInstance().getSpectrumControl()!=null){
+            try{
+                ControleUI.getInstance().getSpectrumControl().setBlockC2(CorGrad2.getValue().toString());
+                 ControleUI.getInstance().getSpectrumControl().start(
+                 ControleUI.getInstance().getSpectrumControl().getGc());
+            }
+            catch(Exception e){
+               //vazio
+            }
+        }
+    }
+    @FXML
+    public void setGrad3(){
+        if(ControleUI.getInstance().getSpectrumControl()!=null){
+            try{
+                ControleUI.getInstance().getSpectrumControl().setBlockC3(CorGrad3.getValue().toString());
+                 ControleUI.getInstance().getSpectrumControl().start(
+                 ControleUI.getInstance().getSpectrumControl().getGc());
+            }
+            catch(Exception e){
+               //vazio
+            }
+        }        
+    }
+    @FXML
     public void setBack(){
-        System.out.println(BackgroundColor.getValue().toString());
             if(ControleUI.getInstance().getSpectrumControl()!=null){
             try{
                 ControleUI.getInstance().getSpectrumControl().setBackgroundC(BackgroundColor.getValue().toString());
+                 ControleUI.getInstance().getSpectrumControl().start(
+                 ControleUI.getInstance().getSpectrumControl().getGc());
             }
             catch(Exception e){
                //vazio
@@ -63,9 +179,10 @@ public class SpecCfgController implements Initializable {
     @FXML
     public void setLabel(){
         if(ControleUI.getInstance().getSpectrumControl()!=null){
-            System.out.println(LabelColor.getValue().toString());
              try{
               ControleUI.getInstance().getSpectrumControl().setLabelC(LabelColor.getValue().toString());
+              ControleUI.getInstance().getSpectrumControl().start(
+                ControleUI.getInstance().getSpectrumControl().getGc());
              }
              catch(Exception e){
                  //vazio
@@ -75,9 +192,9 @@ public class SpecCfgController implements Initializable {
     @FXML
     public void setBar(){
         if(ControleUI.getInstance().getSpectrumControl()!=null){
-            System.out.println(BarColor.getValue().toString());
             try{
-               ControleUI.getInstance().getSpectrumControl().setBlockC(BarColor.getValue().toString());  
+               ControleUI.getInstance().getSpectrumControl().setBlockC(BarColor.getValue().toString()); 
+               ControleUI.getInstance().getSpectrumControl().setBlockC1(BarColor.getValue().toString());
             }
             catch(Exception e){
                 //Vazio
@@ -87,7 +204,6 @@ public class SpecCfgController implements Initializable {
     @FXML
     public void setNumBands(){
         if(ControleUI.getInstance().getSpectrumControl()!=null){
-            System.out.println((int)Numbands.getValue());
             ControleUI.getInstance().getSpectrumControl().setBands((int)Numbands.getValue());
             try{
             ControleUI.getInstance().getSpectrumControl().start(
@@ -101,7 +217,6 @@ public class SpecCfgController implements Initializable {
     @FXML
     public void setIntervalo(){
         if(ControleUI.getInstance().getSpectrumControl()!=null){
-            System.out.println(Intervalo.getValue());
             ControleUI.getInstance().getSpectrumControl().setInter(1/Intervalo.getValue());
             try{
                 ControleUI.getInstance().getSpectrumControl().start(
@@ -141,7 +256,6 @@ public class SpecCfgController implements Initializable {
           aux.replace(0, 4, "");
           aux.reverse();
           itemselect.add(aux.toString());
-          System.out.println(aux);
       }
       Perfil.setItems((ObservableList<String>)itemselect);
       //Detectando alterações de estado no ChoiceBox
@@ -196,7 +310,33 @@ public class SpecCfgController implements Initializable {
        BarColor.setValue(Color.web("4169E1"));
        Intervalo.setValue(1/0.02);
        Numbands.setValue(64);
+       
+       ObservableList<String> TipoCor= FXCollections.observableArrayList();
+       TipoCor.add("Solid");
+       TipoCor.add("Gradiente");
+       this.TipoCor.setItems(TipoCor);
+       this.TipoCor.setValue("Gradiente");
+       
+       ObservableList NumGrad=FXCollections.observableArrayList();
+       NumGrad.add(2);
+       NumGrad.add(3);
+       NumeroGradiente.setItems(NumGrad);
+       NumeroGradiente.setValue(3);
+       
+       ObservableList TipoDesenho=FXCollections.observableArrayList();
+       TipoDesenho.add("Barras");
+       TipoDesenho.add("Suave");
+       this.TipoDesenho.setItems(TipoDesenho);
+       this.TipoDesenho.setValue("Suave");
+       
        Perfil.setValue(codeplayer.ExchangeInfos.getInstance().getSpecCfg());
+       
+       this.TipoCor.valueProperty().addListener(listener->setTipoCor());
+       this.TipoDesenho.valueProperty().addListener(lister->setTipoDes());
+       this.NumeroGradiente.valueProperty().addListener(listener->setNumGrad());
+       this.CorGrad2.valueProperty().addListener(listener->setGrad2());
+       this.CorGrad3.valueProperty().addListener(listener->setGrad3());
+       
     }    
     
 }

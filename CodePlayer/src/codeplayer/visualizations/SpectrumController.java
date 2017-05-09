@@ -93,6 +93,55 @@ public class SpectrumController implements Initializable {
     public void setBlockC(String blockC) {
         this.blockC = blockC;
     }
+
+    public int getTypeFill() {
+        return typeFill;
+    }
+
+    public void setTypeFill(int typeFill) {
+        this.typeFill = typeFill;
+    }
+
+    public int getNumC() {
+        return numC;
+    }
+
+    public void setNumC(int numC) {
+        this.numC = numC;
+    }
+
+    public int getTypeDraw() {
+        return typeDraw;
+    }
+
+    public void setTypeDraw(int typeDraw) {
+        this.typeDraw = typeDraw;
+    }
+
+    public String getBlockC1() {
+        return blockC1;
+    }
+
+    public void setBlockC1(String blockC1) {
+        this.blockC1 = blockC1;
+    }
+
+    public String getBlockC2() {
+        return blockC2;
+    }
+
+    public void setBlockC2(String blockC2) {
+        this.blockC2 = blockC2;
+    }
+
+    public String getBlockC3() {
+        return blockC3;
+    }
+
+    public void setBlockC3(String blockC3) {
+        this.blockC3 = blockC3;
+    }
+    
     
     /**
      * Initializes the controller class.
@@ -142,7 +191,6 @@ public class SpectrumController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         pane.getChildren().add(specT);
-        System.out.println(specT.isResizable());
         gc = specT.getGraphicsContext2D();
         gc.setStroke(Color.web(labelC));
         gc.setLineWidth(strokeW);
@@ -194,9 +242,7 @@ public class SpectrumController implements Initializable {
                     cordX[i+1] = displaceX;
                     cordY[i+1] = (specT.getHeight()-spaceY2-prop((mag[i]-tresh))-strokeW);
                     displaceX+=(specT.getWidth()-spaceX1-strokeW-spaceX2)/bands;
-                    if(cordY[i+1]>(specT.getHeight()-spaceY2-strokeW)){
-                        System.out.println("FUROU: "+cordY[i+1]+" passou por: "+(cordY[i+1]-(specT.getHeight()-spaceY2-strokeW)));
-                    }
+                   
                 }
                 cordX[bands+1] = (displaceX+1);
                 cordY[bands+1] = (specT.getHeight()-spaceY2-strokeW);
@@ -223,7 +269,6 @@ public class SpectrumController implements Initializable {
                     fillMetod(typeFill);
                     
                     //desenha o grafico
-                    
                     drawMetod(typeDraw,gc,displaceX,mag);
                 }
             });

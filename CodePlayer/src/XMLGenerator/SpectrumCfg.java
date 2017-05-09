@@ -15,6 +15,52 @@ public class SpectrumCfg {
     private String BarColor;
     private int numBands;
     private double intervalo;
+    private int preenchimento; //Cor Solida ou Gradiente
+    private int numC; //Cores do gradiente 3
+    private String primeiracorgrad;
+    private String segundacorgrad;
+    private String terceiracorgrad;
+
+    public int getPreenchimento() {
+        return preenchimento;
+    }
+
+    public void setPreenchimento(int preenchimento) {
+        this.preenchimento = preenchimento;
+    }
+
+    public int getNumC() {
+        return numC;
+    }
+
+    public void setNumC(int numC) {
+        this.numC = numC;
+    }
+
+    public String getPrimeiracorgrad() {
+        return primeiracorgrad;
+    }
+
+    public void setPrimeiracorgrad(String primeiracorgrad) {
+        this.primeiracorgrad = primeiracorgrad;
+    }
+
+    public String getSegundacorgrad() {
+        return segundacorgrad;
+    }
+
+    public void setSegundacorgrad(String segundacorgrad) {
+        this.segundacorgrad = segundacorgrad;
+    }
+
+    public String getTerceiracorgrad() {
+        return terceiracorgrad;
+    }
+
+    public void setTerceiracorgrad(String terceiracorgrad) {
+        this.terceiracorgrad = terceiracorgrad;
+    }
+    
 
     public double getIntervalo() {
         return intervalo;
