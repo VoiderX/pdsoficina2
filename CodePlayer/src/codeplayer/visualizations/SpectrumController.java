@@ -39,7 +39,7 @@ public class SpectrumController implements Initializable {
     private final int maxf=25600;
     
     //variáveis para a visualização
-    private int bands = 256,tresh=-100,type=1,numC=2;
+    private int bands = 256,tresh=-100,typeFill=1,numC=2,typeDraw=1;
     private double inter=0.02;
     private String backgroundC ="201D1D",labelC="FFFFFF",blockC="4169E1",blockC1="FF0000",blockC2="0000FF",blockC3="AACCFF";
     private GraphicsContext gc;
@@ -148,18 +148,9 @@ public class SpectrumController implements Initializable {
         gc.setLineWidth(strokeW);
         specT.widthProperty().bind(pane.widthProperty());
         specT.heightProperty().bind(pane.heightProperty());
-        pane.widthProperty().addListener(event -> teste());
-        pane.heightProperty().addListener(event -> teste());
         pane.widthProperty().addListener(event -> staticElements(gc));
         pane.heightProperty().addListener(event -> staticElements(gc));        
         start(gc);
-    }
-
-    private void teste(){
-        System.out.println("Pane width: "+pane.getWidth());
-        System.out.println("Pane height: "+pane.getHeight());
-        System.out.println("SpecT width: "+specT.getWidth());
-        System.out.println("SpecT height: "+specT.getHeight());
     }
     
     public double prop(double mag){
@@ -187,6 +178,34 @@ public class SpectrumController implements Initializable {
         }
     }
     
+    private void drawMetod(int typeDraw, GraphicsContext gc, int displaceX, float[] mag){
+        if(typeDraw==0){
+            for(int i=0;i<bands;i++){
+                gc.fillRect((displaceX),((specT.getHeight()-strokeW)-prop((mag[i]-tresh))),((specT.getWidth()-spaceX1-strokeW-spaceX2)/bands),(prop((mag[i]-tresh))-spaceY2));
+                displaceX+=(specT.getWidth()-spaceX1-strokeW-spaceX2)/bands;            
+            }
+        }else{
+            double[] cordX = new double[((bands*2)+3)];
+                double[] cordY = new double[((bands*2)+3)];
+                cordX[0] = (displaceX);
+                cordY[0] = (specT.getHeight()-spaceY2-strokeW);
+
+                for(int i=0;i<bands;i++){
+                    cordX[i+1] = displaceX;
+                    cordY[i+1] = (specT.getHeight()-spaceY2-prop((mag[i]-tresh))-strokeW);
+                    displaceX+=(specT.getWidth()-spaceX1-strokeW-spaceX2)/bands;
+                    if(cordY[i+1]>(specT.getHeight()-spaceY2-strokeW)){
+                        System.out.println("FUROU: "+cordY[i+1]+" passou por: "+(cordY[i+1]-(specT.getHeight()-spaceY2-strokeW)));
+                    }
+                }
+                cordX[bands+1] = (displaceX+1);
+                cordY[bands+1] = (specT.getHeight()-spaceY2-strokeW);
+                cordX[bands+2] = (specT.getWidth()-spaceX2);
+                cordY[bands+2] = (specT.getHeight()-spaceY2-strokeW);
+                gc.fillPolygon(cordX, cordY,(bands+3));
+        }
+    }
+    
     public void start(GraphicsContext gc){
         staticElements(gc);
         if(Mp3Buf.getInstance().checkmp()!=null){
@@ -201,14 +220,11 @@ public class SpectrumController implements Initializable {
                     gc.clearRect(0, 0, specT.getWidth(), specT.getHeight());
                     staticElements(gc);
                     //cor do grafico
-                    fillMetod(type);
+                    fillMetod(typeFill);
                     
                     //desenha o grafico
-                    for(int i=0;i<bands;i++){
-                        gc.fillRect((displaceX),((specT.getHeight()-strokeW)-prop((mag[i]-tresh))),((specT.getWidth()-spaceX1-strokeW-spaceX2)/bands),(prop((mag[i]-tresh))-spaceY2));
-                        displaceX+=(specT.getWidth()-spaceX1-strokeW-spaceX2)/bands;
-                        
-                    }
+                    
+                    drawMetod(typeDraw,gc,displaceX,mag);
                 }
             });
         }
