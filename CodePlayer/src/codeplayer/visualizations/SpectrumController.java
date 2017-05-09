@@ -23,8 +23,8 @@ import javafx.scene.paint.Color;
  * @author Gabriel
  */
 public class SpectrumController implements Initializable {
-    @FXML
-    Canvas spec;
+//    @FXML
+//    Canvas spec;
     @FXML
     Pane pane;
     
@@ -44,11 +44,11 @@ public class SpectrumController implements Initializable {
         //background
         gc.setFill(Color.web(backgroundC));
         
-        gc.fillRect(0, 0, spec.getWidth(), spec.getHeight());
+        gc.fillRect(0, 0, specT.getWidth(), specT.getHeight());
         //linha vertical
-        gc.strokeLine(spaceX1, spaceY1, spaceX1, (spec.getHeight()-spaceY2));
+        gc.strokeLine(spaceX1, spaceY1, spaceX1, (specT.getHeight()-spaceY2));
         //linha horizontal
-        gc.strokeLine(spaceX1,(spec.getHeight()-spaceY2),(spec.getWidth()-spaceX2),(spec.getHeight()-spaceY2));
+        gc.strokeLine(spaceX1,(specT.getHeight()-spaceY2),(specT.getWidth()-spaceX2),(specT.getHeight()-spaceY2));
         //labels do y
         int interv = 5;
         float text=0;
@@ -57,7 +57,7 @@ public class SpectrumController implements Initializable {
         for(int i=0;i<(interv+1);i++){
             gc.strokeText(""+text,11,displaceY+5);
             gc.strokeLine(45, displaceY, 50, displaceY);
-            displaceY+=(spec.getHeight()-spaceY1-spaceY2-strokeW)/interv;
+            displaceY+=(specT.getHeight()-spaceY1-spaceY2-strokeW)/interv;
             text+=passo;
         }
         //labels do x
@@ -67,34 +67,44 @@ public class SpectrumController implements Initializable {
         int displaceX=spaceX1;
         for(int i=0;i<(interv+1);i++){
             if(text<1000){
-                gc.strokeText(""+text,displaceX,(spec.getHeight()-spaceY2)+15);
+                gc.strokeText(""+text,displaceX,(specT.getHeight()-spaceY2)+15);
             }else{
-                gc.strokeText((text/1000)+"k",displaceX,(spec.getHeight()-spaceY2)+15);
+                gc.strokeText((text/1000)+"k",displaceX,(specT.getHeight()-spaceY2)+15);
             }
-            gc.strokeLine(displaceX, (spec.getHeight()-spaceY2),displaceX, (spec.getHeight()-spaceY2+5));
-            displaceX+=(spec.getWidth()-spaceX1-spaceX2-strokeW)/interv;
+            gc.strokeLine(displaceX, (specT.getHeight()-spaceY2),displaceX, (specT.getHeight()-spaceY2+5));
+            displaceX+=(specT.getWidth()-spaceX1-spaceX2-strokeW)/interv;
             text+=passo;
         }
         gc.setLineWidth(strokeW);
     }
     
+    ResizableCanvas specT = new ResizableCanvas();
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        GraphicsContext gc = spec.getGraphicsContext2D();
+        pane.getChildren().add(specT);
+        System.out.println(specT.isResizable());
+        GraphicsContext gc = specT.getGraphicsContext2D();
         gc.setStroke(Color.web(labelC));
         gc.setLineWidth(strokeW);
+        specT.widthProperty().bind(pane.widthProperty());
+        specT.heightProperty().bind(pane.heightProperty());
         pane.widthProperty().addListener(event -> teste());
         pane.heightProperty().addListener(event -> teste());
+        pane.widthProperty().addListener(event -> staticElements(gc));
+        pane.heightProperty().addListener(event -> staticElements(gc));
         start(gc);
     }
 
     private void teste(){
-        System.out.println("width: "+pane.getWidth());
-        System.out.println("height: "+pane.getHeight());
+        System.out.println("Pane width: "+pane.getWidth());
+        System.out.println("Pane height: "+pane.getHeight());
+        System.out.println("SpecT width: "+specT.getWidth());
+        System.out.println("SpecT height: "+specT.getHeight());
     }
     
     public double prop(double mag){
-        return ((mag/(-tresh))*(spec.getHeight()-spaceY2-spaceY1));
+        return ((mag/(-tresh))*(specT.getHeight()-spaceY2-spaceY1));
     }
     
     private void start(GraphicsContext gc){
@@ -108,12 +118,12 @@ public class SpectrumController implements Initializable {
                 public void spectrumDataUpdate(double d, double d1, float[] mag, float[] phase) {
                     
                     int displaceX=spaceX1+strokeW;
-                    gc.clearRect(0, 0, spec.getWidth(), spec.getHeight());
+                    gc.clearRect(0, 0, specT.getWidth(), specT.getHeight());
                     staticElements(gc);
                     gc.setFill(Color.web(blockC));
                     for(int i=0;i<bands;i++){
-                        gc.fillRect((displaceX),((spec.getHeight()-strokeW)-prop((mag[i]-tresh))),(spec.getWidth()/bands),(prop((mag[i]-tresh))-spaceY2));
-                        displaceX+=(spec.getWidth()-spaceX1-strokeW-spaceX2)/bands;
+                        gc.fillRect((displaceX),((specT.getHeight()-strokeW)-prop((mag[i]-tresh))),(specT.getWidth()/bands),(prop((mag[i]-tresh))-spaceY2));
+                        displaceX+=(specT.getWidth()-spaceX1-strokeW-spaceX2)/bands;
                         
                     }
                 }
