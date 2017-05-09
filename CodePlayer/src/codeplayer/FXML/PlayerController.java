@@ -85,9 +85,10 @@ public class PlayerController implements Initializable {
             if(Mp3Buf.getInstance().getMp()==null){
             }else{
                 //Recepção de metadadados atraves da Thread pois as informações chegam de forma Assincrona
-               Mp3Buf.getInstance().getMp().play();
-               if(ControleUI.getInstance().getFourthStage().isShowing()){
-                   ControleUI.getInstance().mostraSpectrum();
+            Mp3Buf.getInstance().getMp().play();
+            if(ControleUI.getInstance().getFourthStage().isShowing()){
+                ControleUI.getInstance().getSpectrumControl().start(
+                ControleUI.getInstance().getSpectrumControl().getGc());
                }
            }
         }catch(Exception e){

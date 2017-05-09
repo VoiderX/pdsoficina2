@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codeplayer.misc.SpecCfgController">
+   <children>
+      <Slider fx:id="Numbands" layoutX="50.0" layoutY="110.0" max="256.0" min="2.0" showTickLabels="true" showTickMarks="true" />
+      <ColorPicker fx:id="BackgroundColor" layoutX="47.0" layoutY="175.0" onAction="#setBack" />
+      <ColorPicker fx:id="LabelColor" layoutX="47.0" layoutY="231.0" onAction="#setLabel" />
+      <ColorPicker fx:id="BarColor" layoutX="47.0" layoutY="294.0" onAction="#setBar" />
+      <Slider fx:id="Intervalo" layoutX="47.0" layoutY="45.0" majorTickUnit="10.0" max="120.0" min="24.0" showTickLabels="true" showTickMarks="true" />
+      <Label layoutX="47.0" layoutY="21.0" text="Taxa de atualização" />
+      <Label layoutX="47.0" layoutY="83.0" text="Número de Bandas" />
+      <Label layoutX="47.0" layoutY="148.0" text="Cor de Fundo" />
+      <Label layoutX="47.0" layoutY="207.0" text="Cor dos rótulos" />
+      <Label layoutX="47.0" layoutY="271.0" text="Cor das Barras" />
+   </children>
+</AnchorPane>

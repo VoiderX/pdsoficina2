@@ -6,6 +6,7 @@
 package codeplayer;
 
 import codeplayer.FXML.PlayerController;
+import codeplayer.visualizations.SpectrumController;
 import java.io.IOException;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -59,6 +60,25 @@ public final class ControleUI{
    
    public PlayerController playControl; //Instanciação da classe controller do player para mudanças de interface
    //Em tempo real
+   public SpectrumController spectrumControl;
+
+    public SpectrumController getSpectrumControl() {
+        return spectrumControl;
+    }
+
+    public void setSpectrumControl(SpectrumController spectrumControl) {
+        this.spectrumControl = spectrumControl;
+    }
+   
+
+    public PlayerController getPlayControl() {
+        return playControl;
+    }
+
+    public void setPlayControl(PlayerController playControl) {
+        this.playControl = playControl;
+    }
+   
    
     public PlayerController getPlayerController(){ //Metodo get permitir que o controller seja modificado em
        //outras classes
@@ -139,8 +159,12 @@ public final class ControleUI{
    }
    public void mostraSpectrum(){
     try{
-        spectrumFXML=FXMLLoader.load(getClass().getResource("visualizations/Spectrum.fxml"));
-        spectrumScene=new Scene(spectrumFXML);
+        FXMLLoader loader=new FXMLLoader();//Prepara um loader para o arquivo fxml
+        loader.setLocation(getClass().getResource("visualizations/Spectrum.fxml"));//Puxa o arquivo fxml
+        spectrumFXML = (Parent)loader.load(); //Carrega o arquivo FXML na classe pai
+        spectrumControl=loader.getController();//Puxa o o controller para o determinado FXMl
+        spectrumScene= new Scene(spectrumFXML);
+
        }
     catch(Exception e){
            
@@ -165,7 +189,7 @@ public final class ControleUI{
    }
    public void mostraSpectrumCfg(){
     try{
-        spectrumcfgFXML=FXMLLoader.load(getClass().getResource("misc/Infos.fxml"));
+        spectrumcfgFXML=FXMLLoader.load(getClass().getResource("misc/SpecCfg.fxml"));
         spectrumcfgScene=new Scene(spectrumcfgFXML);
         sixthStage.setScene(spectrumcfgScene);
         sixthStage.setTitle(("Informações sobre o programa"));

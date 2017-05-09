@@ -33,9 +33,60 @@ public class SpectrumController implements Initializable {
     private final int maxf=25600;
     
     //variáveis para a visualização
-    private int bands = 60,tresh=-100;
+    private int bands = 256,tresh=-100;
     private double inter=0.02;
     private String backgroundC ="201D1D",labelC="FFFFFF",blockC="4169E1";
+    private GraphicsContext gc;
+
+    public GraphicsContext getGc() {
+        return gc;
+    }
+
+    public void setGc(GraphicsContext gc) {
+        this.gc = gc;
+    }
+    
+
+    public int getBands() {
+        return bands;
+    }
+
+    public void setBands(int bands) {
+        this.bands = bands;
+    }
+
+    public double getInter() {
+        return inter;
+    }
+
+    public void setInter(double inter) {
+        this.inter = inter;
+    }
+
+    public String getBackgroundC() {
+        return backgroundC;
+    }
+
+    public void setBackgroundC(String backgroundC) {
+        this.backgroundC = backgroundC;
+    }
+
+    public String getLabelC() {
+        return labelC;
+    }
+
+    public void setLabelC(String labelC) {
+        this.labelC = labelC;
+    }
+
+    public String getBlockC() {
+        return blockC;
+    }
+
+    public void setBlockC(String blockC) {
+        this.blockC = blockC;
+    }
+    
     /**
      * Initializes the controller class.
      */
@@ -49,6 +100,7 @@ public class SpectrumController implements Initializable {
         gc.strokeLine(spaceX1, spaceY1, spaceX1, (specT.getHeight()-spaceY2));
         //linha horizontal
         gc.strokeLine(spaceX1,(specT.getHeight()-spaceY2),(specT.getWidth()-spaceX2),(specT.getHeight()-spaceY2));
+        gc.setStroke(Color.web(labelC));
         //labels do y
         int interv = 5;
         float text=0;
@@ -84,7 +136,7 @@ public class SpectrumController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         pane.getChildren().add(specT);
         System.out.println(specT.isResizable());
-        GraphicsContext gc = specT.getGraphicsContext2D();
+        gc = specT.getGraphicsContext2D();
         gc.setStroke(Color.web(labelC));
         gc.setLineWidth(strokeW);
         specT.widthProperty().bind(pane.widthProperty());
@@ -92,7 +144,7 @@ public class SpectrumController implements Initializable {
         pane.widthProperty().addListener(event -> teste());
         pane.heightProperty().addListener(event -> teste());
         pane.widthProperty().addListener(event -> staticElements(gc));
-        pane.heightProperty().addListener(event -> staticElements(gc));
+        pane.heightProperty().addListener(event -> staticElements(gc));        
         start(gc);
     }
 
@@ -107,7 +159,7 @@ public class SpectrumController implements Initializable {
         return ((mag/(-tresh))*(specT.getHeight()-spaceY2-spaceY1));
     }
     
-    private void start(GraphicsContext gc){
+    public void start(GraphicsContext gc){
         staticElements(gc);
         if(Mp3Buf.getInstance().checkmp()!=null){
             Mp3Buf.getInstance().getMp().setAudioSpectrumThreshold(tresh);
@@ -122,7 +174,7 @@ public class SpectrumController implements Initializable {
                     staticElements(gc);
                     gc.setFill(Color.web(blockC));
                     for(int i=0;i<bands;i++){
-                        gc.fillRect((displaceX),((specT.getHeight()-strokeW)-prop((mag[i]-tresh))),(specT.getWidth()/bands),(prop((mag[i]-tresh))-spaceY2));
+                        gc.fillRect((displaceX),((specT.getHeight()-strokeW)-prop((mag[i]-tresh))),((specT.getWidth()-spaceX1-strokeW-spaceX2)/bands),(prop((mag[i]-tresh))-spaceY2));
                         displaceX+=(specT.getWidth()-spaceX1-strokeW-spaceX2)/bands;
                         
                     }
