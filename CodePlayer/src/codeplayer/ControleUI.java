@@ -140,6 +140,8 @@ public final class ControleUI{
     catch(Exception e){
            
     }
+    fourthStage.setMinWidth(460);
+    fourthStage.setMinHeight(320);
     fourthStage.setScene(spectrumScene);
     fourthStage.setTitle(("Visualizador de Espectro"));
     fourthStage.show();
