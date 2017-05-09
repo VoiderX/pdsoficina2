@@ -8,6 +8,9 @@ package codeplayer.visualizations;
 import codeplayer.ControleUI;
 import codeplayer.Mp3Buf;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +19,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioSpectrumListener;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 
 /**
  * FXML Controller class
@@ -33,10 +39,11 @@ public class SpectrumController implements Initializable {
     private final int maxf=25600;
     
     //variáveis para a visualização
-    private int bands = 256,tresh=-100;
+    private int bands = 256,tresh=-100,type=1,numC=2;
     private double inter=0.02;
-    private String backgroundC ="201D1D",labelC="FFFFFF",blockC="4169E1";
+    private String backgroundC ="201D1D",labelC="FFFFFF",blockC="4169E1",blockC1="FF0000",blockC2="0000FF",blockC3="AACCFF";
     private GraphicsContext gc;
+    
 
     public GraphicsContext getGc() {
         return gc;
@@ -159,6 +166,27 @@ public class SpectrumController implements Initializable {
         return ((mag/(-tresh))*(specT.getHeight()-spaceY2-spaceY1));
     }
     
+    private void fillMetod(int type){
+        if(type==0){
+            gc.setFill(Color.web(blockC));
+        }else{
+            if(numC==2){
+                gc.setFill(new LinearGradient(0, 0, 0, 1, true, 
+                        CycleMethod.NO_CYCLE,
+                        Arrays.asList(
+                                new Stop(0.3,Color.web(blockC1)),
+                                new Stop(1,Color.web(blockC2)))));
+            }else{
+                gc.setFill(new LinearGradient(0, 0, 0, 1, true, 
+                        CycleMethod.NO_CYCLE,
+                        Arrays.asList(
+                                new Stop(0.3,Color.web(blockC1)),
+                                new Stop(0.6,Color.web(blockC2)),
+                                new Stop(1.0, Color.web(blockC3)))));
+            }
+        }
+    }
+    
     public void start(GraphicsContext gc){
         staticElements(gc);
         if(Mp3Buf.getInstance().checkmp()!=null){
@@ -172,7 +200,10 @@ public class SpectrumController implements Initializable {
                     int displaceX=spaceX1+strokeW;
                     gc.clearRect(0, 0, specT.getWidth(), specT.getHeight());
                     staticElements(gc);
-                    gc.setFill(Color.web(blockC));
+                    //cor do grafico
+                    fillMetod(type);
+                    
+                    //desenha o grafico
                     for(int i=0;i<bands;i++){
                         gc.fillRect((displaceX),((specT.getHeight()-strokeW)-prop((mag[i]-tresh))),((specT.getWidth()-spaceX1-strokeW-spaceX2)/bands),(prop((mag[i]-tresh))-spaceY2));
                         displaceX+=(specT.getWidth()-spaceX1-strokeW-spaceX2)/bands;
