@@ -320,6 +320,7 @@ public class EqualizerController implements Initializable {
       HelperNomePerfil.setVisible(false);
       BotaoOk.setDisable(true);
       BotaoOk.setVisible(false);
+      Seletor.setValue("Zerar");
     }    
     
 }

@@ -14,6 +14,15 @@ public class SpectrumCfg {
     private String LabelColor;
     private String BarColor;
     private int numBands;
+    private double intervalo;
+
+    public double getIntervalo() {
+        return intervalo;
+    }
+
+    public void setIntervalo(double intervalo) {
+        this.intervalo = intervalo;
+    }
 
     public String getBackgroundColor() {
         return BackgroundColor;
@@ -46,6 +55,15 @@ public class SpectrumCfg {
     public void setNumBands(int numBands) {
         this.numBands = numBands;
     }
+
+    public SpectrumCfg(String BackgroundColor, String LabelColor, String BarColor, int numBands, double intervalo) {
+        this.BackgroundColor = BackgroundColor;
+        this.LabelColor = LabelColor;
+        this.BarColor = BarColor;
+        this.numBands = numBands;
+        this.intervalo = intervalo;
+    }
+    
     
     
 }
