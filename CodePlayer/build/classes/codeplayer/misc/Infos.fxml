@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="210.0" prefWidth="368.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codeplayer.misc.InfosController">
+   <children>
+      <Text layoutX="40.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Este programa é dedicado ao nosso senhor das trevas:" wrappingWidth="288.0703125" />
+      <Text fill="#d02222" layoutX="132.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exu Caveirinha" wrappingWidth="79.12109375" />
+      <Text layoutX="14.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2017- Todos os direitos reservados" wrappingWidth="212.13671875" />
+   </children>
+</AnchorPane>

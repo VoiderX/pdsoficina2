@@ -242,6 +242,10 @@ public class PlayerController implements Initializable {
      public void carregaSpectrum(){
          ControleUI.getInstance().mostraSpectrum();
      }
+     @FXML
+     public void mostraInfos(){
+         ControleUI.getInstance().mostraInfos();
+     }
     /**
      * Initializes the controller class.
      */
