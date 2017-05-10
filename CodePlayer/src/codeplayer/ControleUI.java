@@ -9,7 +9,6 @@ import codeplayer.FXML.PlayerController;
 import codeplayer.visualizations.SpectrumController;
 import java.io.IOException;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -74,9 +73,6 @@ public final class ControleUI {
         this.spectrumControl = spectrumControl;
     }
 
-    public PlayerController getPlayControl() {
-        return playControl;
-    }
 
     public void setPlayControl(PlayerController playControl) {
         this.playControl = playControl;
@@ -124,7 +120,7 @@ public final class ControleUI {
         }
         playerScene = new Scene(playerFXML); //Transforma a classe parent em um objeto do tipo Scene
 
-        mostraPlayer();
+        mostraIndex();
     }
 
     public void mostraPlayer() { //Método para chamar o login

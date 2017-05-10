@@ -248,7 +248,9 @@ public class EqualizerController implements Initializable {
                  codeplayer.ExchangeInfos.getInstance().setPerfilEq("Zerar");
              }
              else{  //Obtendo valores do XML e passando para o Array de bandas na classe da Mp3
-              BandaXML bxml= new BandastoXML(Seletor.getValue()).xmltoBanda(new File("PerfEQ"+Seletor.getValue()+".xml"));
+              File arq=new File("User"+""+codeplayer.ExchangeInfos.getInstance().getUseratual()+"/PerfEQ"+Seletor.getValue()+".xml");
+                 System.out.println(arq.getAbsolutePath());
+              BandaXML bxml= new BandastoXML(Seletor.getValue()).xmltoBanda(arq);
               Mp3Buf.getInstance().getBandas().get(0).setValor(bxml.getGanho0());
               Mp3Buf.getInstance().getBandas().get(1).setValor(bxml.getGanho1());
               Mp3Buf.getInstance().getBandas().get(2).setValor(bxml.getGanho2());

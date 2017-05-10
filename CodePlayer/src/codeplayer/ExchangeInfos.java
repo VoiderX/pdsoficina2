@@ -30,7 +30,16 @@ public final class ExchangeInfos {
         SpecCfgObj.setTerceiracorgrad("AACCFF");
         SpecCfgObj.setTipoDesenho(1);
     }
-   
+   String useratual;
+
+    public String getUseratual() {
+        return useratual;
+    }
+
+    public void setUseratual(String useratual) {
+        this.useratual = useratual;
+    }
+    
    String PerfilEq="Zerar";
    String SpecCfg="Default";
    SpectrumCfg SpecCfgObj=new SpectrumCfg();

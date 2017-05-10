@@ -6,6 +6,7 @@
 package codeplayer.FXML;
 
 import XMLGenerator.SpectrumXML;
+import codeplayer.ControleUI;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -28,7 +29,7 @@ import javafx.scene.layout.Pane;
 public class IndexFXMLController implements Initializable {
     
     @FXML
-    ChoiceBox perfExistente;
+    ChoiceBox<String> perfExistente;
     @FXML
     Button go;
     @FXML
@@ -43,24 +44,31 @@ public class IndexFXMLController implements Initializable {
     @FXML
     public void criaUsuario(){
         new File("User"+newName.getText()).mkdir();
+        carregaPerfis();
     }
     @FXML
     public void go(){
-        
+         codeplayer.ExchangeInfos.getInstance().setUseratual(perfExistente.getValue());
+         ControleUI.getInstance().mostraPlayer();
     }
     public void carregaPerfis(){
       ArrayList<String> aux= SpectrumXML.procuraArquivosXML("User");
       ObservableList<String> oal=FXCollections.observableArrayList();
       for(int i=0;i<aux.size();i++){
-          
+          StringBuilder str= new StringBuilder();
+          str.insert(0, aux.get(i));
+          str.replace(0, 4, "");
+          System.err.println(str.toString());
+          oal.add(str.toString());
       }
+      perfExistente.setItems(oal); 
     }
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        carregaPerfis();
     }    
     
 }

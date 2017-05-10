@@ -31,7 +31,8 @@ public class BandastoXML {
     public void geraXMLfile(BandaXML bandas){
         String textoxml=xstream.toXML(bandas);
         try{
-            PrintWriter writer = new PrintWriter("PerfEQ"+NomePerfil+".xml", "UTF-8");
+            PrintWriter writer = new PrintWriter("User"+codeplayer.ExchangeInfos.getInstance().getUseratual()+
+                    "/PerfEQ"+NomePerfil+".xml", "UTF-8");
             writer.print(textoxml);
             writer.close();
         } catch (Exception e) {
@@ -48,7 +49,7 @@ public class BandastoXML {
     }    
     public static ArrayList<String> procuraArquivosXML(){
         ArrayList<String> nomesarq= new ArrayList<>();
-        File aux= new File(".");
+        File aux= new File("User"+codeplayer.ExchangeInfos.getInstance().getUseratual());
         File auxvet[]=aux.listFiles(new FileFilter() {
 
             @Override
