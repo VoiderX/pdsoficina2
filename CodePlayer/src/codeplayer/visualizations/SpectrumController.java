@@ -198,6 +198,17 @@ public class SpectrumController implements Initializable {
         specT.heightProperty().bind(pane.heightProperty());
         pane.widthProperty().addListener(event -> staticElements(gc));
         pane.heightProperty().addListener(event -> staticElements(gc));        
+        setBackgroundC(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getBackgroundColor());
+        setBands(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getNumBands());
+        setBlockC(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getBarColor());
+        setBlockC1(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getBarColor());
+        setBlockC2(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getSegundacorgrad());
+        setBlockC3(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getTerceiracorgrad());
+        setInter(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getIntervalo());
+        setLabelC(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getLabelColor());
+        setNumC(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getNumC());
+        setTypeDraw(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getTipoDesenho());
+        setTypeFill(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getPreenchimento());
         start(gc);
     }
     

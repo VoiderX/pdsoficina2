@@ -397,7 +397,7 @@ public class SpecCfgController implements Initializable {
             BarColor.setValue(Color.web(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getBarColor()));
             CorGrad2.setValue(Color.web(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getSegundacorgrad()));
             CorGrad3.setValue(Color.web(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getTerceiracorgrad()));
-            Intervalo.setValue(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getIntervalo());
+            Intervalo.setValue(1/codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getIntervalo());
             LabelColor.setValue(Color.web(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getLabelColor()));
             Numbands.setValue(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getNumBands());
             NumeroGradiente.setValue(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getNumC());
