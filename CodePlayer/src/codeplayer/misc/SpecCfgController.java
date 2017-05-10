@@ -275,7 +275,12 @@ public class SpecCfgController implements Initializable {
                 aux.setLabelColor(LabelColor.getValue().toString());
                 aux.setNumBands((int)Numbands.getValue());
                 aux.setNumC(NumeroGradiente.getValue());
-                aux.setPreenchimento(IndexFill);
+                if(TipoCor.getValue().equals("Solid")){
+                    aux.setPreenchimento(0);
+                }
+                else if(TipoCor.getValue().equals("Gradiente")){
+                    aux.setPreenchimento(1);
+                }
                 aux.setSegundacorgrad(CorGrad2.getValue().toString());
                 aux.setTerceiracorgrad(CorGrad3.getValue().toString());
                 aux.setTipoDesenho(TipoDesIndex);
@@ -341,6 +346,11 @@ public class SpecCfgController implements Initializable {
                         NumeroGradiente.setValue(cfg.getNumC());
                         LabelColor.setValue(Color.web(cfg.getLabelColor()));
                         Intervalo.setValue(cfg.getIntervalo());
+                        setNumBands();
+                        setIntervalo();
+                        setBack();
+                        setLabel();
+                        setBar();
                     }
                     codeplayer.ExchangeInfos.getInstance().setSpecCfg(Perfil.getValue());
                     NomePerfil.setText(Perfil.getValue());
@@ -434,13 +444,23 @@ public class SpecCfgController implements Initializable {
             }
             if(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getPreenchimento()==0){
                 this.TipoCor.setValue("Solid");
+                CorGrad.setDisable(true);
             }
             else if(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getPreenchimento()==1){
                 this.TipoCor.setValue("Gradiente");
+                CorGrad.setDisable(false);
+                if(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getNumC()==2){
+                    CorGrad3.setDisable(true);
+                }
+                else if(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getNumC()==3){
+                    CorGrad3.setDisable(false);
+                }
             }                      
        }
        else{
            Perfil.setValue(codeplayer.ExchangeInfos.getInstance().getSpecCfg());
+           SpectrumCfg cfg = new SpectrumXML(Perfil.getValue()).xmltoSpec(new File("PerfSpec" + Perfil.getValue() + ".xml"));
+           codeplayer.ExchangeInfos.getInstance().setSpecCfgObj(cfg);
        }
        
     }    

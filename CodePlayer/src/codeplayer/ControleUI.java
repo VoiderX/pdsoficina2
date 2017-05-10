@@ -106,14 +106,11 @@ public final class ControleUI{
       fourthStage= new Stage();
       fifthStage=new Stage();
       sixthStage= new Stage();
-      mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {//Metodo para finalizar tudo ao apertar o "x"
-            @Override
-            public void handle(WindowEvent t) {
-                Platform.exit();
-                System.exit(0);
-            }
-
-        });
+      mainStage.setOnCloseRequest((WindowEvent t) -> {
+          Platform.exit();
+          System.exit(0);
+      } //Metodo para finalizar tudo ao apertar o "x"
+      );
       try {
           FXMLLoader loader=new FXMLLoader();//Prepara um loader para o arquivo fxml
           loader.setLocation(getClass().getResource("FXML/Player.fxml"));//Puxa o arquivo fxml
