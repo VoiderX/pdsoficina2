@@ -232,7 +232,7 @@ public class SpectrumController implements Initializable {
                                 new Stop(0.3,Color.web(blockC1)),
                                 new Stop(1,Color.web(blockC2)))));
                 }else{
-                    gc.setFill(new RadialGradient(0, 0.35, 
+                    gc.setFill(new RadialGradient(0, 0, 
                             0.45, 
                             0.45,
                             0.5, 
@@ -251,7 +251,7 @@ public class SpectrumController implements Initializable {
                                     new Stop(0.6,Color.web(blockC2)),
                                     new Stop(1.0, Color.web(blockC3)))));
                 }else{
-                    gc.setFill(new RadialGradient(0, 0.35, 
+                    gc.setFill(new RadialGradient(0, 0, 
                             0.5, 
                             0.5,
                             0.5, 
