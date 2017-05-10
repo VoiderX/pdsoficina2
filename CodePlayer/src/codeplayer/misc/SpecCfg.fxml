@@ -7,23 +7,28 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="466.0" prefWidth="664.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codeplayer.misc.SpecCfgController">
+<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codeplayer.misc.SpecCfgController">
    <children>
-      <Pane layoutX="44.0" layoutY="21.0">
+      <VBox layoutX="44.0" layoutY="100.0">
          <children>
-            <Slider fx:id="Numbands" layoutX="6.0" layoutY="89.0" max="360.0" min="3.0" showTickLabels="true" showTickMarks="true" />
-            <ColorPicker fx:id="BackgroundColor" layoutX="3.0" layoutY="154.0" onAction="#setBack" />
-            <ColorPicker fx:id="LabelColor" layoutX="3.0" layoutY="210.0" onAction="#setLabel" />
-            <Slider fx:id="Intervalo" layoutX="3.0" layoutY="24.0" majorTickUnit="10.0" max="120.0" min="24.0" showTickLabels="true" showTickMarks="true" />
-            <Label layoutX="3.0" text="Taxa de atualização" />
-            <Label layoutX="3.0" layoutY="62.0" text="Número de Bandas" />
-            <Label layoutX="3.0" layoutY="127.0" text="Cor de Fundo" />
-            <Label layoutX="3.0" layoutY="186.0" text="Cor dos rótulos" />
+            <Label text="Taxa de atualização" />
+            <Slider fx:id="Intervalo" majorTickUnit="10.0" max="120.0" min="24.0" showTickLabels="true" showTickMarks="true" />
+            <Label text="Número de Bandas" />
+            <Slider fx:id="Numbands" max="360.0" min="3.0" showTickLabels="true" showTickMarks="true" />
+            <Label text="Cor de Fundo" />
+            <ColorPicker fx:id="BackgroundColor" onAction="#setBack" />
+            <Label text="Cor dos rótulos" />
+            <ColorPicker fx:id="LabelColor" onAction="#setLabel" />
          </children>
-      </Pane>
-      <Pane layoutX="476.0" layoutY="30.0">
+      </VBox>
+      <Pane layoutX="476.0" layoutY="100.0">
          <children>
             <ChoiceBox fx:id="Perfil" layoutY="24.0" prefWidth="150.0" />
             <TextField fx:id="NomePerfil" layoutX="1.0" layoutY="89.0" />
@@ -33,7 +38,7 @@
             <Label layoutY="71.0" text="Nome do Perfil" />
          </children>
       </Pane>
-      <Pane layoutX="262.0" layoutY="40.0">
+      <Pane layoutX="262.0" layoutY="100.0">
          <children>
             <Pane fx:id="CorGrad" layoutY="58.0" prefHeight="156.0" prefWidth="140.0">
                <children>
@@ -51,23 +56,43 @@
             </Pane>
          </children>
       </Pane>
-      <Pane layoutX="42.0" layoutY="287.0">
-         <children>
-            <ChoiceBox fx:id="TipoCor" layoutY="17.0" prefWidth="150.0" />
-            <Label text="Tipo da cor" />
-         </children>
-      </Pane>
-      <Pane layoutX="42.0" layoutY="345.0">
-         <children>
-            <ChoiceBox fx:id="TipoDesenho" layoutY="17.0" prefWidth="150.0" />
-            <Label text="Tipo de Desenho" />
-         </children>
-      </Pane>
-      <Pane layoutX="42.0" layoutY="393.0">
-         <children>
-            <ChoiceBox fx:id="NumeroGradiente" layoutY="17.0" prefWidth="150.0" />
-            <Label text="Número de Gradientes" />
-         </children>
-      </Pane>
+      <BorderPane fx:id="root" prefHeight="480.0" prefWidth="640.0">
+         <top>
+            <GridPane fx:id="topPane" BorderPane.alignment="CENTER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Pane GridPane.halignment="CENTER">
+                     <children>
+                        <Pane fx:id="subTopPane1" layoutX="32.0">
+                           <children>
+                              <ChoiceBox fx:id="TipoCor" layoutY="16.0" prefWidth="150.0" />
+                              <Label layoutX="45.0" text="Tipo da cor" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+                  <Pane GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                     <children>
+                        <ChoiceBox fx:id="TipoDesenho" layoutX="28.0" layoutY="16.0" prefWidth="150.0" />
+                        <Label layoutX="58.0" text="Tipo de Desenho" />
+                     </children>
+                  </Pane>
+                  <Pane GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                     <children>
+                        <ChoiceBox fx:id="NumeroGradiente" layoutX="24.0" layoutY="16.0" prefWidth="150.0" />
+                        <Label layoutX="39.0" text="Número de Gradientes" />
+                     </children>
+                  </Pane>
+               </children>
+            </GridPane>
+         </top>
+      </BorderPane>
    </children>
 </AnchorPane>

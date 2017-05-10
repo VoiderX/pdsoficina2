@@ -22,10 +22,14 @@ import javafx.collections.ObservableList;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -35,6 +39,7 @@ import javafx.scene.paint.Color;
  * @author Gabriel
  */
 public class SpecCfgController implements Initializable {
+    
     @FXML
     private ColorPicker BackgroundColor;
     @FXML
@@ -62,10 +67,19 @@ public class SpecCfgController implements Initializable {
     @FXML
     private Pane CorGrad;
     @FXML
-    private int IndexFill;
+    private GridPane topPane;
+    
     @FXML
+    private Pane subTopPane1;
+    @FXML
+    private BorderPane root;
+    
+    private int IndexFill;
+    
     private int TipoDesIndex;
+    
     SpectrumCfg aux;
+    
     @FXML
     public void setTipoCor(){
         int aux=1;
@@ -382,7 +396,14 @@ public class SpecCfgController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        codeplayer.ExchangeInfos.getInstance();
+       
+       root.prefWidthProperty().bind(ControleUI.getInstance().getSixthStage().widthProperty());
+       root.prefHeightProperty().bind(ControleUI.getInstance().getSixthStage().heightProperty());
+       topPane.prefWidthProperty().bind(root.prefWidthProperty());
+       topPane.prefHeightProperty().bind(root.prefHeightProperty());
+       topPane.widthProperty().addListener(event->centerSubTop());
+       
+       codeplayer.ExchangeInfos.getInstance();
        Numbands.valueProperty().addListener(listener->setNumBands());
        Intervalo.valueProperty().addListener(listerner->setIntervalo());
        carregarPerfis();
@@ -464,5 +485,11 @@ public class SpecCfgController implements Initializable {
        }
        
     }    
+
+    private void centerSubTop() {
+        subTopPane1.setLayoutX(2);
+    }
+
+    
     
 }
