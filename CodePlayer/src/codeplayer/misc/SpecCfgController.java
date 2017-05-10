@@ -62,6 +62,11 @@ public class SpecCfgController implements Initializable {
     @FXML
     private Pane CorGrad;
     @FXML
+    private int IndexFill;
+    @FXML
+    private int TipoDesIndex;
+    SpectrumCfg aux;
+    @FXML
     public void setTipoCor(){
         int aux=1;
         if(TipoCor.getValue()==null){
@@ -83,6 +88,9 @@ public class SpecCfgController implements Initializable {
                 ControleUI.getInstance().getSpectrumControl().setTypeFill(aux);
                 ControleUI.getInstance().getSpectrumControl().start(
                     ControleUI.getInstance().getSpectrumControl().getGc());
+                IndexFill=aux;
+                codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setPreenchimento(IndexFill);
+                codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
             }
             catch(Exception e){
                //vazio
@@ -108,6 +116,8 @@ public class SpecCfgController implements Initializable {
                 ControleUI.getInstance().getSpectrumControl().setNumC(aux);
                 ControleUI.getInstance().getSpectrumControl().start(
                     ControleUI.getInstance().getSpectrumControl().getGc());
+                codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setNumC(aux);
+                codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");                
             }
             catch(Exception e){
                 
@@ -131,6 +141,9 @@ public class SpecCfgController implements Initializable {
               ControleUI.getInstance().getSpectrumControl().setTypeDraw(aux);
                ControleUI.getInstance().getSpectrumControl().start(
                 ControleUI.getInstance().getSpectrumControl().getGc());
+              TipoDesIndex=aux;
+              codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setTipoDesenho(TipoDesIndex);
+              codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
             }
             catch(Exception e){
                //vazio
@@ -144,6 +157,9 @@ public class SpecCfgController implements Initializable {
                 ControleUI.getInstance().getSpectrumControl().setBlockC2(CorGrad2.getValue().toString());
                  ControleUI.getInstance().getSpectrumControl().start(
                  ControleUI.getInstance().getSpectrumControl().getGc());
+                 codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setSegundacorgrad(
+                 CorGrad2.getValue().toString());
+                 codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
             }
             catch(Exception e){
                //vazio
@@ -157,6 +173,9 @@ public class SpecCfgController implements Initializable {
                 ControleUI.getInstance().getSpectrumControl().setBlockC3(CorGrad3.getValue().toString());
                  ControleUI.getInstance().getSpectrumControl().start(
                  ControleUI.getInstance().getSpectrumControl().getGc());
+                 codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setTerceiracorgrad(
+                 CorGrad3.getValue().toString());
+                 codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
             }
             catch(Exception e){
                //vazio
@@ -170,6 +189,9 @@ public class SpecCfgController implements Initializable {
                 ControleUI.getInstance().getSpectrumControl().setBackgroundC(BackgroundColor.getValue().toString());
                  ControleUI.getInstance().getSpectrumControl().start(
                  ControleUI.getInstance().getSpectrumControl().getGc());
+                 codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setBackgroundColor(BackgroundColor
+                 .getValue().toString());
+                 codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
             }
             catch(Exception e){
                //vazio
@@ -183,6 +205,9 @@ public class SpecCfgController implements Initializable {
               ControleUI.getInstance().getSpectrumControl().setLabelC(LabelColor.getValue().toString());
               ControleUI.getInstance().getSpectrumControl().start(
                 ControleUI.getInstance().getSpectrumControl().getGc());
+             codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setLabelColor(
+                     LabelColor.getValue().toString());
+             codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
              }
              catch(Exception e){
                  //vazio
@@ -195,6 +220,8 @@ public class SpecCfgController implements Initializable {
             try{
                ControleUI.getInstance().getSpectrumControl().setBlockC(BarColor.getValue().toString()); 
                ControleUI.getInstance().getSpectrumControl().setBlockC1(BarColor.getValue().toString());
+               codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setBarColor(BarColor.getValue().toString());
+               codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
             }
             catch(Exception e){
                 //Vazio
@@ -208,6 +235,10 @@ public class SpecCfgController implements Initializable {
             try{
             ControleUI.getInstance().getSpectrumControl().start(
             ControleUI.getInstance().getSpectrumControl().getGc());
+            codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setNumBands(
+            (int)Numbands.getValue());
+            codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+                
             }
             catch(Exception e){
                 //Faz nada
@@ -221,18 +252,27 @@ public class SpecCfgController implements Initializable {
             try{
                 ControleUI.getInstance().getSpectrumControl().start(
                 ControleUI.getInstance().getSpectrumControl().getGc());
+                codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setIntervalo(1/Intervalo.getValue());
             }
             catch(Exception e){
-                //Faz nada
+                e.printStackTrace();
             }
         }
     }
     @FXML
     public void salvaPerfil(){
         if(!NomePerfil.getText().isEmpty()){
-            new SpectrumXML(NomePerfil.getText()).geraXMLfile(new SpectrumCfg(BackgroundColor.getValue().toString(),
-            LabelColor.getValue().toString(),BarColor.getValue().toString(),(int)Numbands.getValue(),
-            Intervalo.getValue()));
+            aux=new SpectrumCfg();
+            aux.setBackgroundColor(BackgroundColor.getValue().toString());
+            aux.setBarColor(BarColor.getValue().toString());
+            aux.setIntervalo(Intervalo.getValue());
+            aux.setLabelColor(LabelColor.getValue().toString());
+            aux.setNumBands((int)Numbands.getValue());
+            aux.setNumC(NumeroGradiente.getValue());
+            aux.setPreenchimento(IndexFill);
+            aux.setSegundacorgrad(CorGrad2.getValue().toString());
+            aux.setTerceiracorgrad(CorGrad3.getValue().toString());
+            aux.setTipoDesenho(TipoDesIndex);
             carregarPerfis();
             Perfil.setValue(NomePerfil.getText());
         }else{
@@ -266,21 +306,12 @@ public class SpecCfgController implements Initializable {
           public void changed(ObservableValue<? extends String> ov, String t, String t1) {
               if(Perfil.getValue()!=null){
               if(Perfil.getValue().equals("Default")){
-                    BackgroundColor.setValue(Color.web("201D1D"));
-                    LabelColor.setValue(Color.web("FFFFFF"));
-                    BarColor.setValue(Color.web("4169E1"));
-                    Intervalo.setValue(1/0.02);
-                    Numbands.setValue(64);
-                    setNumBands();
-                    setIntervalo();
-                    setBack();
-                    setLabel();
-                    setBar();
-                    codeplayer.ExchangeInfos.getInstance().setSpecCfg("Default");
+                    setDefault();
+                   codeplayer.ExchangeInfos.getInstance().setSpecCfg("Default");
               }else{
-                SpectrumCfg aux=
-                        new SpectrumXML(Perfil.getValue()).xmltoSpec(new File("PerfSpec"+Perfil.getValue()+".xml"));
-                Numbands.setValue(aux.getNumBands());
+            //    SpectrumCfg aux=
+                        //new SpectrumXML(Perfil.getValue()).xmltoSpec(new File("PerfSpec"+Perfil.getValue()+".xml"));
+              /*  Numbands.setValue(aux.getNumBands());
                 setNumBands();
                 Intervalo.setValue(aux.getIntervalo());
                 setIntervalo();
@@ -291,31 +322,47 @@ public class SpecCfgController implements Initializable {
                 BarColor.setValue(Color.web(aux.getBarColor()));
                 setBar();
                 NomePerfil.setText(Perfil.getValue());
-                codeplayer.ExchangeInfos.getInstance().setSpecCfg(Perfil.getValue());
+                codeplayer.ExchangeInfos.getInstance().setSpecCfg(Perfil.getValue());*/
               }
               }
           }
       });
+    }
+    
+    public void setDefault(){
+        BackgroundColor.setValue(Color.web("201D1D"));
+        LabelColor.setValue(Color.web("FFFFFF"));
+        BarColor.setValue(Color.web("4169E1"));
+        Intervalo.setValue(1/0.02);
+        Numbands.setValue(64);
+        this.TipoCor.setValue("Gradiente");
+        this.TipoDesenho.setValue("Suave");
+        NumeroGradiente.setValue(3);
+        CorGrad2.setValue(Color.web("0000FF"));
+        CorGrad3.setValue(Color.web("AACCFF"));
+        setNumBands();
+        setIntervalo();
+        setBack();
+        setLabel();
+        setBar();
+        codeplayer.ExchangeInfos.getInstance().setSpecCfg("Default");
     }
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        codeplayer.ExchangeInfos.getInstance();
        Numbands.valueProperty().addListener(listener->setNumBands());
        Intervalo.valueProperty().addListener(listerner->setIntervalo());
        carregarPerfis();
-       BackgroundColor.setValue(Color.web("201D1D"));
-       LabelColor.setValue(Color.web("FFFFFF"));
-       BarColor.setValue(Color.web("4169E1"));
-       Intervalo.setValue(1/0.02);
-       Numbands.setValue(64);
+       
        
        ObservableList<String> TipoCor= FXCollections.observableArrayList();
        TipoCor.add("Solid");
        TipoCor.add("Gradiente");
        this.TipoCor.setItems(TipoCor);
-       this.TipoCor.setValue("Gradiente");
+      
        
        ObservableList NumGrad=FXCollections.observableArrayList();
        NumGrad.add(2);
@@ -327,7 +374,7 @@ public class SpecCfgController implements Initializable {
        TipoDesenho.add("Barras");
        TipoDesenho.add("Suave");
        this.TipoDesenho.setItems(TipoDesenho);
-       this.TipoDesenho.setValue("Suave");
+
        
        Perfil.setValue(codeplayer.ExchangeInfos.getInstance().getSpecCfg());
        
@@ -336,6 +383,42 @@ public class SpecCfgController implements Initializable {
        this.NumeroGradiente.valueProperty().addListener(listener->setNumGrad());
        this.CorGrad2.valueProperty().addListener(listener->setGrad2());
        this.CorGrad3.valueProperty().addListener(listener->setGrad3());
+       
+       if("Default".equals(codeplayer.ExchangeInfos.getInstance().getSpecCfg())){
+           setDefault();
+       }
+        else if(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj()==null){
+            codeplayer.ExchangeInfos.getInstance().setSpecCfgObj(new SpectrumCfg());
+            System.err.println("vai3");
+       }
+       else if("Perfil nao salvo".equals(codeplayer.ExchangeInfos.getInstance().getSpecCfg())){
+            BackgroundColor.setValue(Color.web(codeplayer.ExchangeInfos.getInstance().
+                    getSpecCfgObj().getBackgroundColor()));
+            BarColor.setValue(Color.web(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getBarColor()));
+            CorGrad2.setValue(Color.web(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getSegundacorgrad()));
+            CorGrad3.setValue(Color.web(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getTerceiracorgrad()));
+            Intervalo.setValue(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getIntervalo());
+            LabelColor.setValue(Color.web(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getLabelColor()));
+            Numbands.setValue(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getNumBands());
+            NumeroGradiente.setValue(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getNumC());
+            if(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getTipoDesenho()==0){
+                this.TipoDesenho.setValue("Barras");
+            }
+            else if(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getTipoDesenho()==1){
+                this.TipoDesenho.setValue("Suave");
+            }
+            if(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getPreenchimento()==0){
+                this.TipoCor.setValue("Solid");
+            }
+            else if(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getPreenchimento()==1){
+                this.TipoCor.setValue("Gradiente");
+            }
+            
+            
+       }
+       else{
+           
+       }
        
     }    
     

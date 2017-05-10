@@ -39,7 +39,7 @@ public class SpectrumController implements Initializable {
     private final int maxf=25600;
     
     //variáveis para a visualização
-    private int bands = 256,tresh=-100,typeFill=1,numC=2,typeDraw=1;
+    private int bands = 64,tresh=-100,typeFill=1,numC=3,typeDraw=1;
     private double inter=0.02;
     private String backgroundC ="201D1D",labelC="FFFFFF",blockC="4169E1",blockC1="FF0000",blockC2="0000FF",blockC3="AACCFF";
     private GraphicsContext gc;

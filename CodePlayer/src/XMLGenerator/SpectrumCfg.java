@@ -17,9 +17,17 @@ public class SpectrumCfg {
     private double intervalo;
     private int preenchimento; //Cor Solida ou Gradiente
     private int numC; //Cores do gradiente 3
-    private String primeiracorgrad;
     private String segundacorgrad;
     private String terceiracorgrad;
+    private int TipoDesenho;
+
+    public int getTipoDesenho() {
+        return TipoDesenho;
+    }
+
+    public void setTipoDesenho(int TipoDesenho) {
+        this.TipoDesenho = TipoDesenho;
+    }
 
     public int getPreenchimento() {
         return preenchimento;
@@ -35,14 +43,6 @@ public class SpectrumCfg {
 
     public void setNumC(int numC) {
         this.numC = numC;
-    }
-
-    public String getPrimeiracorgrad() {
-        return primeiracorgrad;
-    }
-
-    public void setPrimeiracorgrad(String primeiracorgrad) {
-        this.primeiracorgrad = primeiracorgrad;
     }
 
     public String getSegundacorgrad() {
@@ -102,14 +102,9 @@ public class SpectrumCfg {
         this.numBands = numBands;
     }
 
-    public SpectrumCfg(String BackgroundColor, String LabelColor, String BarColor, int numBands, double intervalo) {
-        this.BackgroundColor = BackgroundColor;
-        this.LabelColor = LabelColor;
-        this.BarColor = BarColor;
-        this.numBands = numBands;
-        this.intervalo = intervalo;
+    public SpectrumCfg(){
+        
     }
-    
     
     
 }
