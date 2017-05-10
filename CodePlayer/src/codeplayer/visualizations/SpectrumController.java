@@ -8,8 +8,10 @@ package codeplayer.visualizations;
 import codeplayer.ControleUI;
 import codeplayer.Mp3Buf;
 import java.net.URL;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -37,6 +39,8 @@ public class SpectrumController implements Initializable {
     //variáveis para o funcionamento(NÃO MEXER)
     private final int spaceX1 = 50,spaceX2=30,spaceY1 = 10,spaceY2=25,strokeW = 2;
     private final int maxf=25600;
+    private double origin[] = new double[2];
+    private boolean needScale = true;
     
     //variáveis para a visualização
     private int bands = 64,tresh=-100,typeFill=1,numC=3,typeDraw=1;
@@ -145,6 +149,7 @@ public class SpectrumController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * @param gc
      */
     
     public void staticElements(GraphicsContext gc){
@@ -152,6 +157,7 @@ public class SpectrumController implements Initializable {
         gc.setFill(Color.web(backgroundC));
         
         gc.fillRect(0, 0, specT.getWidth(), specT.getHeight());
+        gc.setStroke(Color.WHITE);
         //linha vertical
         gc.strokeLine(spaceX1, spaceY1, spaceX1, (specT.getHeight()-spaceY2));
         //linha horizontal
@@ -196,8 +202,8 @@ public class SpectrumController implements Initializable {
         gc.setLineWidth(strokeW);
         specT.widthProperty().bind(pane.widthProperty());
         specT.heightProperty().bind(pane.heightProperty());
-        pane.widthProperty().addListener(event -> staticElements(gc));
-        pane.heightProperty().addListener(event -> staticElements(gc));        
+        pane.widthProperty().addListener(event -> start(gc));
+        pane.heightProperty().addListener(event -> start(gc));        
         setBackgroundC(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getBackgroundColor());
         setBands(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getNumBands());
         setBlockC(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getBarColor());
@@ -237,34 +243,73 @@ public class SpectrumController implements Initializable {
         }
     }
     
-    private void drawMetod(int typeDraw, GraphicsContext gc, int displaceX, float[] mag){
+    private void drawMetod(int typeDraw, GraphicsContext gc, double displaceX, float[] mag){
         if(typeDraw==0){
+            needScale = true;
             for(int i=0;i<bands;i++){
                 gc.fillRect((displaceX),((specT.getHeight()-strokeW)-prop((mag[i]-tresh))),((specT.getWidth()-spaceX1-strokeW-spaceX2)/bands),(prop((mag[i]-tresh))-spaceY2));
                 displaceX+=(specT.getWidth()-spaceX1-strokeW-spaceX2)/bands;            
             }
-        }else{
+        }else if(typeDraw==1){
+            needScale = true;
             double[] cordX = new double[((bands*2)+3)];
-                double[] cordY = new double[((bands*2)+3)];
-                cordX[0] = (displaceX);
-                cordY[0] = (specT.getHeight()-spaceY2-strokeW);
+            double[] cordY = new double[((bands*2)+3)];
+            cordX[0] = (displaceX);
+            cordY[0] = (specT.getHeight()-spaceY2-strokeW);
 
-                for(int i=0;i<bands;i++){
-                    cordX[i+1] = displaceX;
-                    cordY[i+1] = (specT.getHeight()-spaceY2-prop((mag[i]-tresh))-strokeW);
-                    displaceX+=(specT.getWidth()-spaceX1-strokeW-spaceX2)/bands;
-                   
-                }
-                cordX[bands+1] = (displaceX+1);
-                cordY[bands+1] = (specT.getHeight()-spaceY2-strokeW);
-                cordX[bands+2] = (specT.getWidth()-spaceX2);
-                cordY[bands+2] = (specT.getHeight()-spaceY2-strokeW);
-                gc.fillPolygon(cordX, cordY,(bands+3));
+            for(int i=0;i<bands;i++){
+                cordX[i+1] = displaceX;
+                cordY[i+1] = (specT.getHeight()-spaceY2-prop((mag[i]-tresh))-strokeW);
+                displaceX+=(specT.getWidth()-spaceX1-strokeW-spaceX2)/bands;
+
+            }
+            cordX[bands+1] = (displaceX+1);
+            cordY[bands+1] = (specT.getHeight()-spaceY2-strokeW);
+            cordX[bands+2] = (specT.getWidth()-spaceX2);
+            cordY[bands+2] = (specT.getHeight()-spaceY2-strokeW);
+            gc.fillPolygon(cordX, cordY,(bands+3));
+        }else{
+            needScale=false;
+            gc.setFill(Color.web(backgroundC));
+        
+            gc.fillRect(0, 0, specT.getWidth(), specT.getHeight());
+            fillMetod(typeFill);
+            origin[0] = (pane.getWidth()/2);
+            origin[1] = ((pane.getHeight()/2)-5);
+            double baseR=(pane.getHeight()*0.20),uBaseR=(pane.getHeight()*0.22),expanMax=0;
+            
+            double[] cordX=new double[(bands+1)*2];
+            Deque<Double> innerCordX = new ArrayDeque<>();
+            double[] cordY=new double[(bands+1)*2];
+            Deque<Double> innerCordY = new ArrayDeque<>();
+            double passo = ((double) 360)/bands,dispAng=0;
+            for(int i=0;i<bands;i++){
+                expanMax=(((mag[i]-tresh)/(-tresh))*(origin[1]-uBaseR));
+                innerCordX.push(origin[0]+getX(baseR,dispAng));
+                innerCordY.push(origin[1]+getY(baseR,dispAng));
+                cordX[i]=(origin[0]+getX((expanMax+uBaseR),dispAng));
+                cordY[i]=(origin[1]+getY((expanMax+uBaseR),dispAng));
+                dispAng+=passo;
+                
+            }
+            
+            dispAng+=passo;
+            innerCordX.push(origin[0]+getX(baseR,dispAng));
+            innerCordY.push(origin[1]+getY(baseR,dispAng));
+            cordX[bands]=(origin[0]+getX(uBaseR,dispAng));
+            cordY[bands]=(origin[1]+getY(uBaseR,dispAng));
+
+            int i=1;
+            while(!innerCordX.isEmpty()){
+                cordX[bands+i]=innerCordX.pop();
+                cordY[bands+i]=innerCordY.pop();
+                i++;
+            }
+            gc.fillPolygon(cordX, cordY, ((bands+1)*2));
         }
     }
     
     public void start(GraphicsContext gc){
-        staticElements(gc);
         if(Mp3Buf.getInstance().checkmp()!=null){
             Mp3Buf.getInstance().getMp().setAudioSpectrumThreshold(tresh);
             Mp3Buf.getInstance().getMp().setAudioSpectrumNumBands(bands);
@@ -273,9 +318,11 @@ public class SpectrumController implements Initializable {
                 @Override
                 public void spectrumDataUpdate(double d, double d1, float[] mag, float[] phase) {
                     
-                    int displaceX=spaceX1+strokeW;
+                    double displaceX=spaceX1+strokeW;
                     gc.clearRect(0, 0, specT.getWidth(), specT.getHeight());
-                    staticElements(gc);
+                    if(needScale){
+                        staticElements(gc);
+                    }
                     //cor do grafico
                     fillMetod(typeFill);
                     
@@ -285,6 +332,14 @@ public class SpectrumController implements Initializable {
             });
         }
         
+    }
+    
+    private double getX(double V,double ang){
+        return(V*Math.sin(Math.toRadians(ang)));
+    }
+    
+    private double getY(double V,double ang){
+        return(V*Math.cos(Math.toRadians(ang)));
     }
     
 }

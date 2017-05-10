@@ -13,7 +13,7 @@
    <children>
       <Pane layoutX="44.0" layoutY="21.0">
          <children>
-            <Slider fx:id="Numbands" layoutX="6.0" layoutY="89.0" max="256.0" min="2.0" showTickLabels="true" showTickMarks="true" />
+            <Slider fx:id="Numbands" layoutX="6.0" layoutY="89.0" max="360.0" min="3.0" showTickLabels="true" showTickMarks="true" />
             <ColorPicker fx:id="BackgroundColor" layoutX="3.0" layoutY="154.0" onAction="#setBack" />
             <ColorPicker fx:id="LabelColor" layoutX="3.0" layoutY="210.0" onAction="#setLabel" />
             <Slider fx:id="Intervalo" layoutX="3.0" layoutY="24.0" majorTickUnit="10.0" max="120.0" min="24.0" showTickLabels="true" showTickMarks="true" />

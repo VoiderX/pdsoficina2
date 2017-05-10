@@ -135,6 +135,8 @@ public class SpecCfgController implements Initializable {
         }
         else if(TipoDesenho.getValue().equals("Suave")){
             aux=1;
+        }else if(TipoDesenho.getValue().equals("Radial")){
+            aux=2;
         }
         if(ControleUI.getInstance().getSpectrumControl()!=null){
             try{
@@ -373,6 +375,7 @@ public class SpecCfgController implements Initializable {
        ObservableList TipoDesenho=FXCollections.observableArrayList();
        TipoDesenho.add("Barras");
        TipoDesenho.add("Suave");
+       TipoDesenho.add("Radial");
        this.TipoDesenho.setItems(TipoDesenho);
 
        
@@ -406,6 +409,9 @@ public class SpecCfgController implements Initializable {
             }
             else if(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getTipoDesenho()==1){
                 this.TipoDesenho.setValue("Suave");
+            }
+            else if(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getTipoDesenho()==2){
+                this.TipoDesenho.setValue("Radial");
             }
             if(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getPreenchimento()==0){
                 this.TipoCor.setValue("Solid");
