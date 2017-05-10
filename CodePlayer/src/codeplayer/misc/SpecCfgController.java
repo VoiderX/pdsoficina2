@@ -266,72 +266,87 @@ public class SpecCfgController implements Initializable {
     }
     @FXML
     public void salvaPerfil(){
-        if(!NomePerfil.getText().isEmpty()){
-            aux=new SpectrumCfg();
-            aux.setBackgroundColor(BackgroundColor.getValue().toString());
-            aux.setBarColor(BarColor.getValue().toString());
-            aux.setIntervalo(Intervalo.getValue());
-            aux.setLabelColor(LabelColor.getValue().toString());
-            aux.setNumBands((int)Numbands.getValue());
-            aux.setNumC(NumeroGradiente.getValue());
-            aux.setPreenchimento(IndexFill);
-            aux.setSegundacorgrad(CorGrad2.getValue().toString());
-            aux.setTerceiracorgrad(CorGrad3.getValue().toString());
-            aux.setTipoDesenho(TipoDesIndex);
-            carregarPerfis();
-            Perfil.setValue(NomePerfil.getText());
-        }else{
-            System.out.println("Campo Vazio");
+        try{
+            if(!NomePerfil.getText().isEmpty()){
+                aux=new SpectrumCfg();
+                aux.setBackgroundColor(BackgroundColor.getValue().toString());
+                aux.setBarColor(BarColor.getValue().toString());
+                aux.setIntervalo(Intervalo.getValue());
+                aux.setLabelColor(LabelColor.getValue().toString());
+                aux.setNumBands((int)Numbands.getValue());
+                aux.setNumC(NumeroGradiente.getValue());
+                aux.setPreenchimento(IndexFill);
+                aux.setSegundacorgrad(CorGrad2.getValue().toString());
+                aux.setTerceiracorgrad(CorGrad3.getValue().toString());
+                aux.setTipoDesenho(TipoDesIndex);
+                SpectrumXML xmltemp= new SpectrumXML(NomePerfil.getText());
+                xmltemp.geraXMLfile(aux);
+                carregarPerfis();
+                Perfil.setValue(NomePerfil.getText());
+            }else{
+                System.out.println("Campo Vazio");
+            }
+   
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
     @FXML
     public void excluiPerfil(){
         
     }
-    public void carregarPerfis(){
-      ObservableList<String> itemselect=FXCollections.observableArrayList();
-      itemselect.add("Default");
-      ArrayList<String> nomesperfis=SpectrumXML.procuraArquivosXML();
+    public void carregarPerfis() {
+        ObservableList<String> itemselect = FXCollections.observableArrayList();
+        itemselect.add("Default");
+        ArrayList<String> nomesperfis = SpectrumXML.procuraArquivosXML();
 
-      for(int i=0;i<nomesperfis.size();i++){ //Limpa o nome do arquivo e deixa só o nome do pefil
-          StringBuilder aux=new StringBuilder();
-          aux.insert(0, nomesperfis.get(i));
-          aux.replace(0, 8, "");
-          aux.reverse();
-          aux.replace(0, 4, "");
-          aux.reverse();
-          itemselect.add(aux.toString());
-      }
-      Perfil.setItems((ObservableList<String>)itemselect);
-      //Detectando alterações de estado no ChoiceBox
-     
-      Perfil.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-          //Listener identifica mudanças na seleção
-          @Override
-          public void changed(ObservableValue<? extends String> ov, String t, String t1) {
-              if(Perfil.getValue()!=null){
-              if(Perfil.getValue().equals("Default")){
-                    setDefault();
-                   codeplayer.ExchangeInfos.getInstance().setSpecCfg("Default");
-              }else{
-            //    SpectrumCfg aux=
-                        //new SpectrumXML(Perfil.getValue()).xmltoSpec(new File("PerfSpec"+Perfil.getValue()+".xml"));
-              /*  Numbands.setValue(aux.getNumBands());
-                setNumBands();
-                Intervalo.setValue(aux.getIntervalo());
-                setIntervalo();
-                BackgroundColor.setValue(Color.web(aux.getBackgroundColor()));
-                setBack();
-                LabelColor.setValue(Color.web(aux.getLabelColor()));
-                setLabel();
-                BarColor.setValue(Color.web(aux.getBarColor()));
-                setBar();
-                NomePerfil.setText(Perfil.getValue());
-                codeplayer.ExchangeInfos.getInstance().setSpecCfg(Perfil.getValue());*/
-              }
-              }
-          }
-      });
+        for (int i = 0; i < nomesperfis.size(); i++) { //Limpa o nome do arquivo e deixa só o nome do pefil
+            StringBuilder aux = new StringBuilder();
+            aux.insert(0, nomesperfis.get(i));
+            aux.replace(0, 8, "");
+            aux.reverse();
+            aux.replace(0, 4, "");
+            aux.reverse();
+            itemselect.add(aux.toString());
+        }
+        Perfil.setItems((ObservableList<String>) itemselect);
+        //Detectando alterações de estado no ChoiceBox
+
+        Perfil.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            //Listener identifica mudanças na seleção
+            @Override
+            public void changed(ObservableValue<? extends String> ov, String t, String t1) {
+                if (Perfil.getValue() != null) {
+                    if (Perfil.getValue().equals("Default")) {
+                        setDefault();
+                    } else {
+                        SpectrumCfg cfg = new SpectrumXML(Perfil.getValue()).xmltoSpec(new File("PerfSpec" + Perfil.getValue() + ".xml"));
+                        Numbands.setValue(cfg.getNumBands());
+                        BackgroundColor.setValue(Color.web(cfg.getBackgroundColor()));
+                        BarColor.setValue(Color.web(cfg.getBarColor()));
+                        CorGrad2.setValue(Color.web(cfg.getSegundacorgrad()));
+                        CorGrad3.setValue(Color.web(cfg.getTerceiracorgrad()));
+                        if (cfg.getPreenchimento() == 0) {
+                            TipoCor.setValue("Solid");
+                        } else if (cfg.getPreenchimento() == 1) {
+                            TipoCor.setValue("Gradiente");
+                        }
+                        if (cfg.getTipoDesenho() == 0) {
+                            TipoDesenho.setValue("Barras");
+                        } else if (cfg.getTipoDesenho() == 1) {
+                            TipoDesenho.setValue("Suave");
+                        } else if (cfg.getTipoDesenho() == 2) {
+                            TipoDesenho.setValue("Radial");
+                        }
+                        NumeroGradiente.setValue(cfg.getNumC());
+                        LabelColor.setValue(Color.web(cfg.getLabelColor()));
+                        Intervalo.setValue(cfg.getIntervalo());
+                    }
+                    codeplayer.ExchangeInfos.getInstance().setSpecCfg(Perfil.getValue());
+                    NomePerfil.setText(Perfil.getValue());
+                }
+            }
+        });
     }
     
     public void setDefault(){
@@ -393,7 +408,8 @@ public class SpecCfgController implements Initializable {
        if("Default".equals(codeplayer.ExchangeInfos.getInstance().getSpecCfg())){
            setDefault();
        }
-        else if(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj()==null){
+        else if(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj()==null &&
+                !codeplayer.ExchangeInfos.getInstance().getSpecCfg().equals("Default")){
             codeplayer.ExchangeInfos.getInstance().setSpecCfgObj(new SpectrumCfg());
             System.err.println("vai3");
        }
@@ -421,12 +437,10 @@ public class SpecCfgController implements Initializable {
             }
             else if(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getPreenchimento()==1){
                 this.TipoCor.setValue("Gradiente");
-            }
-            
-            
+            }                      
        }
        else{
-           
+           Perfil.setValue(codeplayer.ExchangeInfos.getInstance().getSpecCfg());
        }
        
     }    

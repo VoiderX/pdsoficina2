@@ -192,7 +192,7 @@ public final class ControleUI{
         spectrumcfgFXML=FXMLLoader.load(getClass().getResource("misc/SpecCfg.fxml"));
         spectrumcfgScene=new Scene(spectrumcfgFXML);
         sixthStage.setScene(spectrumcfgScene);
-        sixthStage.setTitle(("Informações sobre o programa"));
+        sixthStage.setTitle(("Configurações do Visualizador Espectral"));
         sixthStage.show();
     }
     catch(Exception e){
