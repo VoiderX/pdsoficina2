@@ -88,14 +88,15 @@ public class SpecCfgController implements Initializable {
                 ControleUI.getInstance().getSpectrumControl().setTypeFill(aux);
                 ControleUI.getInstance().getSpectrumControl().start(
                     ControleUI.getInstance().getSpectrumControl().getGc());
-                IndexFill=aux;
-                codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setPreenchimento(IndexFill);
-                codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+                
             }
             catch(Exception e){
                //vazio
-            }
+            }            
         }
+        IndexFill=aux;
+        codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setPreenchimento(IndexFill);
+        codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
     }
     @FXML
     public void setNumGrad(){
@@ -116,13 +117,14 @@ public class SpecCfgController implements Initializable {
                 ControleUI.getInstance().getSpectrumControl().setNumC(aux);
                 ControleUI.getInstance().getSpectrumControl().start(
                     ControleUI.getInstance().getSpectrumControl().getGc());
-                codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setNumC(aux);
-                codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");                
+                            
             }
             catch(Exception e){
                 
             }
         }
+        codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setNumC(aux);
+        codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");    
     }
     @FXML
     public void setTipoDes(){
@@ -143,14 +145,14 @@ public class SpecCfgController implements Initializable {
               ControleUI.getInstance().getSpectrumControl().setTypeDraw(aux);
                ControleUI.getInstance().getSpectrumControl().start(
                 ControleUI.getInstance().getSpectrumControl().getGc());
-              TipoDesIndex=aux;
-              codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setTipoDesenho(TipoDesIndex);
-              codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
             }
             catch(Exception e){
                //vazio
             }
         }
+        TipoDesIndex=aux;
+        codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setTipoDesenho(TipoDesIndex);
+        codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");        
     }
     @FXML
     public void setGrad2(){
@@ -158,15 +160,15 @@ public class SpecCfgController implements Initializable {
             try{
                 ControleUI.getInstance().getSpectrumControl().setBlockC2(CorGrad2.getValue().toString());
                  ControleUI.getInstance().getSpectrumControl().start(
-                 ControleUI.getInstance().getSpectrumControl().getGc());
-                 codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setSegundacorgrad(
-                 CorGrad2.getValue().toString());
-                 codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+                 ControleUI.getInstance().getSpectrumControl().getGc());                 
             }
             catch(Exception e){
                //vazio
             }
         }
+         codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setSegundacorgrad(
+                 CorGrad2.getValue().toString());
+                 codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
     }
     @FXML
     public void setGrad3(){
@@ -174,15 +176,15 @@ public class SpecCfgController implements Initializable {
             try{
                 ControleUI.getInstance().getSpectrumControl().setBlockC3(CorGrad3.getValue().toString());
                  ControleUI.getInstance().getSpectrumControl().start(
-                 ControleUI.getInstance().getSpectrumControl().getGc());
-                 codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setTerceiracorgrad(
-                 CorGrad3.getValue().toString());
-                 codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+                 ControleUI.getInstance().getSpectrumControl().getGc());                 
             }
             catch(Exception e){
                //vazio
             }
-        }        
+        }
+        codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setTerceiracorgrad(
+                 CorGrad3.getValue().toString());
+                 codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
     }
     @FXML
     public void setBack(){
@@ -190,15 +192,15 @@ public class SpecCfgController implements Initializable {
             try{
                 ControleUI.getInstance().getSpectrumControl().setBackgroundC(BackgroundColor.getValue().toString());
                  ControleUI.getInstance().getSpectrumControl().start(
-                 ControleUI.getInstance().getSpectrumControl().getGc());
-                 codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setBackgroundColor(BackgroundColor
-                 .getValue().toString());
-                 codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+                 ControleUI.getInstance().getSpectrumControl().getGc());                
             }
             catch(Exception e){
                //vazio
             }
         }
+         codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setBackgroundColor(BackgroundColor
+                 .getValue().toString());
+                 codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");    
     }
     @FXML
     public void setLabel(){
@@ -206,29 +208,29 @@ public class SpecCfgController implements Initializable {
              try{
               ControleUI.getInstance().getSpectrumControl().setLabelC(LabelColor.getValue().toString());
               ControleUI.getInstance().getSpectrumControl().start(
-                ControleUI.getInstance().getSpectrumControl().getGc());
-             codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setLabelColor(
-                     LabelColor.getValue().toString());
-             codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+                ControleUI.getInstance().getSpectrumControl().getGc());             
              }
              catch(Exception e){
                  //vazio
              }
         }
+        codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setLabelColor(
+                     LabelColor.getValue().toString());
+             codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
     }
     @FXML
     public void setBar(){
         if(ControleUI.getInstance().getSpectrumControl()!=null){
             try{
                ControleUI.getInstance().getSpectrumControl().setBlockC(BarColor.getValue().toString()); 
-               ControleUI.getInstance().getSpectrumControl().setBlockC1(BarColor.getValue().toString());
-               codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setBarColor(BarColor.getValue().toString());
-               codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+               ControleUI.getInstance().getSpectrumControl().setBlockC1(BarColor.getValue().toString());              
             }
             catch(Exception e){
                 //Vazio
             }
         }
+         codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setBarColor(BarColor.getValue().toString());
+               codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
     }
     @FXML
     public void setNumBands(){
@@ -236,16 +238,16 @@ public class SpecCfgController implements Initializable {
             ControleUI.getInstance().getSpectrumControl().setBands((int)Numbands.getValue());
             try{
             ControleUI.getInstance().getSpectrumControl().start(
-            ControleUI.getInstance().getSpectrumControl().getGc());
-            codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setNumBands(
-            (int)Numbands.getValue());
-            codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+            ControleUI.getInstance().getSpectrumControl().getGc());         
                 
             }
             catch(Exception e){
                 //Faz nada
             }
         }
+         codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setNumBands(
+            (int)Numbands.getValue());
+            codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
     }
     @FXML
     public void setIntervalo(){
@@ -253,13 +255,14 @@ public class SpecCfgController implements Initializable {
             ControleUI.getInstance().getSpectrumControl().setInter(1/Intervalo.getValue());
             try{
                 ControleUI.getInstance().getSpectrumControl().start(
-                ControleUI.getInstance().getSpectrumControl().getGc());
-                codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setIntervalo(1/Intervalo.getValue());
+                ControleUI.getInstance().getSpectrumControl().getGc());                
             }
             catch(Exception e){
                 e.printStackTrace();
             }
         }
+        codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setIntervalo(1/Intervalo.getValue());
+                codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
     }
     @FXML
     public void salvaPerfil(){
@@ -366,13 +369,13 @@ public class SpecCfgController implements Initializable {
        this.TipoCor.setItems(TipoCor);
       
        
-       ObservableList NumGrad=FXCollections.observableArrayList();
-       NumGrad.add(2);
-       NumGrad.add(3);
+       ObservableList<Integer> NumGrad=FXCollections.observableArrayList();
+       NumGrad.add((Integer)2);
+       NumGrad.add((Integer)3);
        NumeroGradiente.setItems(NumGrad);
-       NumeroGradiente.setValue(3);
+       NumeroGradiente.setValue((Integer)3);
        
-       ObservableList TipoDesenho=FXCollections.observableArrayList();
+       ObservableList<String> TipoDesenho=FXCollections.observableArrayList();
        TipoDesenho.add("Barras");
        TipoDesenho.add("Suave");
        TipoDesenho.add("Radial");
