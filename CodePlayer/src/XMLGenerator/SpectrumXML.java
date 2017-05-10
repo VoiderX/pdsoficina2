@@ -64,5 +64,23 @@ public class SpectrumXML {
            nomesarq.add(auxvet[i].getName());
         }
         return nomesarq;
+    }
+        public static ArrayList<String> procuraArquivosXML(String Tipo){
+        ArrayList<String> nomesarq= new ArrayList<>();
+        File aux= new File(".");
+        File auxvet[]=aux.listFiles(new FileFilter() {
+
+            @Override
+            public boolean accept(File file) {
+                if(file.getName().contains(Tipo)){
+                    return true;
+                }
+                return false;
+            }
+        });
+        for(int i=0;i<auxvet.length;i++){
+           nomesarq.add(auxvet[i].getName());
+        }
+        return nomesarq;
     }    
 }

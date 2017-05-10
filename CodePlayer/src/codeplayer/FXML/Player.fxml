@@ -42,6 +42,11 @@
       <Slider fx:id="SlidVol" blockIncrement="1.0" layoutX="45.0" layoutY="481.0" onMouseReleased="#changeSliderVol" showTickLabels="true" showTickMarks="true" />
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="841.0">
         <menus>
+            <Menu mnemonicParsing="false" text="Index">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#testIndex" text="Teste" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Visualizações">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#carregaOsciloscope" text="Osciloscópio" />

@@ -5,8 +5,14 @@
  */
 package codeplayer.FXML;
 
+import XMLGenerator.SpectrumXML;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -33,6 +39,22 @@ public class IndexFXMLController implements Initializable {
     Pane newUser;
     @FXML
     Pane login;
+    
+    @FXML
+    public void criaUsuario(){
+        new File("User"+newName.getText()).mkdir();
+    }
+    @FXML
+    public void go(){
+        
+    }
+    public void carregaPerfis(){
+      ArrayList<String> aux= SpectrumXML.procuraArquivosXML("User");
+      ObservableList<String> oal=FXCollections.observableArrayList();
+      for(int i=0;i<aux.size();i++){
+          
+      }
+    }
     /**
      * Initializes the controller class.
      */

@@ -259,6 +259,10 @@ public class PlayerController implements Initializable {
         // TODO
         imagem.setSmooth(true);
         SlidVol.setValue(100);
-    }    
+    }
+    @FXML
+    public void testIndex(){
+        ControleUI.getInstance().mostraIndex();
+    }
     
 }
