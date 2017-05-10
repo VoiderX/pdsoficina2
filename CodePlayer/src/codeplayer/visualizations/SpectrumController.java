@@ -23,6 +23,7 @@ import javafx.scene.media.AudioSpectrumListener;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
 
 /**
@@ -153,10 +154,7 @@ public class SpectrumController implements Initializable {
      */
     
     public void staticElements(GraphicsContext gc){
-        //background
-        gc.setFill(Color.web(backgroundC));
-        
-        gc.fillRect(0, 0, specT.getWidth(), specT.getHeight());
+        //cor dos labels
         gc.setStroke(Color.WHITE);
         //linha vertical
         gc.strokeLine(spaceX1, spaceY1, spaceX1, (specT.getHeight()-spaceY2));
@@ -227,18 +225,43 @@ public class SpectrumController implements Initializable {
             gc.setFill(Color.web(blockC));
         }else{
             if(numC==2){
-                gc.setFill(new LinearGradient(0, 0, 0, 1, true, 
+                if(typeDraw!=2){
+                    gc.setFill(new LinearGradient(0, 0, 0, 1, true, 
                         CycleMethod.NO_CYCLE,
                         Arrays.asList(
                                 new Stop(0.3,Color.web(blockC1)),
                                 new Stop(1,Color.web(blockC2)))));
-            }else{
-                gc.setFill(new LinearGradient(0, 0, 0, 1, true, 
-                        CycleMethod.NO_CYCLE,
-                        Arrays.asList(
+                }else{
+                    gc.setFill(new RadialGradient(0, 0.35, 
+                            0.45, 
+                            0.45,
+                            0.5, 
+                            true, 
+                            CycleMethod.NO_CYCLE, 
+                            Arrays.asList(
                                 new Stop(0.3,Color.web(blockC1)),
-                                new Stop(0.6,Color.web(blockC2)),
-                                new Stop(1.0, Color.web(blockC3)))));
+                                new Stop(1,Color.web(blockC2)))));
+                }
+            }else{
+                if(typeDraw!=2){
+                    gc.setFill(new LinearGradient(0, 0, 0, 1, true, 
+                            CycleMethod.NO_CYCLE,
+                            Arrays.asList(
+                                    new Stop(0.3,Color.web(blockC1)),
+                                    new Stop(0.6,Color.web(blockC2)),
+                                    new Stop(1.0, Color.web(blockC3)))));
+                }else{
+                    gc.setFill(new RadialGradient(0, 0.35, 
+                            0.5, 
+                            0.5,
+                            0.5, 
+                            true, 
+                            CycleMethod.NO_CYCLE, 
+                            Arrays.asList(
+                                    new Stop(0.3,Color.web(blockC1)),
+                                    new Stop(0.6,Color.web(blockC2)),
+                                    new Stop(1.0, Color.web(blockC3)))));
+                }
             }
         }
     }
@@ -270,9 +293,6 @@ public class SpectrumController implements Initializable {
             gc.fillPolygon(cordX, cordY,(bands+3));
         }else{
             needScale=false;
-            gc.setFill(Color.web(backgroundC));
-        
-            gc.fillRect(0, 0, specT.getWidth(), specT.getHeight());
             fillMetod(typeFill);
             origin[0] = (pane.getWidth()/2);
             origin[1] = ((pane.getHeight()/2)-5);
@@ -283,21 +303,20 @@ public class SpectrumController implements Initializable {
             double[] cordY=new double[(bands+1)*2];
             Deque<Double> innerCordY = new ArrayDeque<>();
             double passo = ((double) 360)/bands,dispAng=0;
-            for(int i=0;i<bands;i++){
-                expanMax=(((mag[i]-tresh)/(-tresh))*(origin[1]-uBaseR));
+            for(int i=0;i<(bands+1);i++){
                 innerCordX.push(origin[0]+getX(baseR,dispAng));
                 innerCordY.push(origin[1]+getY(baseR,dispAng));
-                cordX[i]=(origin[0]+getX((expanMax+uBaseR),dispAng));
-                cordY[i]=(origin[1]+getY((expanMax+uBaseR),dispAng));
+                if(i<bands){
+                    expanMax=(((mag[i]-tresh)/(-tresh))*(origin[1]-uBaseR));
+                    cordX[i]=(origin[0]+getX((expanMax+uBaseR),dispAng));
+                    cordY[i]=(origin[1]+getY((expanMax+uBaseR),dispAng));
+                }else{
+                    cordX[i]=(origin[0]+getX(uBaseR,dispAng));
+                    cordY[i]=(origin[1]+getY(uBaseR,dispAng));
+                }
                 dispAng+=passo;
                 
             }
-            
-            dispAng+=passo;
-            innerCordX.push(origin[0]+getX(baseR,dispAng));
-            innerCordY.push(origin[1]+getY(baseR,dispAng));
-            cordX[bands]=(origin[0]+getX(uBaseR,dispAng));
-            cordY[bands]=(origin[1]+getY(uBaseR,dispAng));
 
             int i=1;
             while(!innerCordX.isEmpty()){
@@ -319,7 +338,13 @@ public class SpectrumController implements Initializable {
                 public void spectrumDataUpdate(double d, double d1, float[] mag, float[] phase) {
                     
                     double displaceX=spaceX1+strokeW;
+                    //limpa o canvas
                     gc.clearRect(0, 0, specT.getWidth(), specT.getHeight());
+                    //redesenha o fundo
+                    gc.setFill(Color.web(backgroundC));
+                    gc.fillRect(0, 0, specT.getWidth(), specT.getHeight());
+                    
+                    //desenha os labels se precisar
                     if(needScale){
                         staticElements(gc);
                     }
