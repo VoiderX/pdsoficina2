@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioSpectrumListener;
 import javafx.scene.paint.Color;
@@ -311,8 +312,9 @@ public class SpectrumController implements Initializable {
                     cordX[i]=(origin[0]+getX((expanMax+uBaseR),dispAng));
                     cordY[i]=(origin[1]+getY((expanMax+uBaseR),dispAng));
                 }else{
-                    cordX[i]=(origin[0]+getX(uBaseR,dispAng));
-                    cordY[i]=(origin[1]+getY(uBaseR,dispAng));
+                    expanMax=(((mag[0]-tresh)/(-tresh))*(origin[1]-uBaseR));
+                    cordX[i]=(origin[0]+getX(expanMax+uBaseR,dispAng));
+                    cordY[i]=(origin[1]+getY(expanMax+uBaseR,dispAng));
                 }
                 dispAng+=passo;
                 
@@ -367,4 +369,14 @@ public class SpectrumController implements Initializable {
         return(V*Math.cos(Math.toRadians(ang)));
     }
     
+    @FXML
+     public void setFS(MouseEvent evt){//Metodo para reproduzir uma música selecionada na tabela a partir do Index
+        try{
+            if(evt.getClickCount()==2){
+                ControleUI.getInstance().getFourthStage().setMaximized(!ControleUI.getInstance().getFourthStage().isMaximized());
+           }
+        }catch(Exception e){
+            //
+        }
+     }
 }
