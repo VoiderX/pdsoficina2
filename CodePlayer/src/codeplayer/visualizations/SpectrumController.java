@@ -9,16 +9,17 @@ import codeplayer.ControleUI;
 import codeplayer.Mp3Buf;
 import java.net.URL;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
-import java.util.List;
 import java.util.ResourceBundle;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioSpectrumListener;
 import javafx.scene.paint.Color;
@@ -37,6 +38,12 @@ public class SpectrumController implements Initializable {
 //    Canvas spec;
     @FXML
     Pane pane;
+    @FXML
+    AnchorPane anchor;
+    
+    MenuItem fs = new MenuItem("FullScreen");
+    MenuItem callConfig= new MenuItem("Configurações");
+    ContextMenu contMenu= new ContextMenu(callConfig,fs);
     
     //variáveis para o funcionamento(NÃO MEXER)
     private final int spaceX1 = 50,spaceX2=30,spaceY1 = 10,spaceY2=25,strokeW = 2;
@@ -196,6 +203,13 @@ public class SpectrumController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         pane.getChildren().add(specT);
+        System.out.println("teste1");
+        fs.setOnAction(e->fs());
+        contMenu.setOnAction(e->openConfig());
+        System.out.println("teste2");
+        specT.setOnContextMenuRequested(event->contMenu.show(anchor, event.getScreenX(), event.getScreenY()));
+        System.out.println("teste3");
+        contMenu.setAutoHide(true);
         gc = specT.getGraphicsContext2D();
         gc.setStroke(Color.web(labelC));
         gc.setLineWidth(strokeW);
@@ -370,8 +384,16 @@ public class SpectrumController implements Initializable {
     }
     
     @FXML
-     public void setFS(MouseEvent evt){//Metodo para reproduzir uma música selecionada na tabela a partir do Index
+    private void fs(){
+        ControleUI.getInstance().getFourthStage().setFullScreen(!ControleUI.getInstance().getFourthStage().isFullScreen());
+    }
+    
+    @FXML
+    private void setFS(MouseEvent evt){//Metodo para reproduzir uma música selecionada na tabela a partir do Index
         try{
+            if(contMenu.isShowing()){
+                contMenu.hide();
+            }
             if(evt.getClickCount()==2){
                 ControleUI.getInstance().getFourthStage().setMaximized(!ControleUI.getInstance().getFourthStage().isMaximized());
            }
@@ -379,4 +401,9 @@ public class SpectrumController implements Initializable {
             //
         }
      }
+
+    @FXML
+    private void openConfig(){
+        ControleUI.getInstance().mostraSpectrumCfg();
+    }
 }
