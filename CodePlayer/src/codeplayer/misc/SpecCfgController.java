@@ -75,11 +75,19 @@ public class SpecCfgController implements Initializable {
     @FXML
     private HBox mainHBox;
 
-    private int IndexFill;
+    private int IndexFill=1;
 
-    private int TipoDesIndex;
+    private int TipoDesIndex=1;
 
     SpectrumCfg aux;
+    boolean ativarPerfNSalvo;
+
+    public void setPerfNSalvo(boolean ativarPerfNSalvo) {
+        if (this.ativarPerfNSalvo) {
+            Perfil.setValue("Perfil nao Salvo");
+            codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao Salvo");
+        }
+    }
 
     @FXML
     public void setTipoCor() {
@@ -108,7 +116,8 @@ public class SpecCfgController implements Initializable {
         }
         IndexFill = aux;
         codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setPreenchimento(IndexFill);
-        codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+        setPerfNSalvo(ativarPerfNSalvo);
+
     }
 
     @FXML
@@ -134,12 +143,12 @@ public class SpecCfgController implements Initializable {
             }
         }
         codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setNumC(aux);
-        codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+        setPerfNSalvo(ativarPerfNSalvo);
     }
 
     @FXML
     public void setTipoDes() {
-        int aux = 0;
+        int aux = 1;
         if (TipoDesenho.getValue() == null) {
             //
         } else if (TipoDesenho.getValue().equals("Barras")) {
@@ -160,7 +169,7 @@ public class SpecCfgController implements Initializable {
         }
         TipoDesIndex = aux;
         codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setTipoDesenho(TipoDesIndex);
-        codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+        setPerfNSalvo(ativarPerfNSalvo);
     }
 
     @FXML
@@ -176,7 +185,7 @@ public class SpecCfgController implements Initializable {
         }
         codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setSegundacorgrad(
                 CorGrad2.getValue().toString());
-        codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+        setPerfNSalvo(ativarPerfNSalvo);
     }
 
     @FXML
@@ -192,7 +201,7 @@ public class SpecCfgController implements Initializable {
         }
         codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setTerceiracorgrad(
                 CorGrad3.getValue().toString());
-        codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+        setPerfNSalvo(ativarPerfNSalvo);
     }
 
     @FXML
@@ -208,7 +217,7 @@ public class SpecCfgController implements Initializable {
         }
         codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setBackgroundColor(BackgroundColor
                 .getValue().toString());
-        codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+        setPerfNSalvo(ativarPerfNSalvo);
     }
 
     @FXML
@@ -224,7 +233,7 @@ public class SpecCfgController implements Initializable {
         }
         codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setLabelColor(
                 LabelColor.getValue().toString());
-        codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+        setPerfNSalvo(ativarPerfNSalvo);
     }
 
     @FXML
@@ -238,7 +247,7 @@ public class SpecCfgController implements Initializable {
             }
         }
         codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setBarColor(BarColor.getValue().toString());
-        codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+        setPerfNSalvo(ativarPerfNSalvo);
     }
 
     @FXML
@@ -255,7 +264,7 @@ public class SpecCfgController implements Initializable {
         }
         codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setNumBands(
                 (int) Numbands.getValue());
-        codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+        setPerfNSalvo(ativarPerfNSalvo);
     }
 
     @FXML
@@ -270,13 +279,13 @@ public class SpecCfgController implements Initializable {
             }
         }
         codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setIntervalo(1 / Intervalo.getValue());
-        codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao salvo");
+        setPerfNSalvo(ativarPerfNSalvo);
     }
 
     @FXML
     public void salvaPerfil() {
         try {
-            if (!NomePerfil.getText().isEmpty()) {
+            if (!NomePerfil.getText().isEmpty() && !NomePerfil.getText().equals("Perfil nao Salvo")) {
                 aux = new SpectrumCfg();
                 aux.setBackgroundColor(BackgroundColor.getValue().toString());
                 aux.setBarColor(BarColor.getValue().toString());
@@ -297,7 +306,7 @@ public class SpecCfgController implements Initializable {
                 carregarPerfis();
                 Perfil.setValue(NomePerfil.getText());
             } else {
-                System.out.println("Campo Vazio");
+                System.out.println("Nome inválido");
             }
 
         } catch (Exception e) {
@@ -310,138 +319,33 @@ public class SpecCfgController implements Initializable {
 
     }
 
-    public void carregarPerfis() {
-        ObservableList<String> itemselect = FXCollections.observableArrayList();
-        itemselect.add("Default");
-        ArrayList<String> nomesperfis = SpectrumXML.procuraArquivosXML();
-
-        for (int i = 0; i < nomesperfis.size(); i++) { //Limpa o nome do arquivo e deixa só o nome do pefil
-            StringBuilder aux = new StringBuilder();
-            aux.insert(0, nomesperfis.get(i));
-            aux.replace(0, 8, "");
-            aux.reverse();
-            aux.replace(0, 4, "");
-            aux.reverse();
-            itemselect.add(aux.toString());
-        }
-        Perfil.setItems((ObservableList<String>) itemselect);
-        //Detectando alterações de estado no ChoiceBox
-
-        Perfil.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            //Listener identifica mudanças na seleção
-            @Override
-            public void changed(ObservableValue<? extends String> ov, String t, String t1) {
-                if (Perfil.getValue() != null) {
-                    if (Perfil.getValue().equals("Default")) {
-                        setDefault();
-                    } else {
-                        SpectrumCfg cfg = new SpectrumXML(Perfil.getValue()).xmltoSpec(new File("PerfSpec" + Perfil.getValue() + ".xml"));
-                        Numbands.setValue(cfg.getNumBands());
-                        BackgroundColor.setValue(Color.web(cfg.getBackgroundColor()));
-                        BarColor.setValue(Color.web(cfg.getBarColor()));
-                        CorGrad2.setValue(Color.web(cfg.getSegundacorgrad()));
-                        CorGrad3.setValue(Color.web(cfg.getTerceiracorgrad()));
-                        if (cfg.getPreenchimento() == 0) {
-                            TipoCor.setValue("Solid");
-                        } else if (cfg.getPreenchimento() == 1) {
-                            TipoCor.setValue("Gradiente");
-                        }
-                        if (cfg.getTipoDesenho() == 0) {
-                            TipoDesenho.setValue("Barras");
-                        } else if (cfg.getTipoDesenho() == 1) {
-                            TipoDesenho.setValue("Suave");
-                        } else if (cfg.getTipoDesenho() == 2) {
-                            TipoDesenho.setValue("Radial");
-                        }
-                        NumeroGradiente.setValue(cfg.getNumC());
-                        LabelColor.setValue(Color.web(cfg.getLabelColor()));
-                        Intervalo.setValue(cfg.getIntervalo());
-                        setNumBands();
-                        setIntervalo();
-                        setBack();
-                        setLabel();
-                        setBar();
-                    }
-                    codeplayer.ExchangeInfos.getInstance().setSpecCfg(Perfil.getValue());
-                    NomePerfil.setText(Perfil.getValue());
-                }
+    public void perfLoadCfg(boolean TemPerfil) {
+        if (TemPerfil) {
+            ativarPerfNSalvo = false;
+            codeplayer.ExchangeInfos.getInstance().setSpecCfg(Perfil.getValue());
+            SpectrumCfg cfg = new SpectrumXML(Perfil.getValue()).xmltoSpec(new File("PerfSpec" + Perfil.getValue() + ".xml"));
+            Numbands.setValue(cfg.getNumBands());
+            BackgroundColor.setValue(Color.web(cfg.getBackgroundColor()));
+            BarColor.setValue(Color.web(cfg.getBarColor()));
+            CorGrad2.setValue(Color.web(cfg.getSegundacorgrad()));
+            CorGrad3.setValue(Color.web(cfg.getTerceiracorgrad()));
+            if (cfg.getPreenchimento() == 0) {
+                TipoCor.setValue("Solid");
+            } else if (cfg.getPreenchimento() == 1) {
+                TipoCor.setValue("Gradiente");
             }
-        });
-    }
-
-    public void setDefault() {
-        BackgroundColor.setValue(Color.web("201D1D"));
-        LabelColor.setValue(Color.web("FFFFFF"));
-        BarColor.setValue(Color.web("4169E1"));
-        Intervalo.setValue(1 / 0.02);
-        Numbands.setValue(64);
-        this.TipoCor.setValue("Gradiente");
-        this.TipoDesenho.setValue("Suave");
-        NumeroGradiente.setValue(3);
-        CorGrad2.setValue(Color.web("0000FF"));
-        CorGrad3.setValue(Color.web("AACCFF"));
-        setNumBands();
-        setIntervalo();
-        setBack();
-        setLabel();
-        setBar();
-        codeplayer.ExchangeInfos.getInstance().setSpecCfg("Default");
-    }
-
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-        root.prefWidthProperty().bind(ControleUI.getInstance().getSixthStage().widthProperty());
-        root.prefHeightProperty().bind(ControleUI.getInstance().getSixthStage().heightProperty());
-
-        topHBOX.prefWidthProperty().bind(root.prefWidthProperty());
-        topHBOX.setAlignment(Pos.CENTER);
-
-        leftVBOX.setAlignment(Pos.CENTER);
-        centerVBox.setAlignment(Pos.CENTER);
-        rightVBox.setAlignment(Pos.CENTER);
-        mainHBox.setAlignment(Pos.CENTER);
-
-        codeplayer.ExchangeInfos.getInstance();
-        Numbands.valueProperty().addListener(listener -> setNumBands());
-        Intervalo.valueProperty().addListener(listerner -> setIntervalo());
-        carregarPerfis();
-
-        ObservableList<String> TipoCor = FXCollections.observableArrayList();
-        TipoCor.add("Solid");
-        TipoCor.add("Gradiente");
-        this.TipoCor.setItems(TipoCor);
-
-        ObservableList<Integer> NumGrad = FXCollections.observableArrayList();
-        NumGrad.add((Integer) 2);
-        NumGrad.add((Integer) 3);
-        NumeroGradiente.setItems(NumGrad);
-        NumeroGradiente.setValue((Integer) 3);
-
-        ObservableList<String> TipoDesenho = FXCollections.observableArrayList();
-        TipoDesenho.add("Barras");
-        TipoDesenho.add("Suave");
-        TipoDesenho.add("Radial");
-        this.TipoDesenho.setItems(TipoDesenho);
-
-        Perfil.setValue(codeplayer.ExchangeInfos.getInstance().getSpecCfg());
-
-        this.TipoCor.valueProperty().addListener(listener -> setTipoCor());
-        this.TipoDesenho.valueProperty().addListener(lister -> setTipoDes());
-        this.NumeroGradiente.valueProperty().addListener(listener -> setNumGrad());
-        this.CorGrad2.valueProperty().addListener(listener -> setGrad2());
-        this.CorGrad3.valueProperty().addListener(listener -> setGrad3());
-
-        if ("Default".equals(codeplayer.ExchangeInfos.getInstance().getSpecCfg())) {
-            setDefault();
-        } else if (codeplayer.ExchangeInfos.getInstance().getSpecCfgObj() == null
-                && !codeplayer.ExchangeInfos.getInstance().getSpecCfg().equals("Default")) {
-            codeplayer.ExchangeInfos.getInstance().setSpecCfgObj(new SpectrumCfg());
-            System.err.println("vai3");
-        } else if ("Perfil nao salvo".equals(codeplayer.ExchangeInfos.getInstance().getSpecCfg())) {
+            if (cfg.getTipoDesenho() == 0) {
+                TipoDesenho.setValue("Barras");
+            } else if (cfg.getTipoDesenho() == 1) {
+                TipoDesenho.setValue("Suave");
+            } else if (cfg.getTipoDesenho() == 2) {
+                TipoDesenho.setValue("Radial");
+            }
+            NumeroGradiente.setValue(cfg.getNumC());
+            LabelColor.setValue(Color.web(cfg.getLabelColor()));
+            Intervalo.setValue(cfg.getIntervalo());
+        } else {
+            ativarPerfNSalvo = true;
             BackgroundColor.setValue(Color.web(codeplayer.ExchangeInfos.getInstance().
                     getSpecCfgObj().getBackgroundColor()));
             BarColor.setValue(Color.web(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getBarColor()));
@@ -470,10 +374,124 @@ public class SpecCfgController implements Initializable {
                     CorGrad3.setDisable(false);
                 }
             }
+        }
+    }
+
+    public void carregarPerfis() {
+        ObservableList<String> itemselect = FXCollections.observableArrayList();
+        itemselect.add("Default");
+        itemselect.add("Perfil nao Salvo");
+        ArrayList<String> nomesperfis = SpectrumXML.procuraArquivosXML();
+
+        for (int i = 0; i < nomesperfis.size(); i++) { //Limpa o nome do arquivo e deixa só o nome do pefil
+            StringBuilder aux = new StringBuilder();
+            aux.insert(0, nomesperfis.get(i));
+            aux.replace(0, 8, "");
+            aux.reverse();
+            aux.replace(0, 4, "");
+            aux.reverse();
+            itemselect.add(aux.toString());
+        }
+        Perfil.setItems((ObservableList<String>) itemselect);
+        //Detectando alterações de estado no ChoiceBox
+
+        Perfil.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            //Listener identifica mudanças na seleção
+            @Override
+            public void changed(ObservableValue<? extends String> ov, String t, String t1) {
+                if (Perfil.getValue() != null) {
+                    if (Perfil.getValue().equals("Default")) {
+                        ativarPerfNSalvo = false;
+                        setDefault();
+                    } else if (Perfil.getValue().equals("Perfil nao Salvo")) {
+                        perfLoadCfg(false);
+                    } else {
+                        perfLoadCfg(true);
+                    }
+                    codeplayer.ExchangeInfos.getInstance().setSpecCfg(Perfil.getValue());
+                    NomePerfil.setText(Perfil.getValue());
+                }
+                ativarPerfNSalvo = true;
+            }
+        });
+    }
+
+    public void setDefault() {
+        BackgroundColor.setValue(Color.web("201D1D"));
+        LabelColor.setValue(Color.web("FFFFFF"));
+        BarColor.setValue(Color.web("4169E1"));
+        Intervalo.setValue(1 / 0.02);
+        Numbands.setValue(64);
+        this.TipoCor.setValue("Gradiente");
+        this.TipoDesenho.setValue("Suave");
+        NumeroGradiente.setValue(3);
+        CorGrad2.setValue(Color.web("0000FF"));
+        CorGrad3.setValue(Color.web("AACCFF"));
+        codeplayer.ExchangeInfos.getInstance().setSpecCfg("Default");
+    }
+
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        //Configurações de interface
+        root.prefWidthProperty().bind(ControleUI.getInstance().getSixthStage().widthProperty());
+        root.prefHeightProperty().bind(ControleUI.getInstance().getSixthStage().heightProperty());
+
+        topHBOX.prefWidthProperty().bind(root.prefWidthProperty());
+        topHBOX.setAlignment(Pos.CENTER);
+
+        leftVBOX.setAlignment(Pos.CENTER);
+        centerVBox.setAlignment(Pos.CENTER);
+        rightVBox.setAlignment(Pos.CENTER);
+        mainHBox.setAlignment(Pos.CENTER);
+        //Fim das configurações de interface
+        codeplayer.ExchangeInfos.getInstance();
+        //Configurando numero de bandas e intervalos  na inerface
+        Numbands.valueProperty().addListener(listener -> setNumBands());
+        Intervalo.valueProperty().addListener(listerner -> setIntervalo());
+        //Carregando os perfis de usuario disponíveis
+        carregarPerfis();
+        //Iniciando o choice box com os tipos de preenchimento
+        ObservableList<String> TipoCor = FXCollections.observableArrayList();
+        TipoCor.add("Solid");
+        TipoCor.add("Gradiente");
+        this.TipoCor.setItems(TipoCor);
+        //Iniciando o ChoiceBox com os numeros de gradientes
+        ObservableList<Integer> NumGrad = FXCollections.observableArrayList();
+        NumGrad.add((Integer) 2);
+        NumGrad.add((Integer) 3);
+        NumeroGradiente.setItems(NumGrad);
+        NumeroGradiente.setValue((Integer) 3);
+        //Iniciando o choicebox com os tipos de desenhos
+        ObservableList<String> TipoDesenho = FXCollections.observableArrayList();
+        TipoDesenho.add("Barras");
+        TipoDesenho.add("Suave");
+        TipoDesenho.add("Radial");
+        this.TipoDesenho.setItems(TipoDesenho);
+        //Pegando o perfil atual
+        Perfil.setValue(codeplayer.ExchangeInfos.getInstance().getSpecCfg());
+        //Adicionando listeners para os elementos de interface
+        this.BackgroundColor.valueProperty().addListener(listener -> setBack());
+        this.LabelColor.valueProperty().addListener(listener -> setLabel());
+        this.BarColor.valueProperty().addListener(listener -> setBar());
+        this.TipoCor.valueProperty().addListener(listener -> setTipoCor());
+        this.TipoDesenho.valueProperty().addListener(lister -> setTipoDes());
+        this.NumeroGradiente.valueProperty().addListener(listener -> setNumGrad());
+        this.CorGrad2.valueProperty().addListener(listener -> setGrad2());
+        this.CorGrad3.valueProperty().addListener(listener -> setGrad3());
+        //Verificações ao carregar a interface
+        if ("Default".equals(codeplayer.ExchangeInfos.getInstance().getSpecCfg())) {
+            ativarPerfNSalvo = false;
+            setDefault();
+        } else if (codeplayer.ExchangeInfos.getInstance().getSpecCfgObj() == null
+                && !codeplayer.ExchangeInfos.getInstance().getSpecCfg().equals("Default")) {
+            codeplayer.ExchangeInfos.getInstance().setSpecCfgObj(new SpectrumCfg());
+        } else if ("Perfil nao Salvo".equals(codeplayer.ExchangeInfos.getInstance().getSpecCfg())) {
+            perfLoadCfg(false);
         } else {
-            Perfil.setValue(codeplayer.ExchangeInfos.getInstance().getSpecCfg());
-            SpectrumCfg cfg = new SpectrumXML(Perfil.getValue()).xmltoSpec(new File("PerfSpec" + Perfil.getValue() + ".xml"));
-            codeplayer.ExchangeInfos.getInstance().setSpecCfgObj(cfg);
+            perfLoadCfg(true);
         }
 
     }

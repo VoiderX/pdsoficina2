@@ -48,9 +48,13 @@ public class IndexFXMLController implements Initializable {
 
     @FXML
     public void go() {
-        codeplayer.ExchangeInfos.getInstance().setUseratual(perfExistente.getValue());
-        ControleUI.getInstance().mostraPlayer();
-        ControleUI.getInstance().getFifthStage().hide();
+        if(perfExistente.getValue()!=null && !perfExistente.getValue().equals("")){
+            codeplayer.ExchangeInfos.getInstance().setUseratual(perfExistente.getValue());
+            ControleUI.getInstance().mostraPlayer();
+            ControleUI.getInstance().getFifthStage().hide();
+        }else{
+            System.err.println("Selecione um usuário");
+        }
     }
 
     public void carregaPerfis() {

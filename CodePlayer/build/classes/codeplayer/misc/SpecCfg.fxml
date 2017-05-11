@@ -59,13 +59,13 @@
                         <Pane prefHeight="115.0">
                            <children>
                               <Label layoutX="37.0" layoutY="21.0" text="Cor de Fundo" />
-                              <ColorPicker fx:id="BackgroundColor" layoutX="37.0" layoutY="38.0" onAction="#setBack" />
+                              <ColorPicker fx:id="BackgroundColor" layoutX="37.0" layoutY="38.0" />
                            </children>
                         </Pane>
                         <Pane prefHeight="115.0">
                            <children>
                               <Label layoutX="37.0" layoutY="23.0" text="Cor dos rótulos" />
-                              <ColorPicker fx:id="LabelColor" layoutX="37.0" layoutY="40.0" onAction="#setLabel" />
+                              <ColorPicker fx:id="LabelColor" layoutX="37.0" layoutY="40.0" />
                            </children>
                         </Pane>
                      </children>
@@ -75,7 +75,7 @@
                         <Pane prefHeight="79.0" prefWidth="213.0">
                            <children>
                               <Label layoutX="37.0" layoutY="14.0" text="Cor Barras" />
-                              <ColorPicker fx:id="BarColor" layoutX="37.0" layoutY="31.0" onAction="#setBar" />
+                              <ColorPicker fx:id="BarColor" layoutX="37.0" layoutY="31.0" />
                            </children>
                         </Pane>
                         <Pane fx:id="CorGrad">
