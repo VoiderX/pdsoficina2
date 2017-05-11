@@ -30,7 +30,9 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 /**
@@ -67,12 +69,17 @@ public class SpecCfgController implements Initializable {
     @FXML
     private Pane CorGrad;
     @FXML
-    private GridPane topPane;
-    
-    @FXML
-    private Pane subTopPane1;
-    @FXML
     private BorderPane root;
+    @FXML
+    private HBox topHBOX;
+    @FXML
+    private VBox leftVBOX;
+    @FXML
+    private VBox centerVBox;
+    @FXML
+    private VBox rightVBox;
+    @FXML
+    private HBox mainHBox;
     
     private int IndexFill;
     
@@ -399,9 +406,14 @@ public class SpecCfgController implements Initializable {
        
        root.prefWidthProperty().bind(ControleUI.getInstance().getSixthStage().widthProperty());
        root.prefHeightProperty().bind(ControleUI.getInstance().getSixthStage().heightProperty());
-       topPane.prefWidthProperty().bind(root.prefWidthProperty());
-       topPane.prefHeightProperty().bind(root.prefHeightProperty());
-       topPane.widthProperty().addListener(event->centerSubTop());
+       
+       topHBOX.prefWidthProperty().bind(root.prefWidthProperty());
+       topHBOX.setAlignment(Pos.CENTER);
+       
+       leftVBOX.setAlignment(Pos.CENTER);
+       centerVBox.setAlignment(Pos.CENTER);
+       rightVBox.setAlignment(Pos.CENTER);
+       mainHBox.setAlignment(Pos.CENTER);
        
        codeplayer.ExchangeInfos.getInstance();
        Numbands.valueProperty().addListener(listener->setNumBands());
@@ -485,11 +497,4 @@ public class SpecCfgController implements Initializable {
        }
        
     }    
-
-    private void centerSubTop() {
-        subTopPane1.setLayoutX(2);
-    }
-
-    
-    
 }

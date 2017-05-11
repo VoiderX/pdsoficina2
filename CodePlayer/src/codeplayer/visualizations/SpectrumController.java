@@ -317,7 +317,7 @@ public class SpectrumController implements Initializable {
             Deque<Double> innerCordX = new ArrayDeque<>();
             double[] cordY=new double[(bands+1)*2];
             Deque<Double> innerCordY = new ArrayDeque<>();
-            double passo = ((double) 360)/bands,dispAng=0;
+            double passo = ((double) 360)/bands,dispAng=180;
             for(int i=0;i<(bands+1);i++){
                 innerCordX.push(origin[0]+getX(baseR,dispAng));
                 innerCordY.push(origin[1]+getY(baseR,dispAng));
