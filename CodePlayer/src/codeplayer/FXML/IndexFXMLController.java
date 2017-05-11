@@ -58,6 +58,7 @@ public class IndexFXMLController implements Initializable {
     }
 
     public void carregaPerfis() {
+        try{
         ArrayList<String> aux = SpectrumXML.procuraArquivosXML("User");
         ObservableList<String> oal = FXCollections.observableArrayList();
         for (int i = 0; i < aux.size(); i++) {
@@ -68,6 +69,10 @@ public class IndexFXMLController implements Initializable {
             oal.add(str.toString());
         }
         perfExistente.setItems(oal);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**

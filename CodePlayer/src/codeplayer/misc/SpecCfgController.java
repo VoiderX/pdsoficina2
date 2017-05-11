@@ -316,14 +316,18 @@ public class SpecCfgController implements Initializable {
 
     @FXML
     public void excluiPerfil() {
-
+        new File("User"+codeplayer.ExchangeInfos.getInstance().getUseratual()+"/PerfSpec"+
+                Perfil.getValue()+".xml").delete();
+        carregarPerfis();
+        setDefault();
     }
 
     public void perfLoadCfg(boolean TemPerfil) {
         if (TemPerfil) {
             ativarPerfNSalvo = false;
             codeplayer.ExchangeInfos.getInstance().setSpecCfg(Perfil.getValue());
-            SpectrumCfg cfg = new SpectrumXML(Perfil.getValue()).xmltoSpec(new File("PerfSpec" + Perfil.getValue() + ".xml"));
+            SpectrumCfg cfg = new SpectrumXML(Perfil.getValue()).xmltoSpec(new File(
+                    "User"+codeplayer.ExchangeInfos.getInstance().getUseratual()+"/PerfSpec" + Perfil.getValue() + ".xml"));
             Numbands.setValue(cfg.getNumBands());
             BackgroundColor.setValue(Color.web(cfg.getBackgroundColor()));
             BarColor.setValue(Color.web(cfg.getBarColor()));
@@ -417,6 +421,7 @@ public class SpecCfgController implements Initializable {
     }
 
     public void setDefault() {
+        ativarPerfNSalvo=false;
         BackgroundColor.setValue(Color.web("201D1D"));
         LabelColor.setValue(Color.web("FFFFFF"));
         BarColor.setValue(Color.web("4169E1"));
@@ -428,6 +433,8 @@ public class SpecCfgController implements Initializable {
         CorGrad2.setValue(Color.web("0000FF"));
         CorGrad3.setValue(Color.web("AACCFF"));
         codeplayer.ExchangeInfos.getInstance().setSpecCfg("Default");
+        Perfil.setValue("Default");
+        ativarPerfNSalvo=true;
     }
 
     /**
@@ -485,13 +492,18 @@ public class SpecCfgController implements Initializable {
         if ("Default".equals(codeplayer.ExchangeInfos.getInstance().getSpecCfg())) {
             ativarPerfNSalvo = false;
             setDefault();
+            ativarPerfNSalvo=true;
         } else if (codeplayer.ExchangeInfos.getInstance().getSpecCfgObj() == null
                 && !codeplayer.ExchangeInfos.getInstance().getSpecCfg().equals("Default")) {
             codeplayer.ExchangeInfos.getInstance().setSpecCfgObj(new SpectrumCfg());
         } else if ("Perfil nao Salvo".equals(codeplayer.ExchangeInfos.getInstance().getSpecCfg())) {
+            ativarPerfNSalvo=false;
             perfLoadCfg(false);
+            ativarPerfNSalvo=true;
         } else {
+            ativarPerfNSalvo=false;
             perfLoadCfg(true);
+            ativarPerfNSalvo=true;
         }
 
     }
