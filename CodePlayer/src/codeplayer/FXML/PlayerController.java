@@ -203,9 +203,9 @@ public class PlayerController implements Initializable {
              temp2dados.add(tempdados.get(i));
          }
          //Binda as colunas da tabela nos componentes da Classe Musica
-         ColunaNome.setCellValueFactory(new PropertyValueFactory<codeplayer.Musica,String>("Nome"));
-         ColunaPath.setCellValueFactory(new PropertyValueFactory<codeplayer.Musica,String>("PathMusic"));
-         ColunaIndice.setCellValueFactory(new PropertyValueFactory<codeplayer.Musica,Integer>("Index"));
+         ColunaNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
+         ColunaPath.setCellValueFactory(new PropertyValueFactory<>("PathMusic"));
+         ColunaIndice.setCellValueFactory(new PropertyValueFactory<>("Index"));
          Tabelamusicas.setItems(temp2dados);//Seta o ObservableList na tabela
      }
      @FXML
@@ -253,6 +253,8 @@ public class PlayerController implements Initializable {
      }     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

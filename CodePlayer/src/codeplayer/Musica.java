@@ -13,13 +13,15 @@ import java.io.File;
  */
 //Classe da Musica, contem o caminho da música, o nome do arquivo, e o Indice no vetor
 public class Musica {
+
     String PathMusic;
     String Nome;
     int Index;
-     public Musica(File PathMusic,int Index){ //Construtor recebe um objeto do tipo File e o Index
-         this.PathMusic = PathMusic.toURI().toString(); //Converte o caminh da música para uma URI
-         this.Nome=PathMusic.getName();//Adquire o nome do arquivo
-         this.Index=Index;//Adquite o Index
+
+    public Musica(File PathMusic, int Index) { //Construtor recebe um objeto do tipo File e o Index
+        this.PathMusic = PathMusic.toURI().toString(); //Converte o caminh da música para uma URI
+        this.Nome = PathMusic.getName();//Adquire o nome do arquivo
+        this.Index = Index;//Adquite o Index
     }
 
     public String getPathMusic() {
@@ -45,6 +47,5 @@ public class Musica {
     public void setIndex(int Index) {
         this.Index = Index;
     }
-    
-    
+
 }

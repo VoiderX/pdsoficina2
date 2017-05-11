@@ -14,12 +14,13 @@ import javafx.stage.Stage;
  */
 //Classe de inicialização
 public class CodePlayer extends Application {
-    public static void main(String[] args) {
-      CodePlayer.launch(args);
-   }
 
-   @Override
-   public void start(Stage primaryStage) throws Exception {
-      ControleUI.getInstance().start(primaryStage); //Chama a inicialização da classe de controle
-   }
+    public static void main(String[] args) {
+        CodePlayer.launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        ControleUI.getInstance().start(primaryStage); //Chama a inicialização da classe de controle
+    }
 }

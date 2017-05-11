@@ -94,13 +94,13 @@ public final class ControleUI {
     public Stage getFourthStage() {
         return fourthStage;
     }
+
+    public Stage getFifthStage() {
+        return fifthStage;
+    }
     
     public Stage getSixthStage() {
         return sixthStage;
-    }
-
-    public static Scene getSpectrumcfgScene() {
-        return spectrumcfgScene;
     }
 
     private void initUI() { //Metódo inicializador

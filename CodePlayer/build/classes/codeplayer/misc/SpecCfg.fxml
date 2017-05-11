@@ -70,24 +70,28 @@
                         </Pane>
                      </children>
                   </VBox>
-                  <VBox fx:id="centerVBox" prefWidth="213.3333333">
+                  <VBox fx:id="centerVBox">
                      <children>
-                        <Pane prefHeight="70.0">
-                           <children>
-                              <ColorPicker fx:id="CorGrad2" layoutX="37.0" layoutY="31.0" />
-                              <Label layoutX="37.0" layoutY="14.0" text="Cor Grad2" />
-                           </children>
-                        </Pane>
-                        <Pane prefHeight="70.0">
-                           <children>
-                              <ColorPicker fx:id="CorGrad3" layoutX="37.0" layoutY="33.0" />
-                              <Label layoutX="37.0" layoutY="12.0" text="Cor Grad3" />
-                           </children>
-                        </Pane>
-                        <Pane prefHeight="70.0">
+                        <Pane prefHeight="79.0" prefWidth="213.0">
                            <children>
                               <Label layoutX="37.0" layoutY="14.0" text="Cor Barras" />
                               <ColorPicker fx:id="BarColor" layoutX="37.0" layoutY="31.0" onAction="#setBar" />
+                           </children>
+                        </Pane>
+                        <Pane fx:id="CorGrad">
+                           <children>
+                              <Pane layoutY="70.0" prefHeight="70.0">
+                                 <children>
+                                    <ColorPicker fx:id="CorGrad3" layoutX="37.0" layoutY="33.0" />
+                                    <Label layoutX="37.0" layoutY="12.0" text="Cor Grad3" />
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="70.0">
+                                 <children>
+                                    <ColorPicker fx:id="CorGrad2" layoutX="37.0" layoutY="31.0" />
+                                    <Label layoutX="37.0" layoutY="14.0" text="Cor Grad2" />
+                                 </children>
+                              </Pane>
                            </children>
                         </Pane>
                      </children>

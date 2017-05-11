@@ -12,13 +12,14 @@ import XMLGenerator.SpectrumCfg;
  * @author Gabriel
  */
 public final class ExchangeInfos {
-    
-    private static ExchangeInfos INSTANCE=null;
-    
-    public static ExchangeInfos getInstance(){
-      return((INSTANCE == null)?INSTANCE = new ExchangeInfos():INSTANCE);
-   }
-    public ExchangeInfos(){
+
+    private static ExchangeInfos INSTANCE = null;
+
+    public static ExchangeInfos getInstance() {
+        return ((INSTANCE == null) ? INSTANCE = new ExchangeInfos() : INSTANCE);
+    }
+
+    public ExchangeInfos() {
         SpecCfgObj.setBackgroundColor("201D1D");
         SpecCfgObj.setBarColor("4169E1");
         SpecCfgObj.setIntervalo(0.02);
@@ -30,7 +31,7 @@ public final class ExchangeInfos {
         SpecCfgObj.setTerceiracorgrad("AACCFF");
         SpecCfgObj.setTipoDesenho(1);
     }
-   String useratual;
+    String useratual;
 
     public String getUseratual() {
         return useratual;
@@ -39,10 +40,10 @@ public final class ExchangeInfos {
     public void setUseratual(String useratual) {
         this.useratual = useratual;
     }
-    
-   String PerfilEq="Zerar";
-   String SpecCfg="Default";
-   SpectrumCfg SpecCfgObj=new SpectrumCfg();
+
+    String PerfilEq = "Zerar";
+    String SpecCfg = "Default";
+    SpectrumCfg SpecCfgObj = new SpectrumCfg();
 
     public SpectrumCfg getSpecCfgObj() {
         return SpecCfgObj;
@@ -51,7 +52,6 @@ public final class ExchangeInfos {
     public void setSpecCfgObj(SpectrumCfg SpecCfgObj) {
         this.SpecCfgObj = SpecCfgObj;
     }
-   
 
     public String getPerfilEq() {
         return PerfilEq;
@@ -68,5 +68,5 @@ public final class ExchangeInfos {
     public void setSpecCfg(String SpecCfg) {
         this.SpecCfg = SpecCfg;
     }
-   
+
 }
