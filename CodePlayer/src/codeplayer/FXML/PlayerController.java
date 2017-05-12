@@ -13,8 +13,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -42,36 +40,36 @@ public class PlayerController implements Initializable {
     Inicio das Variaveis do FXML
      */
     @FXML
-    Text Faixa;
+    private Text Faixa;
     @FXML
-    Text Artista;
+    private Text Artista;
     @FXML
-    Text Titulo;
+    private Text Titulo;
     @FXML
-    Text Album;
+    private Text Album;
     @FXML
-    Text Ano;
-    Image CapaAlbum;
+    private Text Ano;
+    private Image CapaAlbum;
     @FXML
-    ImageView imagem;
+    private ImageView imagem;
     @FXML
-    Slider SlidVol;
+    private Slider SlidVol;
     @FXML
-    Button Btnext;
+    private Button Btnext;
     @FXML
-    Button Btlast;
+    private Button Btlast;
     @FXML
-    TableView<codeplayer.Musica> Tabelamusicas;
+    private TableView<codeplayer.Musica> Tabelamusicas;
     @FXML
-    TableColumn<codeplayer.Musica, String> ColunaNome;
+    private TableColumn<codeplayer.Musica, String> ColunaNome;
     @FXML
-    TableColumn<codeplayer.Musica, String> ColunaPath;
+    private TableColumn<codeplayer.Musica, String> ColunaPath;
     @FXML
-    TableColumn<codeplayer.Musica, Integer> ColunaIndice;
+    private TableColumn<codeplayer.Musica, Integer> ColunaIndice;
     @FXML
-    Slider Tracker;
+    private Slider Tracker;
     @FXML
-    Text Duration;
+    private Text Duration;
 
     /*
          Fim das variaveis do FXML
@@ -95,7 +93,7 @@ public class PlayerController implements Initializable {
      */
     //Metodo play, inicia a reprodução e a busca dos metadados
     @FXML
-    public void play() {
+    private void play() {
         try {
             if (Mp3Buf.getInstance().getMp() == null) {
             } else {
@@ -112,7 +110,7 @@ public class PlayerController implements Initializable {
 
     //Metodo para dar stop na musica
     @FXML
-    public void stop() {
+    private void stop() {
         try {
             if (Mp3Buf.getInstance().getMp() != null) {
                 Mp3Buf.getInstance().getMp().stop();
@@ -124,7 +122,7 @@ public class PlayerController implements Initializable {
 
     //Metodo para dar pause na musica
     @FXML
-    public void pause() {
+    private void pause() {
         try {
             if (Mp3Buf.getInstance().getMp() != null) {
                 Mp3Buf.getInstance().getMp().pause();
@@ -148,7 +146,7 @@ public class PlayerController implements Initializable {
     }
 
     @FXML
-    public void last() {
+    private void last() {
         //Idem  ao metodo next, no entanto seta a música anterior
         Btlast.setDisable(true);
         Mp3Buf.getInstance().setPosTocando(Mp3Buf.getInstance().getPosTocando() - 1);
@@ -159,13 +157,13 @@ public class PlayerController implements Initializable {
 
     //Metodo para chamar a classe de exibição do equalizador
     @FXML
-    public void exibeEqualizer() {
+    private void exibeEqualizer() {
         ControleUI.getInstance().mostraEqualizer();
     }
-    
+
     //Chama o File Chooser para carregar as músicas
     @FXML
-    public void loadMusicDialog() {
+    private void loadMusicDialog() {
         FileChooser fc = new FileChooser();
         try {
             List musicas = fc.showOpenMultipleDialog(null); //Chama o FileChooser e armazena os FIles num list
@@ -184,9 +182,10 @@ public class PlayerController implements Initializable {
 
         }
     }
+
     //Metodo para reproduzir uma música selecionada na tabela a partir do Index
     @FXML
-    public void selecionaMusica(MouseEvent evt) {
+    private void selecionaMusica(MouseEvent evt) {
         int aux;
         try {
             if (evt.getClickCount() == 2) {
@@ -206,7 +205,7 @@ public class PlayerController implements Initializable {
     }
 
     @FXML
-    public void changeSliderVol() { //Metodo para controle de volume
+    private void changeSliderVol() { //Metodo para controle de volume
         if (Mp3Buf.getInstance().checkmp() != null) { //Verifica se o media player está instanciado
             Double volume = SlidVol.getValue(); //Pega o valor do slider
             volume = volume / 100;//Divide por 100, pos o volume vai de 0 a 1;
@@ -215,54 +214,53 @@ public class PlayerController implements Initializable {
     }
 
     @FXML
-    public void carregaOsciloscope() {
+    private void carregaOsciloscope() {
         ControleUI.getInstance().mostraOsciloscope();
     }
 
     @FXML
-    public void carregaSpectrum() {
+    private void carregaSpectrum() {
         ControleUI.getInstance().mostraSpectrum();
     }
 
     @FXML
-    public void mostraInfos() {
+    private void mostraInfos() {
         ControleUI.getInstance().mostraInfos();
     }
 
     @FXML
-    public void mostraSpectrumCfg() {
+    private void mostraSpectrumCfg() {
         ControleUI.getInstance().mostraSpectrumCfg();
     }
 
     @FXML
-    public void testIndex() {
+    private void testIndex() {
         ControleUI.getInstance().mostraIndex();
     }
 
     @FXML
-    public void startScroll() {
+    private void startScroll() {
         Mp3Buf.getInstance().removeListenerTracker();
         Mp3Buf.getInstance().setValorTrackerAnterior(Tracker.getValue());
     }
 
     @FXML
-    public void finishScroll() {
+    private void finishScroll() {
         Mp3Buf.getInstance().setLastseekValue(Tracker.getValue());
         Mp3Buf.getInstance().seekTime(Tracker.getValue());
         Mp3Buf.getInstance().addListenerTracker();
-        System.out.println(Mp3Buf.getInstance().getLastseekValue());
-
     }
+
     /*
         Fim dos metodos FXML
-    */
-    
-    /*
+     */
+
+ /*
         Inicio dos metodos padrão
-    */
+     */
     //Metodo para preparação da musica
     //Caso esteja tocando e uma nova musica seja carregada encerra o MediaPlayer atual
-    public void prepararMusica() {
+    private void prepararMusica() {
         try {
             if (Mp3Buf.getInstance().getMp() != null && Mp3Buf.getInstance().getPathMusic() != null) {
                 Mp3Buf.getInstance().getMp().dispose();
@@ -274,15 +272,16 @@ public class PlayerController implements Initializable {
             // NOTHING TO DO HERE
         }
     }
+
     //Realiza as alterações baseadas no listener do slider para o visualizador da duração
-    public void atualizaTracker() {
+    private void atualizaTracker() {
         Duration.setText(Mp3Buf.getInstance().getConversorSliderLabel().toString(Tracker.getValue())
                 + "/" + Mp3Buf.getInstance().getConversorSliderLabel().toString(
                         Mp3Buf.getInstance().getMp().getMedia().getDuration().toMinutes()));
     }
-    
+
     //Carrega a tabela a para exibição
-    public void carregarTabela() {
+    private void carregarTabela() {
         //Array temporário para armazenar os  dados
         ArrayList<Musica> tempdados = Mp3Buf.getInstance().getMusicas();
         //ObservableList para carregar os dados na tabela
@@ -297,7 +296,7 @@ public class PlayerController implements Initializable {
         ColunaIndice.setCellValueFactory(new PropertyValueFactory<>("Index"));
         Tabelamusicas.setItems(temp2dados);//Seta o ObservableList na tabela
     }
-    
+
     //Metodo chamado dentro da CheckMetada para exibir os metadados
     public void setInfos(ObservableMap<String, Object> metadata) {
         Artista.setText("Nenhum");
@@ -327,17 +326,18 @@ public class PlayerController implements Initializable {
             imagem.setImage(CapaAlbum);
         }
     }
+
     /*
         Fim dos metodos padrão
-    */
-    
-    /*
+     */
+
+ /*
         Inicio dos Getter e Setter
-    */
+     */
     public Slider getTracker() {
         return Tracker;
     }
     /*
         Fim dos getter e Setter
-    */
+     */
 }

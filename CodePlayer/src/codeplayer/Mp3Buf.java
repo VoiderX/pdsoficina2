@@ -24,35 +24,36 @@ public final class Mp3Buf {
 
     /*
         Variáveis
-    */
+     */
     private static Mp3Buf INSTANCE = null;
-    ArrayList<Musica> Musicas; //ArrayList para guardar os caminhos das musicas a serem reproduzidas
-    String pathMusic;//Caminho da música a ser reproduzida no momento
-    Media media = null;//Classe Media uitlizada para iniciar o MediaPlayer e também para puxar os metadados
-    MediaPlayer mp = null; //MediaPlayer, classe responsável pela reprodução em si
-    int PosTocando;//Indica a posição que está sendo reproduzida na playlist
-    ArrayList<Banda> bandas = null; //Array Contendo os valores das bandas
+    private ArrayList<Musica> Musicas; //ArrayList para guardar os caminhos das musicas a serem reproduzidas
+    private String pathMusic;//Caminho da música a ser reproduzida no momento
+    private Media media = null;//Classe Media uitlizada para iniciar o MediaPlayer e também para puxar os metadados
+    private MediaPlayer mp = null; //MediaPlayer, classe responsável pela reprodução em si
+    private int PosTocando;//Indica a posição que está sendo reproduzida na playlist
+    private ArrayList<Banda> bandas = null; //Array Contendo os valores das bandas
     private double lastseekValue; //Ultimo Valor selecionado no tracker
     private double valorTrackerAnterior; //Valor no tracker antes da seleção
+
     /*
         Fim variáveis
-    */
-    
-    /*
+     */
+
+ /*
         Construtor
-    */
+     */
     public static Mp3Buf getInstance() {
         return ((INSTANCE == null) ? INSTANCE = new Mp3Buf() : INSTANCE);
     }
     /*
         Fim construtor
-    */
-    
-    /*
+     */
+
+ /*
         Métodos
-    */
+     */
     //Classe para converter double em horário  
-    private StringConverter<Double> conversorSliderLabel = new StringConverter<Double>() {
+    private final StringConverter<Double> conversorSliderLabel = new StringConverter<Double>() {
         @Override
         public String toString(Double object) {
             int ValorMin = (int) (double) (object);
@@ -65,15 +66,15 @@ public final class Mp3Buf {
                 return (ParteInt + ":0" + ParteSegs);
             }
         }
-        
+
         @Override
         public Double fromString(String string) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-    };   
+    };
 
     //Prepara o slider do Seeker
-    public void setSeekerSlider() {
+    private void setSeekerSlider() {
         //Valor maximo é a duração da música
         ControleUI.getInstance().getPlayerController().getTracker().setMax(
                 mp.getMedia().getDuration().toMinutes());
@@ -88,7 +89,7 @@ public final class Mp3Buf {
         ControleUI.getInstance().getPlayerController().getTracker().setShowTickLabels(true);
     }
     //Classe listener para a posição atual da música
-    InvalidationListener teste = (Observable observable) -> {
+    private final InvalidationListener listenerSlider = (Observable observable) -> {
         /*Identifica se o usuário retrocedeu ou avançou, e aguarda a atualização do seeker para não
         Retornar o slider ao valor anterior*/
         if (getLastseekValue() >= getValorTrackerAnterior()) {
@@ -133,7 +134,7 @@ public final class Mp3Buf {
         //Prepara o Slider
         mp.getMedia().durationProperty().addListener(listener -> setSeekerSlider());
         //Mantem o slider seguindo a música
-        mp.currentTimeProperty().addListener(teste);
+        mp.currentTimeProperty().addListener(listenerSlider);
     }
 
     //Metodo para adicionar o listener para verificar alterações nos metadados
@@ -158,33 +159,34 @@ public final class Mp3Buf {
         startListenerSlider();
 
     }
-    
+
     //Códigos para controle dos trackers
     public void removeListenerTracker() {
-        mp.currentTimeProperty().removeListener(teste);
+        mp.currentTimeProperty().removeListener(listenerSlider);
         ControleUI.getInstance().getPlayerController().getTracker().setValue(lastseekValue);
     }
-    
+
     public void seekTime(double time) {
         //System.out.println(ControleUI.getInstance().getPlayerController().getTracker().getValue());
         mp.seek(Duration.minutes(time));
     }
-    
+
     public void addListenerTracker() {
         ControleUI.getInstance().getPlayerController().getTracker().setValue(lastseekValue);
-        mp.currentTimeProperty().addListener(teste);
+        mp.currentTimeProperty().addListener(listenerSlider);
     }
-    
+
     private void setTrackerSliderPos() {
         ControleUI.getInstance().getPlayerController().getTracker().setValue(mp.getCurrentTime().toMinutes());
     }
+
     /*
         Fim métodos
-    */
-    
-    /*
+     */
+
+ /*
         Getters e Setters
-    */
+     */
     public double getLastseekValue() {
         return lastseekValue;
     }
@@ -261,5 +263,5 @@ public final class Mp3Buf {
     }
     /*
         Fim Getter e Setter
-    */
+     */
 }

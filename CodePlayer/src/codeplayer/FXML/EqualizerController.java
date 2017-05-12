@@ -167,7 +167,7 @@ public class EqualizerController implements Initializable {
         Inicio dos metodos FXML
      */
     @FXML
-    public void salvarPerfil() {
+    private void salvarPerfil() {
         HelperNomePerfil.setText("Digite um nome para o perfil:");
         NomePerfil.setVisible(true);
         NomePerfil.setDisable(false);
@@ -177,7 +177,7 @@ public class EqualizerController implements Initializable {
     }
 
     @FXML
-    public void confirmaSalvarPerfil() {
+    private void confirmaSalvarPerfil() {
         BandaXML temp;
 
         if (NomePerfil.getText().isEmpty()) {
@@ -226,7 +226,7 @@ public class EqualizerController implements Initializable {
     }
 
     @FXML
-    public void excluirPerfil() {
+    private void excluirPerfil() {
         try {
             new File("User" + codeplayer.ExchangeInfos.getInstance().getUseratual() + "/PerfEQ" + Seletor.getValue() + ".xml").delete();
             carregaPerfis();
@@ -237,7 +237,7 @@ public class EqualizerController implements Initializable {
     }
 
     @FXML
-    public void equalizar() { //Metodo para setar a equalização para o máximo
+    private void equalizar() { //Metodo para setar a equalização para o máximo
         for (int i = 0; i < Mp3Buf.getInstance().getBandas().size(); i++) {
             Mp3Buf.getInstance().getBandas().get(i).setValor(12);
         }
@@ -246,7 +246,7 @@ public class EqualizerController implements Initializable {
     }
 
     @FXML
-    public void equalizar2() {//Metodo para equalizar ao minimo
+    private void equalizar2() {//Metodo para equalizar ao minimo
         for (int i = 0; i < Mp3Buf.getInstance().getBandas().size(); i++) {
             Mp3Buf.getInstance().getBandas().get(i).setValor(-24);
         }
@@ -256,7 +256,7 @@ public class EqualizerController implements Initializable {
     }
 
     @FXML
-    public void zeroAll() { //Metodo para retornar todas os ganhos nas faixas para zero
+    private void zeroAll() { //Metodo para retornar todas os ganhos nas faixas para zero
         for (int i = 0; i < Mp3Buf.getInstance().getBandas().size(); i++) {
             Mp3Buf.getInstance().getBandas().get(i).setValor(0);
         }
@@ -282,13 +282,13 @@ public class EqualizerController implements Initializable {
         atualizaEqualizer();//Atualiza o equalizador
     }
 
-    public void atualizaSlider() {//Metodo simples para mudar a visualização do Slider
+    private void atualizaSlider() {//Metodo simples para mudar a visualização do Slider
         for (int i = 0; i < Sliders.size(); i++) {
             Sliders.get(i).setValue(Mp3Buf.getInstance().getBandas().get(i).getValor());
         }
     }
 
-    public void atualizaEqualizer() {//Metodo para transferir os dados do array para o equalizador
+    private void atualizaEqualizer() {//Metodo para transferir os dados do array para o equalizador
         ObservableList<EqualizerBand> bandseq;
         if (Mp3Buf.getInstance().checkmp() != null) {
             //Obtendo as bandas do equalizador
@@ -300,7 +300,7 @@ public class EqualizerController implements Initializable {
         }
     }
 
-    public void carregaPerfis() { //Metodo para preparar o choicebox para seleção de perfis
+    private void carregaPerfis() { //Metodo para preparar o choicebox para seleção de perfis
         ObservableList<String> itemselect = FXCollections.observableArrayList();
         itemselect.add("Zerar"); //Valores hardcoded
         itemselect.add("Maximizar");
