@@ -20,7 +20,36 @@ public class SpectrumCfg {
     private String segundacorgrad;
     private String terceiracorgrad;
     private int TipoDesenho;
+    private double stopColor1;
+    private double stopColor2;
+    private double stopColor3;
 
+    public double getStopColor1() {
+        return stopColor1;
+    }
+
+    public void setStopColor1(double stopColor1) {
+        this.stopColor1 = stopColor1;
+    }
+
+    public double getStopColor2() {
+        return stopColor2;
+    }
+
+    public void setStopColor2(double stopColor2) {
+        this.stopColor2 = stopColor2;
+    }
+
+    public double getStopColor3() {
+        return stopColor3;
+    }
+
+    public void setStopColor3(double stopColor3) {
+        this.stopColor3 = stopColor3;
+    }
+
+    
+    
     public int getTipoDesenho() {
         return TipoDesenho;
     }

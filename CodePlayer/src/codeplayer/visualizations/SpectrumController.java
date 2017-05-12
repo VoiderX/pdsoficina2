@@ -447,4 +447,30 @@ public class SpectrumController implements Initializable {
     public void setBlockC3(String blockC3) {
         this.blockC3 = blockC3;
     }
+
+    public double getColorStop1() {
+        return colorStop1;
+    }
+
+    public void setColorStop1(double colorStop1) {
+        this.colorStop1 = colorStop1;
+    }
+
+    public double getColorStop2() {
+        return colorStop2;
+    }
+
+    public void setColorStop2(double colorStop2) {
+        this.colorStop2 = colorStop2;
+    }
+
+    public double getColorStop3() {
+        return colorStop3;
+    }
+
+    public void setColorStop3(double colorStop3) {
+        this.colorStop3 = colorStop3;
+    }
+    
+    
 }

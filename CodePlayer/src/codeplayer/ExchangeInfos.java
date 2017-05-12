@@ -30,6 +30,9 @@ public final class ExchangeInfos {
         SpecCfgObj.setSegundacorgrad("0000FF");
         SpecCfgObj.setTerceiracorgrad("AACCFF");
         SpecCfgObj.setTipoDesenho(1);
+        SpecCfgObj.setStopColor1(0.3);
+        SpecCfgObj.setStopColor2(0.5);
+        SpecCfgObj.setStopColor3(0.6);
     }
     String useratual;
 

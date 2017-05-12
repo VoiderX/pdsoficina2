@@ -67,6 +67,12 @@ public class SpecCfgController implements Initializable {
     @FXML
     private BorderPane root;
     @FXML
+    private Slider colorStop1;
+    @FXML
+    private Slider colorStop2;
+    @FXML
+    private Slider colorStop3;
+    @FXML
     private HBox topHBOX;
     @FXML
     private VBox leftVBOX;
@@ -478,11 +484,62 @@ public class SpecCfgController implements Initializable {
         NumeroGradiente.setValue(3);
         CorGrad2.setValue(Color.web("0000FF"));
         CorGrad3.setValue(Color.web("AACCFF"));
+        colorStop1.setValue(0.3);
+        colorStop2.setValue(0.5);
+        colorStop3.setValue(0.6);
         codeplayer.ExchangeInfos.getInstance().setSpecCfg("Default");
         Perfil.setValue("Default");
         ativarPerfNSalvo = true;
     }
+    
+    @FXML
+    public void setStop1() {
+        if (ControleUI.getInstance().getSpectrumControl() != null) {
+            ControleUI.getInstance().getSpectrumControl().setColorStop1(colorStop1.getValue());
+            try {
+                ControleUI.getInstance().getSpectrumControl().start(
+                        ControleUI.getInstance().getSpectrumControl().getGc());
 
+            } catch (Exception e) {
+                //Faz nada
+            }
+        }
+        codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setStopColor1(colorStop1.getValue());
+        setPerfNSalvo(ativarPerfNSalvo);
+    }
+    
+    @FXML
+    public void setStop2() {
+        if (ControleUI.getInstance().getSpectrumControl() != null) {
+            ControleUI.getInstance().getSpectrumControl().setColorStop2(colorStop2.getValue());
+            try {
+                ControleUI.getInstance().getSpectrumControl().start(
+                        ControleUI.getInstance().getSpectrumControl().getGc());
+
+            } catch (Exception e) {
+                //Faz nada
+            }
+        }
+        codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setStopColor2(colorStop2.getValue());
+        setPerfNSalvo(ativarPerfNSalvo);
+    }
+    
+    @FXML
+    public void setStop3() {
+        if (ControleUI.getInstance().getSpectrumControl() != null) {
+            ControleUI.getInstance().getSpectrumControl().setColorStop3(colorStop3.getValue());
+            try {
+                ControleUI.getInstance().getSpectrumControl().start(
+                        ControleUI.getInstance().getSpectrumControl().getGc());
+
+            } catch (Exception e) {
+                //Faz nada
+            }
+        }
+        codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setStopColor3(colorStop3.getValue());
+        setPerfNSalvo(ativarPerfNSalvo);
+    }
+    
     /**
      * Initializes the controller class.
      */
@@ -557,6 +614,9 @@ public class SpecCfgController implements Initializable {
         //Pegando o perfil atual
         Perfil.setValue(codeplayer.ExchangeInfos.getInstance().getSpecCfg());
         //Adicionando listeners para os elementos de interface
+        this.colorStop1.valueProperty().addListener(listener->setStop1());
+        this.colorStop2.valueProperty().addListener(listener->setStop2());
+        this.colorStop3.valueProperty().addListener(listener->setStop3());
         this.BackgroundColor.valueProperty().addListener(listener -> setBack());
         this.LabelColor.valueProperty().addListener(listener -> setLabel());
         this.BarColor.valueProperty().addListener(listener -> setBar());
