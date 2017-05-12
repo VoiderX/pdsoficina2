@@ -75,17 +75,17 @@ public class SpecCfgController implements Initializable {
     @FXML
     private HBox mainHBox;
 
-    private int IndexFill=1;
+    private int IndexFill = 1;
 
-    private int TipoDesIndex=1;
+    private int TipoDesIndex = 1;
 
     SpectrumCfg aux;
     boolean ativarPerfNSalvo;
 
     public void setPerfNSalvo(boolean ativarPerfNSalvo) {
         if (this.ativarPerfNSalvo) {
-            Perfil.setValue("Perfil nao Salvo");
-            codeplayer.ExchangeInfos.getInstance().setSpecCfg("Perfil nao Salvo");
+            Perfil.setValue("Novo Perfil");
+            codeplayer.ExchangeInfos.getInstance().setSpecCfg("Novo Perfil");
         }
     }
 
@@ -285,7 +285,7 @@ public class SpecCfgController implements Initializable {
     @FXML
     public void salvaPerfil() {
         try {
-            if (!NomePerfil.getText().isEmpty() && !NomePerfil.getText().equals("Perfil nao Salvo")) {
+            if (!NomePerfil.getText().isEmpty() && !NomePerfil.getText().equals("Novo Perfil")) {
                 aux = new SpectrumCfg();
                 aux.setBackgroundColor(BackgroundColor.getValue().toString());
                 aux.setBarColor(BarColor.getValue().toString());
@@ -316,8 +316,8 @@ public class SpecCfgController implements Initializable {
 
     @FXML
     public void excluiPerfil() {
-        new File("User"+codeplayer.ExchangeInfos.getInstance().getUseratual()+"/PerfSpec"+
-                Perfil.getValue()+".xml").delete();
+        new File("User" + codeplayer.ExchangeInfos.getInstance().getUseratual() + "/PerfSpec"
+                + Perfil.getValue() + ".xml").delete();
         carregarPerfis();
         setDefault();
     }
@@ -327,7 +327,7 @@ public class SpecCfgController implements Initializable {
             ativarPerfNSalvo = false;
             codeplayer.ExchangeInfos.getInstance().setSpecCfg(Perfil.getValue());
             SpectrumCfg cfg = new SpectrumXML(Perfil.getValue()).xmltoSpec(new File(
-                    "User"+codeplayer.ExchangeInfos.getInstance().getUseratual()+"/PerfSpec" + Perfil.getValue() + ".xml"));
+                    "User" + codeplayer.ExchangeInfos.getInstance().getUseratual() + "/PerfSpec" + Perfil.getValue() + ".xml"));
             Numbands.setValue(cfg.getNumBands());
             BackgroundColor.setValue(Color.web(cfg.getBackgroundColor()));
             BarColor.setValue(Color.web(cfg.getBarColor()));
@@ -384,7 +384,7 @@ public class SpecCfgController implements Initializable {
     public void carregarPerfis() {
         ObservableList<String> itemselect = FXCollections.observableArrayList();
         itemselect.add("Default");
-        itemselect.add("Perfil nao Salvo");
+        itemselect.add("Novo Perfil");
         ArrayList<String> nomesperfis = SpectrumXML.procuraArquivosXML();
 
         for (int i = 0; i < nomesperfis.size(); i++) { //Limpa o nome do arquivo e deixa só o nome do pefil
@@ -407,7 +407,7 @@ public class SpecCfgController implements Initializable {
                     if (Perfil.getValue().equals("Default")) {
                         ativarPerfNSalvo = false;
                         setDefault();
-                    } else if (Perfil.getValue().equals("Perfil nao Salvo")) {
+                    } else if (Perfil.getValue().equals("Novo Perfil")) {
                         perfLoadCfg(false);
                     } else {
                         perfLoadCfg(true);
@@ -421,7 +421,7 @@ public class SpecCfgController implements Initializable {
     }
 
     public void setDefault() {
-        ativarPerfNSalvo=false;
+        ativarPerfNSalvo = false;
         BackgroundColor.setValue(Color.web("201D1D"));
         LabelColor.setValue(Color.web("FFFFFF"));
         BarColor.setValue(Color.web("4169E1"));
@@ -434,7 +434,7 @@ public class SpecCfgController implements Initializable {
         CorGrad3.setValue(Color.web("AACCFF"));
         codeplayer.ExchangeInfos.getInstance().setSpecCfg("Default");
         Perfil.setValue("Default");
-        ativarPerfNSalvo=true;
+        ativarPerfNSalvo = true;
     }
 
     /**
@@ -492,18 +492,18 @@ public class SpecCfgController implements Initializable {
         if ("Default".equals(codeplayer.ExchangeInfos.getInstance().getSpecCfg())) {
             ativarPerfNSalvo = false;
             setDefault();
-            ativarPerfNSalvo=true;
+            ativarPerfNSalvo = true;
         } else if (codeplayer.ExchangeInfos.getInstance().getSpecCfgObj() == null
                 && !codeplayer.ExchangeInfos.getInstance().getSpecCfg().equals("Default")) {
             codeplayer.ExchangeInfos.getInstance().setSpecCfgObj(new SpectrumCfg());
-        } else if ("Perfil nao Salvo".equals(codeplayer.ExchangeInfos.getInstance().getSpecCfg())) {
-            ativarPerfNSalvo=false;
+        } else if ("Novo Perfil".equals(codeplayer.ExchangeInfos.getInstance().getSpecCfg())) {
+            ativarPerfNSalvo = false;
             perfLoadCfg(false);
-            ativarPerfNSalvo=true;
+            ativarPerfNSalvo = true;
         } else {
-            ativarPerfNSalvo=false;
+            ativarPerfNSalvo = false;
             perfLoadCfg(true);
-            ativarPerfNSalvo=true;
+            ativarPerfNSalvo = true;
         }
 
     }

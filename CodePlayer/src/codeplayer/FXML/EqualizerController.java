@@ -33,7 +33,7 @@ import javafx.scene.text.Text;
  * @author Gabriel
  */
 public class EqualizerController implements Initializable {
-
+    
     @FXML
     ArrayList<Slider> Sliders = new ArrayList<>();
     @FXML
@@ -87,7 +87,7 @@ public class EqualizerController implements Initializable {
     Text HelperNomePerfil;
     @FXML
     Button BotaoOk;
-
+    
     @FXML
     public void salvarPerfil() {
         HelperNomePerfil.setText("Digite um nome para o perfil:");
@@ -97,11 +97,11 @@ public class EqualizerController implements Initializable {
         BotaoOk.setVisible(true);
         BotaoOk.setDisable(false);
     }
-
+    
     @FXML
     public void confirmaSalvarPerfil() {
         BandaXML temp;
-
+        
         if (NomePerfil.getText().isEmpty()) {
             HelperNomePerfil.setText("O nome não pode ser vazio!");
         } else {
@@ -146,19 +146,19 @@ public class EqualizerController implements Initializable {
             }
         }
     }
-
+    
     @FXML
     public void excluirPerfil() {
         System.out.println("ExcluirPerfil");
         try {
-            new File("PerfEQ" + Seletor.getValue() + ".xml").delete();
+            new File("User"+codeplayer.ExchangeInfos.getInstance().getUseratual()+"/PerfEQ" + Seletor.getValue() + ".xml").delete();
             carregaPerfis();
             Seletor.setValue("Zerar");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
+    
     @FXML
     public void equalizar() { //Metodo para setar a equalização para o máximo
         for (int i = 0; i < Mp3Buf.getInstance().getBandas().size(); i++) {
@@ -167,7 +167,7 @@ public class EqualizerController implements Initializable {
         atualizaSlider(); //Metodo para atualizar a visualização dos sliders
         atualizaEqualizer();//Metodo para atualizar o equalizador do Media Player
     }
-
+    
     @FXML
     public void equalizar2() {//Metodo para equalizar ao minimo
         for (int i = 0; i < Mp3Buf.getInstance().getBandas().size(); i++) {
@@ -175,25 +175,27 @@ public class EqualizerController implements Initializable {
         }
         atualizaSlider();
         atualizaEqualizer();
-
+        
     }
-
+    
     public void changeSlider(Event e) { //Metoodo para identificar caso o Slider seja alterado
         for (int i = 0; i < Sliders.size(); i++) {
             if (e.getSource() == Sliders.get(i)) {
                 //Seta o valor do slider no array
                 Mp3Buf.getInstance().getBandas().get(i).setValor(Sliders.get(i).getValue());
+                codeplayer.ExchangeInfos.getInstance().setPerfilEq("EqChanged");
+                Seletor.setValue("Novo Perfil");
             }
         }
         atualizaEqualizer();//Atualiza o equalizador
     }
-
+    
     public void atualizaSlider() {//Metodo simples para mudar a visualização do Slider
         for (int i = 0; i < Sliders.size(); i++) {
             Sliders.get(i).setValue(Mp3Buf.getInstance().getBandas().get(i).getValor());
         }
     }
-
+    
     public void atualizaEqualizer() {//Metodo para transferir os dados do array para o equalizador
         ObservableList<EqualizerBand> bandseq;
         if (Mp3Buf.getInstance().checkmp() != null) {
@@ -205,7 +207,7 @@ public class EqualizerController implements Initializable {
             }
         }
     }
-
+    
     @FXML
     public void zeroAll() { //Metodo para retornar todas os ganhos nas faixas para zero
         for (int i = 0; i < Mp3Buf.getInstance().getBandas().size(); i++) {
@@ -214,14 +216,15 @@ public class EqualizerController implements Initializable {
         atualizaSlider();//Atualiza a visualização dos sliders
         atualizaEqualizer();//Atualiza o equalizador
     }
-
+    
     public void carregaPerfis() { //Metodo para preparar o choicebox para seleção de perfis
         ObservableList<String> itemselect = FXCollections.observableArrayList();
         itemselect.add("Zerar"); //Valores hardcoded
         itemselect.add("Maximizar");
         itemselect.add("Minimizar");
+        itemselect.add("Novo Perfil");
         ArrayList<String> nomesperfis = BandastoXML.procuraArquivosXML();
-
+        
         for (int i = 0; i < nomesperfis.size(); i++) { //Limpa o nome do arquivo e deixa só o nome do pefil
             StringBuilder aux = new StringBuilder();
             aux.insert(0, nomesperfis.get(i));
@@ -234,45 +237,47 @@ public class EqualizerController implements Initializable {
         Seletor.setItems((ObservableList<String>) itemselect);
         //Detectando alterações de estado no ChoiceBox
 
-        Seletor.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            //Listener identifica mudanças na seleção
-            @Override
-            public void changed(ObservableValue<? extends String> ov, String t, String t1) {
-                if (Seletor.getValue() == null) {
-                    //Faz nada
-                } else if (Seletor.getValue().equals("Maximizar")) { //Estados Hardcoded
-                    equalizar();
-                    codeplayer.ExchangeInfos.getInstance().setPerfilEq("Maximizar");
-                } else if (Seletor.getValue().equals("Minimizar")) {
-                    equalizar2();
-                    codeplayer.ExchangeInfos.getInstance().setPerfilEq("Minimizar");
-                } else if (Seletor.getValue().equals("Zerar")) {
-                    zeroAll();
-                    codeplayer.ExchangeInfos.getInstance().setPerfilEq("Zerar");
-                } else {  //Obtendo valores do XML e passando para o Array de bandas na classe da Mp3
-                    File arq = new File("User" + "" + codeplayer.ExchangeInfos.getInstance().getUseratual() + "/PerfEQ" + Seletor.getValue() + ".xml");
-                    System.out.println(arq.getAbsolutePath());
-                    BandaXML bxml = new BandastoXML(Seletor.getValue()).xmltoBanda(arq);
-                    Mp3Buf.getInstance().getBandas().get(0).setValor(bxml.getGanho0());
-                    Mp3Buf.getInstance().getBandas().get(1).setValor(bxml.getGanho1());
-                    Mp3Buf.getInstance().getBandas().get(2).setValor(bxml.getGanho2());
-                    Mp3Buf.getInstance().getBandas().get(3).setValor(bxml.getGanho3());
-                    Mp3Buf.getInstance().getBandas().get(4).setValor(bxml.getGanho4());
-                    Mp3Buf.getInstance().getBandas().get(5).setValor(bxml.getGanho5());
-                    Mp3Buf.getInstance().getBandas().get(6).setValor(bxml.getGanho6());
-                    Mp3Buf.getInstance().getBandas().get(7).setValor(bxml.getGanho7());
-                    Mp3Buf.getInstance().getBandas().get(8).setValor(bxml.getGanho8());
-                    Mp3Buf.getInstance().getBandas().get(9).setValor(bxml.getGanho9());
-                    atualizaSlider(); //Metodo para atualizar a visualização dos sliders
-                    atualizaEqualizer();//Metodo para atualizar o equalizador do Media Player
-                    codeplayer.ExchangeInfos.getInstance().setPerfilEq(Seletor.getValue());
-                }
+        Seletor.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> ov, String t, String t1) -> {
+            codeplayer.ExchangeInfos.getInstance().setPerfilEq(Seletor.getValue());
+            if (Seletor.getValue() == null) {
+                //Faz nada
+            } else if (Seletor.getValue().equals("Maximizar")) { //Estados Hardcoded
+                equalizar();
+                codeplayer.ExchangeInfos.getInstance().setPerfilEq("Maximizar");
+            } else if (Seletor.getValue().equals("Minimizar")) {
+                equalizar2();
+                codeplayer.ExchangeInfos.getInstance().setPerfilEq("Minimizar");
+            } else if (Seletor.getValue().equals("Zerar")) {
+                zeroAll();
+                codeplayer.ExchangeInfos.getInstance().setPerfilEq("Zerar");
+            } else if (!codeplayer.ExchangeInfos.getInstance().getPerfilEq().equals("EqChanged")
+                    && !Seletor.getValue().equals("Novo Perfil")) {  //Obtendo valores do XML e passando para o Array de bandas na classe da Mp3
+                File arq = new File("User" + "" + codeplayer.ExchangeInfos.getInstance().getUseratual() + "/PerfEQ" + Seletor.getValue() + ".xml");
+                System.out.println(arq.getAbsolutePath());
+                BandaXML bxml = new BandastoXML(Seletor.getValue()).xmltoBanda(arq);
+                Mp3Buf.getInstance().getBandas().get(0).setValor(bxml.getGanho0());
+                Mp3Buf.getInstance().getBandas().get(1).setValor(bxml.getGanho1());
+                Mp3Buf.getInstance().getBandas().get(2).setValor(bxml.getGanho2());
+                Mp3Buf.getInstance().getBandas().get(3).setValor(bxml.getGanho3());
+                Mp3Buf.getInstance().getBandas().get(4).setValor(bxml.getGanho4());
+                Mp3Buf.getInstance().getBandas().get(5).setValor(bxml.getGanho5());
+                Mp3Buf.getInstance().getBandas().get(6).setValor(bxml.getGanho6());
+                Mp3Buf.getInstance().getBandas().get(7).setValor(bxml.getGanho7());
+                Mp3Buf.getInstance().getBandas().get(8).setValor(bxml.getGanho8());
+                Mp3Buf.getInstance().getBandas().get(9).setValor(bxml.getGanho9());
+                atualizaSlider(); //Metodo para atualizar a visualização dos sliders
+                atualizaEqualizer();//Metodo para atualizar o equalizador do Media Player
+                codeplayer.ExchangeInfos.getInstance().setPerfilEq(Seletor.getValue());
+            } else {
+                //
             }
-        });
+        } //Listener identifica mudanças na seleção
+        );
     }
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -281,35 +286,35 @@ public class EqualizerController implements Initializable {
         //Adiciona os sliders nos Arrays
         Sliders.add(Slider0);
         Freqs.add(freq0);
-
+        
         Sliders.add(Slider1);
         Freqs.add(freq1);
-
+        
         Sliders.add(Slider2);
         Freqs.add(freq2);
-
+        
         Sliders.add(Slider3);
         Freqs.add(freq3);
-
+        
         Sliders.add(Slider4);
         Freqs.add(freq4);
-
+        
         Sliders.add(Slider5);
         Freqs.add(freq5);
-
+        
         Sliders.add(Slider6);
         Freqs.add(freq6);
-
+        
         Sliders.add(Slider7);
         Freqs.add(freq7);
-
+        
         Sliders.add(Slider8);
         Freqs.add(freq8);
-
+        
         Sliders.add(Slider9);
         Freqs.add(freq9);
         if (Mp3Buf.getInstance().getBandas() == null) {
-            Mp3Buf.getInstance().setBandas(new ArrayList<Banda>());
+            Mp3Buf.getInstance().setBandas(new ArrayList<>());
             for (int i = 0; i < Sliders.size(); i++) {//Inicia todos os valores nos sliders com os valores do array de bandas
                 Banda aux = new Banda();
                 aux.setValor(0);
@@ -332,5 +337,5 @@ public class EqualizerController implements Initializable {
         BotaoOk.setVisible(false);
         Seletor.setValue(codeplayer.ExchangeInfos.getInstance().getPerfilEq());
     }
-
+    
 }
