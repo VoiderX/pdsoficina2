@@ -33,7 +33,9 @@ import javafx.scene.paint.Stop;
  */
 public class SpectrumController implements Initializable {
 
-    //vars do FXML
+    /*
+        Variáveis do FXML
+    */
     @FXML
     Pane pane;
     @FXML
@@ -47,8 +49,73 @@ public class SpectrumController implements Initializable {
 
     //Menu de contexto
     ContextMenu contMenu = new ContextMenu(callConfig, fs);
+    
+    /*
+        Fim das variáveis do FXML
+    */
+    
+    /*
+        Variáveis
+    */
+    //variáveis para o funcionamento(NÃO MEXER)
+    private final int spaceX1 = 50, spaceX2 = 30, spaceY1 = 10, spaceY2 = 25, strokeW = 2;
+    private final int maxf = 25600;
+    private double origin[] = new double[2];
+    private boolean needScale = true;
+    private GraphicsContext gc;
+    ResizableCanvas specT = new ResizableCanvas();
 
-    //coloca me fullscreen
+    //variáveis para a visualização
+    //número de bandas
+    private int bands = 64;
+    //sensibilidade do spectro
+    private int tresh = -80;
+    //tipo de preenchemento das formas
+    private int typeFill = 1;
+    //numero de cores do gradiente
+    private int numC = 3;
+    //tipo de render do spectro
+    private int typeDraw = 1;
+    //intervalo entre os updates
+    private double inter = 0.02;
+
+    //variáveis para controlar as cores do spectrômetro
+    private String backgroundC = "201D1D", labelC = "FFFFFF", blockC = "4169E1", blockC1 = "FF0000", blockC2 = "0000FF", blockC3 = "AACCFF";
+
+    //variáveis para cotnrolar onde cada gradiente acaba
+    double colorStop1 = 0.3, colorStop2 = 0.4, colorStop3 = 0.6;
+
+    /*
+        Fim das variáveis
+    */
+    
+    /**
+     * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        //inicializa o Graphics Context
+        initGC();
+        
+        //configurações do menu de contexto
+        setupContextMenu();
+
+        //coloca o canvas no pane e o configura
+        setupCanvas();
+
+        //pega os valores de configuração da spec config e os seta
+        setValues();
+        
+        start(gc);
+    }
+    
+    /*
+        Métodos do FXML
+    */
+    //coloca em fullscreen
     @FXML
     private void fs() {
         ControleUI.getInstance().getFourthStage().setFullScreen(!ControleUI.getInstance().getFourthStage().isFullScreen());
@@ -78,61 +145,35 @@ public class SpectrumController implements Initializable {
         }
         ControleUI.getInstance().mostraSpectrumCfg();
     }
-
-    //variáveis para o funcionamento(NÃO MEXER)
-    private final int spaceX1 = 50, spaceX2 = 30, spaceY1 = 10, spaceY2 = 25, strokeW = 2;
-    private final int maxf = 25600;
-    private double origin[] = new double[2];
-    private boolean needScale = true;
-    private GraphicsContext gc;
-    ResizableCanvas specT = new ResizableCanvas();
-
-    //variáveis para a visualização
-    //número de bandas
-    private int bands = 64;
-    //sensibilidade do spectro
-    private int tresh = -80;
-    //tipo de preenchemento das formas
-    private int typeFill = 1;
-    //numero de cores do gradiente
-    private int numC = 3;
-    //tipo de render do spectro
-    private int typeDraw = 1;
-    //intervalo entre os updates
-    private double inter = 0.02;
-
-    //variáveis para controlar as cores do spectrômetro
-    private String backgroundC = "201D1D", labelC = "FFFFFF", blockC = "4169E1", blockC1 = "FF0000", blockC2 = "0000FF", blockC3 = "AACCFF";
-
-    //variáveis para cotnrolar onde cada gradiente acaba
-    double colorStop1 = 0.3, colorStop2 = 0.4, colorStop3 = 0.6;
-
-    /**
-     * Initializes the controller class.
-     *
-     * @param gc
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        //inicializa o Graphics Context
+    /*
+       Fim dos métodos do FXML
+    */
+    
+    /*
+        Métodos 
+    */
+    private void initGC(){
         gc = specT.getGraphicsContext2D();
         gc.setStroke(Color.web(labelC));
         gc.setLineWidth(strokeW);
-
-        //configurações do menu de contexto
+    }
+    
+    private void setupContextMenu(){
         fs.setOnAction(e -> fs());
         callConfig.setOnAction(e -> openConfig());
         contMenu.setAutoHide(true);
         specT.setOnContextMenuRequested(event -> contMenu.show(anchor, event.getScreenX(), event.getScreenY()));
-
-        //coloca o canvas no pane e o configura
+    }
+    
+    private void setupCanvas(){
         pane.getChildren().add(specT);
         specT.widthProperty().bind(pane.widthProperty());
         specT.heightProperty().bind(pane.heightProperty());
         pane.widthProperty().addListener(event -> start(gc));
         pane.heightProperty().addListener(event -> start(gc));
-
-        //pega os valores de configuração da spec config e os seta
+    }
+    
+    private void setValues(){
         setBackgroundC(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getBackgroundColor());
         setBands(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getNumBands());
         setBlockC(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getBarColor());
@@ -144,9 +185,8 @@ public class SpectrumController implements Initializable {
         setNumC(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getNumC());
         setTypeDraw(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getTipoDesenho());
         setTypeFill(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getPreenchimento());
-        start(gc);
     }
-
+    
     public void start(GraphicsContext gc) {
         //configura os dados do spectro e o desenha
         if (Mp3Buf.getInstance().checkmp() != null) {
@@ -174,9 +214,9 @@ public class SpectrumController implements Initializable {
             });
         }
     }
-
+    
     //elementos estáticos da tela, como os labels...
-    public void staticElements(GraphicsContext gc) {
+    private void staticElements(GraphicsContext gc) {
         //cor dos labels
         gc.setStroke(Color.WHITE);
         //linha vertical
@@ -269,7 +309,7 @@ public class SpectrumController implements Initializable {
 
     //métodos de desenho do spectrômetro
     private void drawMetod(int typeDraw, GraphicsContext gc, float[] mag) {
-        double displaceX = 0;
+        double displaceX;
         switch (typeDraw) {
             //Gráfico de barras
             case 0:
@@ -307,7 +347,7 @@ public class SpectrumController implements Initializable {
                 fillMetod(typeFill);
                 origin[0] = (pane.getWidth() / 2);
                 origin[1] = ((pane.getHeight() / 2) - 5);
-                double baseR = (pane.getHeight() * 0.20), uBaseR = (pane.getHeight() * 0.22), expanMax = 0;
+                double baseR = (pane.getHeight() * 0.20), uBaseR = (pane.getHeight() * 0.22), expanMax;
                 double[] cordX = new double[(bands + 1) * 2];
                 Deque<Double> innerCordX = new ArrayDeque<>();
                 double[] cordY = new double[(bands + 1) * 2];
@@ -351,11 +391,17 @@ public class SpectrumController implements Initializable {
     }
 
     //da a proporção da magnitude do spectro em relação ao espaço disponível 
-    public double prop(double mag) {
+    private double prop(double mag) {
         return ((mag / (-tresh)) * (specT.getHeight() - spaceY2 - spaceY1));
     }
-
-    //Getters e Setters
+    /*
+        Fim dos métodos
+    */
+    
+    
+    /*
+        Getters e Setters
+    */
     public GraphicsContext getGc() {
         return gc;
     }
@@ -471,6 +517,7 @@ public class SpectrumController implements Initializable {
     public void setColorStop3(double colorStop3) {
         this.colorStop3 = colorStop3;
     }
-    
-    
+    /*
+        Fim Getters e Setters
+    */
 }
