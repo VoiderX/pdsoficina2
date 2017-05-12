@@ -197,7 +197,7 @@ public final class ControleUI {
             sixthStage.setTitle(("Configurações do Visualizador Espectral"));
             sixthStage.show();
             sixthStage.setMinHeight(550);
-            sixthStage.setMinWidth(600);
+            sixthStage.setMinWidth(650);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -75,8 +75,6 @@ public class SpecCfgController implements Initializable {
     @FXML
     private VBox rightVBox;
     @FXML
-    private HBox mainHBox;
-    @FXML
     private HBox posCorGrad;
     @FXML
     private Region spacerCenter1;
@@ -92,6 +90,36 @@ public class SpecCfgController implements Initializable {
     private Region spacerNorth3;
     @FXML
     private Region spacerNorth4;
+    @FXML
+    private Region spacerColor1;
+    @FXML
+    private Region spacerColor2;
+    @FXML
+    private Region spacerLeft1;
+    @FXML
+    private Region spacerLeft2;
+    @FXML
+    private Region spacerLeft3;
+    @FXML
+    private Region spacerLeft4;
+    @FXML
+    private Region spacerLeft5;
+    @FXML
+    private Region spacerCenterH1;
+    @FXML
+    private Region spacerCenterH2;
+    @FXML
+    private Region spacerCenterH3;
+    @FXML
+    private Region spacerCenterH4;
+    @FXML
+    private Region spacerRight1;
+    @FXML
+    private Region spacerRight2;
+    @FXML
+    private Region spacerRight3;
+    @FXML
+    private Region spacerRight4;
     
     private int IndexFill = 1;
 
@@ -458,39 +486,45 @@ public class SpecCfgController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    private void teste(){
-        System.out.println("mainHBox: "+mainHBox.getHeight()+" centerVBox: "+centerVBox.getHeight());
-        System.out.println("root: "+root.getHeight());
-    }
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Configurações de interface
         root.prefWidthProperty().bind(ControleUI.getInstance().getSixthStage().widthProperty());
         root.prefHeightProperty().bind(ControleUI.getInstance().getSixthStage().heightProperty());
 
-        topHBOX.prefWidthProperty().bind(root.prefWidthProperty());
         topHBOX.setAlignment(Pos.CENTER);
 
         leftVBOX.setAlignment(Pos.CENTER);
         centerVBox.setAlignment(Pos.CENTER);
         rightVBox.setAlignment(Pos.CENTER);
-        mainHBox.setAlignment(Pos.CENTER);
-        
-        leftVBOX.prefHeightProperty().bind(mainHBox.prefHeightProperty());
-        centerVBox.prefHeightProperty().bind(mainHBox.prefHeightProperty());
-        rightVBox.prefHeightProperty().bind(mainHBox.prefHeightProperty());
         
         VBox.setVgrow(spacerCenter1, Priority.ALWAYS);
         VBox.setVgrow(spacerCenter2, Priority.ALWAYS);
         VBox.setVgrow(spacerCenter3, Priority.ALWAYS);
+        
         HBox.setHgrow(spacerNorth1, Priority.ALWAYS);
         HBox.setHgrow(spacerNorth2, Priority.ALWAYS);
         HBox.setHgrow(spacerNorth3, Priority.ALWAYS);
         HBox.setHgrow(spacerNorth4, Priority.ALWAYS);
         
-        root.prefHeightProperty().addListener(e->teste());
-        mainHBox.prefHeightProperty().addListener(e->teste());
+        HBox.setHgrow(spacerColor1, Priority.ALWAYS);
+        HBox.setHgrow(spacerColor2, Priority.ALWAYS);
+        
+        VBox.setVgrow(spacerLeft1, Priority.ALWAYS);
+        VBox.setVgrow(spacerLeft2, Priority.ALWAYS);
+        VBox.setVgrow(spacerLeft3, Priority.ALWAYS);
+        VBox.setVgrow(spacerLeft4, Priority.ALWAYS);
+        VBox.setVgrow(spacerLeft5, Priority.ALWAYS);
+        
+        HBox.setHgrow(spacerCenterH1, Priority.ALWAYS);
+        HBox.setHgrow(spacerCenterH2, Priority.ALWAYS);
+        HBox.setHgrow(spacerCenterH3, Priority.ALWAYS);
+        HBox.setHgrow(spacerCenterH4, Priority.ALWAYS);
+        
+        VBox.setVgrow(spacerRight1, Priority.ALWAYS);
+        VBox.setVgrow(spacerRight2, Priority.ALWAYS);
+        VBox.setVgrow(spacerRight3, Priority.ALWAYS);
+        VBox.setVgrow(spacerRight4, Priority.ALWAYS);
         
         posCorGrad.setAlignment(Pos.CENTER);
         //Fim das configurações de interface
