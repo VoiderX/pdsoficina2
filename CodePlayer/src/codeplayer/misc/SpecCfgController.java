@@ -22,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -39,7 +40,9 @@ import javafx.util.StringConverter;
  * @author Gabriel
  */
 public class SpecCfgController implements Initializable {
-
+    
+    @FXML
+    private Label errorLabel;
     @FXML
     private ColorPicker BackgroundColor;
     @FXML
@@ -366,8 +369,10 @@ public class SpecCfgController implements Initializable {
                 xmltemp.geraXMLfile(aux);
                 carregarPerfis();
                 Perfil.setValue(NomePerfil.getText());
+                NomePerfil.clear();
+                errorLabel.setText("");
             } else {
-                System.out.println("Nome inválido");
+                errorLabel.setText("Nome inválido");
             }
 
         } catch (Exception e) {

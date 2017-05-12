@@ -18,7 +18,7 @@
       </Pane>
       <Pane fx:id="newUser" layoutX="18.0" layoutY="149.0">
          <children>
-            <TextField fx:id="newName" layoutY="26.0" onKeyPressed="#criarUsuariaEnter" />
+            <TextField fx:id="newName" layoutY="26.0" onAction="#criarUsuariaEnter" />
             <Button fx:id="save" layoutX="51.0" layoutY="65.0" mnemonicParsing="false" onAction="#criaUsuario" text="Salvar" />
             <Label layoutX="22.0" text="Crie um novo perfil:" />
          </children>

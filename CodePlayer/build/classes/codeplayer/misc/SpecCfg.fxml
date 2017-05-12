@@ -158,10 +158,11 @@
                         <Region fx:id="spacerRight2" layoutX="10.0" layoutY="10.0" />
                         <Pane>
                            <children>
-                              <TextField fx:id="NomePerfil" layoutX="34.0" layoutY="18.0" />
+                              <TextField fx:id="NomePerfil" layoutX="34.0" layoutY="18.0" onAction="#salvaPerfil" />
                               <Label layoutX="33.0" text="Nome do Perfil" />
                            </children>
                         </Pane>
+                        <Label fx:id="errorLabel" />
                         <Region fx:id="spacerRight3" />
                         <Pane>
                            <children>

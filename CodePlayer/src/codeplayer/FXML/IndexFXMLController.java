@@ -90,10 +90,8 @@ public class IndexFXMLController implements Initializable {
     }
     
     @FXML
-    private void criarUsuariaEnter(KeyEvent key){
-        if(key.getCode()==KeyCode.ENTER){
-            criaUsuario();
-        }
+    private void criarUsuariaEnter(){
+        criaUsuario();
     }
     /*
         Fim métodos FXML
