@@ -67,6 +67,8 @@ public class PlayerController implements Initializable {
     TableColumn<codeplayer.Musica, Integer> ColunaIndice;
     @FXML
     Slider Tracker;
+    @FXML
+    Text Duration;
     
     public Slider getTracker() {
         return Tracker;
@@ -285,11 +287,13 @@ public class PlayerController implements Initializable {
         // TODO
         imagem.setSmooth(true);
         SlidVol.setValue(100);
-        //Tracker.valueProperty().addListener(listener -> atualizaTracker());
+        Tracker.valueProperty().addListener(listener -> atualizaTracker());
     }
 
     public void atualizaTracker() {
-        //System.out.println(Tracker.getValue());
+        Duration.setText(Mp3Buf.getInstance().getConversorSliderLabel().toString(Tracker.getValue())
+        +"/"+Mp3Buf.getInstance().getConversorSliderLabel().toString(
+                Mp3Buf.getInstance().getMp().getMedia().getDuration().toMinutes()));
     }
     
     @FXML

@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="859.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codeplayer.FXML.PlayerController">
@@ -17,16 +18,22 @@
       <Button layoutX="44.0" layoutY="438.0" mnemonicParsing="false" onAction="#play" prefHeight="25.0" prefWidth="93.0" text="Play" />
       <Button layoutX="391.0" layoutY="438.0" mnemonicParsing="false" onAction="#pause" prefHeight="25.0" prefWidth="93.0" text="Pause" />
       <Button layoutX="513.0" layoutY="438.0" mnemonicParsing="false" onAction="#stop" prefHeight="25.0" prefWidth="93.0" text="Stop" />
-      <Label layoutX="78.0" layoutY="66.0" prefHeight="17.0" prefWidth="38.0" text="Titulo:" />
-      <Label layoutX="78.0" layoutY="83.0" text="Artista:" />
-      <Label layoutX="78.0" layoutY="100.0" text="Album:" />
-      <Label layoutX="78.0" layoutY="117.0" text="Ano:" />
-      <Label layoutX="77.0" layoutY="134.0" text="Faixa:" />
-      <Text fx:id="Titulo" layoutX="120.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nenhum" wrappingWidth="205.13671875" />
-      <Text fx:id="Artista" layoutX="120.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nenhum" wrappingWidth="205.13671875" />
-      <Text fx:id="Album" layoutX="120.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nenhum" wrappingWidth="205.13671875" />
-      <Text fx:id="Ano" layoutX="120.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nenhum" wrappingWidth="205.13671875" />
-      <Text fx:id="Faixa" layoutX="120.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nenhum" wrappingWidth="205.13671875" />
+      <Pane layoutX="66.0" layoutY="66.0">
+         <children>
+            <Label layoutX="12.0" prefHeight="17.0" prefWidth="38.0" text="Titulo:" />
+            <Label layoutX="12.0" layoutY="17.0" text="Artista:" />
+            <Label layoutX="12.0" layoutY="34.0" text="Album:" />
+            <Label layoutX="12.0" layoutY="51.0" text="Ano:" />
+            <Label layoutX="11.0" layoutY="68.0" text="Faixa:" />
+            <Text fx:id="Titulo" layoutX="54.0" layoutY="13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nenhum" wrappingWidth="205.13671875" />
+            <Text fx:id="Artista" layoutX="54.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nenhum" wrappingWidth="205.13671875" />
+            <Text fx:id="Album" layoutX="54.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nenhum" wrappingWidth="205.13671875" />
+            <Text fx:id="Ano" layoutX="54.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nenhum" wrappingWidth="205.13671875" />
+            <Text fx:id="Faixa" layoutX="54.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nenhum" wrappingWidth="205.13671875" />
+            <Text fx:id="Duration" layoutX="54.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nenhum" wrappingWidth="205.13672360032797" />
+            <Label layoutY="85.0" prefHeight="17.0" prefWidth="52.0" text="Duração:" />
+         </children>
+      </Pane>
       <Button layoutX="642.0" layoutY="54.0" mnemonicParsing="false" onAction="#exibeEqualizer" prefHeight="25.0" prefWidth="133.0" text="Equalizar" />
       <Button layoutX="642.0" layoutY="122.0" mnemonicParsing="false" onAction="#loadMusicDialog" prefHeight="25.0" prefWidth="133.0" text="Carregar Música" />
       <TableView fx:id="Tabelamusicas" layoutX="31.0" layoutY="244.0" onMouseClicked="#selecionaMusica" prefHeight="174.0" prefWidth="752.0">

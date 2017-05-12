@@ -51,12 +51,12 @@ public final class Mp3Buf {
                 return (ParteInt + ":0" + ParteSegs);
             }
         }
-
+        
         @Override
         public Double fromString(String string) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-    };
+    };   
 
     //Prepara o slider do Seeker
     public void setSeekerSlider() {
@@ -236,5 +236,9 @@ public final class Mp3Buf {
     public void setBandas(ArrayList<Banda> bandas) {
         this.bandas = bandas;
     }
+
+    public StringConverter<Double> getConversorSliderLabel() {
+        return conversorSliderLabel;
+    }  
 
 }
