@@ -37,7 +37,10 @@ import javafx.stage.FileChooser;
  * @author Gabriel
  */
 public class PlayerController implements Initializable {
-    
+
+    /*
+    Inicio das Variaveis do FXML
+     */
     @FXML
     Text Faixa;
     @FXML
@@ -69,26 +72,27 @@ public class PlayerController implements Initializable {
     Slider Tracker;
     @FXML
     Text Duration;
-    
-    public Slider getTracker() {
-        return Tracker;
+
+    /*
+         Fim das variaveis do FXML
+     */
+    /**
+     * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+        imagem.setSmooth(true);
+        SlidVol.setValue(100);
+        Tracker.valueProperty().addListener(listener -> atualizaTracker());
     }
 
-    //Metodo para preparação da musica
-    //Caso esteja tocando e uma nova musica seja carregada encerra o MediaPlayer atual
-    public void prepararMusica() {
-        try {
-            if (Mp3Buf.getInstance().getMp() != null && Mp3Buf.getInstance().getPathMusic() != null) {
-                Mp3Buf.getInstance().getMp().dispose();
-                Mp3Buf.getInstance().setMp(null);
-                play();
-                changeSliderVol();
-            }
-        } catch (Exception e) {
-            // NOTHING TO DO HERE
-        }
-    }
-
+    /*
+        Inicio dos metodos FXML
+     */
     //Metodo play, inicia a reprodução e a busca dos metadados
     @FXML
     public void play() {
@@ -105,8 +109,8 @@ public class PlayerController implements Initializable {
         } catch (Exception e) {
         }
     }
-    //Metodo para dar stop na musica
 
+    //Metodo para dar stop na musica
     @FXML
     public void stop() {
         try {
@@ -117,8 +121,8 @@ public class PlayerController implements Initializable {
             // NOTHING TO DO HERE
         }
     }
-    //Metodo para dar pause na musica
 
+    //Metodo para dar pause na musica
     @FXML
     public void pause() {
         try {
@@ -129,8 +133,8 @@ public class PlayerController implements Initializable {
             // NOTHING DO TO HERE
         }
     }
-    //Metodo para chamar a proxima musica
 
+    //Metodo para chamar a proxima musica
     @FXML
     public void next() {
         Btnext.setDisable(true);
@@ -142,7 +146,8 @@ public class PlayerController implements Initializable {
         play();
         Btnext.setDisable(false);
     }
-    
+
+    @FXML
     public void last() {
         //Idem  ao metodo next, no entanto seta a música anterior
         Btlast.setDisable(true);
@@ -151,14 +156,14 @@ public class PlayerController implements Initializable {
         play();
         Btlast.setDisable(false);
     }
-    //Metodo para chamar a classe de exibição do equalizador
 
+    //Metodo para chamar a classe de exibição do equalizador
     @FXML
     public void exibeEqualizer() {
         ControleUI.getInstance().mostraEqualizer();
     }
+    
     //Chama o File Chooser para carregar as músicas
-
     @FXML
     public void loadMusicDialog() {
         FileChooser fc = new FileChooser();
@@ -176,11 +181,124 @@ public class PlayerController implements Initializable {
             carregarTabela(); //Carrega a tabela de exibição de músicas
             prepararMusica();//Prepara a primeira música
         } catch (Exception e) { //Caso venha vazio(sem seleção) não faz nada
-           
+
         }
     }
-    //Metodo chamado dentro da CheckMetada para exibir os metadados
+    //Metodo para reproduzir uma música selecionada na tabela a partir do Index
+    @FXML
+    public void selecionaMusica(MouseEvent evt) {
+        int aux;
+        try {
+            if (evt.getClickCount() == 2) {
+                aux = Tabelamusicas.getSelectionModel().getSelectedItem().getIndex();
 
+                if (aux != Mp3Buf.getInstance().getPosTocando()) { //Verifica se a música já está tocando
+                    Mp3Buf.getInstance().setPosTocando(aux);//Seta a posição a ser tocada
+                    prepararMusica();//Musica deve ser preparada 
+                    play();//Inicia a música
+                } else {
+                    //Faz nada
+                }
+            }
+        } catch (Exception e) {
+            //
+        }
+    }
+
+    @FXML
+    public void changeSliderVol() { //Metodo para controle de volume
+        if (Mp3Buf.getInstance().checkmp() != null) { //Verifica se o media player está instanciado
+            Double volume = SlidVol.getValue(); //Pega o valor do slider
+            volume = volume / 100;//Divide por 100, pos o volume vai de 0 a 1;
+            Mp3Buf.getInstance().getMp().setVolume(volume);//Passa o volume para o media player
+        }
+    }
+
+    @FXML
+    public void carregaOsciloscope() {
+        ControleUI.getInstance().mostraOsciloscope();
+    }
+
+    @FXML
+    public void carregaSpectrum() {
+        ControleUI.getInstance().mostraSpectrum();
+    }
+
+    @FXML
+    public void mostraInfos() {
+        ControleUI.getInstance().mostraInfos();
+    }
+
+    @FXML
+    public void mostraSpectrumCfg() {
+        ControleUI.getInstance().mostraSpectrumCfg();
+    }
+
+    @FXML
+    public void testIndex() {
+        ControleUI.getInstance().mostraIndex();
+    }
+
+    @FXML
+    public void startScroll() {
+        Mp3Buf.getInstance().removeListenerTracker();
+        Mp3Buf.getInstance().setValorTrackerAnterior(Tracker.getValue());
+    }
+
+    @FXML
+    public void finishScroll() {
+        Mp3Buf.getInstance().setLastseekValue(Tracker.getValue());
+        Mp3Buf.getInstance().seekTime(Tracker.getValue());
+        Mp3Buf.getInstance().addListenerTracker();
+        System.out.println(Mp3Buf.getInstance().getLastseekValue());
+
+    }
+    /*
+        Fim dos metodos FXML
+    */
+    
+    /*
+        Inicio dos metodos padrão
+    */
+    //Metodo para preparação da musica
+    //Caso esteja tocando e uma nova musica seja carregada encerra o MediaPlayer atual
+    public void prepararMusica() {
+        try {
+            if (Mp3Buf.getInstance().getMp() != null && Mp3Buf.getInstance().getPathMusic() != null) {
+                Mp3Buf.getInstance().getMp().dispose();
+                Mp3Buf.getInstance().setMp(null);
+                play();
+                changeSliderVol();
+            }
+        } catch (Exception e) {
+            // NOTHING TO DO HERE
+        }
+    }
+    //Realiza as alterações baseadas no listener do slider para o visualizador da duração
+    public void atualizaTracker() {
+        Duration.setText(Mp3Buf.getInstance().getConversorSliderLabel().toString(Tracker.getValue())
+                + "/" + Mp3Buf.getInstance().getConversorSliderLabel().toString(
+                        Mp3Buf.getInstance().getMp().getMedia().getDuration().toMinutes()));
+    }
+    
+    //Carrega a tabela a para exibição
+    public void carregarTabela() {
+        //Array temporário para armazenar os  dados
+        ArrayList<Musica> tempdados = Mp3Buf.getInstance().getMusicas();
+        //ObservableList para carregar os dados na tabela
+        ObservableList<Musica> temp2dados = FXCollections.observableArrayList();
+        //Transfere os dados do array para o ObservableList
+        for (int i = 0; i < tempdados.size(); i++) {
+            temp2dados.add(tempdados.get(i));
+        }
+        //Binda as colunas da tabela nos componentes da Classe Musica
+        ColunaNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
+        ColunaPath.setCellValueFactory(new PropertyValueFactory<>("PathMusic"));
+        ColunaIndice.setCellValueFactory(new PropertyValueFactory<>("Index"));
+        Tabelamusicas.setItems(temp2dados);//Seta o ObservableList na tabela
+    }
+    
+    //Metodo chamado dentro da CheckMetada para exibir os metadados
     public void setInfos(ObservableMap<String, Object> metadata) {
         Artista.setText("Nenhum");
         Titulo.setText("Nenhum");
@@ -188,7 +306,7 @@ public class PlayerController implements Initializable {
         Ano.setText("Nenhum");
         Faixa.setText("Nenhum");
         imagem.setImage(null);
-        
+
         if (metadata.get("artist") != null) {
             Artista.setText(metadata.get("artist").toString());
         }
@@ -209,109 +327,17 @@ public class PlayerController implements Initializable {
             imagem.setImage(CapaAlbum);
         }
     }
-    //Carrega a tabela a para exibição
-
-    public void carregarTabela() {
-        //Array temporário para armazenar os  dados
-        ArrayList<Musica> tempdados = Mp3Buf.getInstance().getMusicas();
-        //ObservableList para carregar os dados na tabela
-        ObservableList<Musica> temp2dados = FXCollections.observableArrayList();
-        //Transfere os dados do array para o ObservableList
-        for (int i = 0; i < tempdados.size(); i++) {
-            temp2dados.add(tempdados.get(i));
-        }
-        //Binda as colunas da tabela nos componentes da Classe Musica
-        ColunaNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
-        ColunaPath.setCellValueFactory(new PropertyValueFactory<>("PathMusic"));
-        ColunaIndice.setCellValueFactory(new PropertyValueFactory<>("Index"));
-        Tabelamusicas.setItems(temp2dados);//Seta o ObservableList na tabela
-    }
+    /*
+        Fim dos metodos padrão
+    */
     
-    @FXML
-    public void selecionaMusica(MouseEvent evt) {//Metodo para reproduzir uma música selecionada na tabela a partir do Index
-        int aux;
-        try {
-            if (evt.getClickCount() == 2) {
-                aux = Tabelamusicas.getSelectionModel().getSelectedItem().getIndex();
-                
-                if (aux != Mp3Buf.getInstance().getPosTocando()) { //Verifica se a música já está tocando
-                    Mp3Buf.getInstance().setPosTocando(aux);//Seta a posição a ser tocada
-                    prepararMusica();//Musica deve ser preparada 
-                    play();//Inicia a música
-                } else {
-                    //Faz nada
-                }
-            }
-        } catch (Exception e) {
-            //
-        }
+    /*
+        Inicio dos Getter e Setter
+    */
+    public Slider getTracker() {
+        return Tracker;
     }
-    
-    @FXML
-    public void changeSliderVol() { //Metodo para controle de volume
-        if (Mp3Buf.getInstance().checkmp() != null) { //Verifica se o media player está instanciado
-            Double volume = SlidVol.getValue(); //Pega o valor do slider
-            volume = volume / 100;//Divide por 100, pos o volume vai de 0 a 1;
-            Mp3Buf.getInstance().getMp().setVolume(volume);//Passa o volume para o media player
-        }
-    }
-    
-    @FXML
-    public void carregaOsciloscope() {
-        ControleUI.getInstance().mostraOsciloscope();
-    }
-    
-    @FXML
-    public void carregaSpectrum() {
-        ControleUI.getInstance().mostraSpectrum();
-    }
-    
-    @FXML
-    public void mostraInfos() {
-        ControleUI.getInstance().mostraInfos();
-    }
-    
-    @FXML
-    public void mostraSpectrumCfg() {
-        ControleUI.getInstance().mostraSpectrumCfg();
-    }
-
-    /**
-     * Initializes the controller class.
-     *
-     * @param url
-     * @param rb
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        imagem.setSmooth(true);
-        SlidVol.setValue(100);
-        Tracker.valueProperty().addListener(listener -> atualizaTracker());
-    }
-
-    public void atualizaTracker() {
-        Duration.setText(Mp3Buf.getInstance().getConversorSliderLabel().toString(Tracker.getValue())
-        +"/"+Mp3Buf.getInstance().getConversorSliderLabel().toString(
-                Mp3Buf.getInstance().getMp().getMedia().getDuration().toMinutes()));
-    }
-    
-    @FXML
-    public void testIndex() {
-        ControleUI.getInstance().mostraIndex();
-    }
-
-    @FXML
-    public void startScroll(){
-        Mp3Buf.getInstance().removeListenerTracker();
-        Mp3Buf.getInstance().setValorTrackerAnterior(Tracker.getValue());
-    }
-    @FXML
-    public void finishScroll(){
-        Mp3Buf.getInstance().setLastseekValue(Tracker.getValue());
-        Mp3Buf.getInstance().seekTime(Tracker.getValue());
-        Mp3Buf.getInstance().addListenerTracker();
-        System.out.println(Mp3Buf.getInstance().getLastseekValue());
-       
-    }
+    /*
+        Fim dos getter e Setter
+    */
 }
