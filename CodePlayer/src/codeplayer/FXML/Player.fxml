@@ -64,6 +64,6 @@
                </items></Menu>
         </menus>
       </MenuBar>
-      <Slider fx:id="Tracker" layoutX="23.0" layoutY="216.0" prefHeight="14.0" prefWidth="736.0" />
+      <Slider fx:id="Tracker" layoutX="23.0" layoutY="216.0" onMousePressed="#startScroll" onMouseReleased="#finishScroll" prefHeight="14.0" prefWidth="736.0" />
    </children>
 </AnchorPane>

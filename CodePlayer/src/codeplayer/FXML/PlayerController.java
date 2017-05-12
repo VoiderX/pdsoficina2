@@ -13,6 +13,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -294,5 +296,18 @@ public class PlayerController implements Initializable {
     public void testIndex() {
         ControleUI.getInstance().mostraIndex();
     }
-    
+
+    @FXML
+    public void startScroll(){
+        Mp3Buf.getInstance().removeListenerTracker();
+        Mp3Buf.getInstance().setValorTrackerAnterior(Tracker.getValue());
+    }
+    @FXML
+    public void finishScroll(){
+        Mp3Buf.getInstance().setLastseekValue(Tracker.getValue());
+        Mp3Buf.getInstance().seekTime(Tracker.getValue());
+        Mp3Buf.getInstance().addListenerTracker();
+        System.out.println(Mp3Buf.getInstance().getLastseekValue());
+       
+    }
 }

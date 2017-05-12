@@ -6,10 +6,13 @@
 package codeplayer;
 
 import java.util.ArrayList;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.collections.MapChangeListener;
 import javafx.scene.media.EqualizerBand;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import javafx.util.StringConverter;
 
 /**
@@ -114,9 +117,23 @@ public final class Mp3Buf {
         ControleUI.getInstance().getPlayerController().getTracker().setMax(
                 mp.getMedia().getDuration().toMinutes());
         ControleUI.getInstance().getPlayerController().getTracker().setMin(0);
+        setValorTrackerAnterior(0);
+        setLastseekValue(0);
+        ControleUI.getInstance().getPlayerController().getTracker().setValue(0);
         ControleUI.getInstance().getPlayerController().getTracker().setLabelFormatter(conversorSliderLabel);
         ControleUI.getInstance().getPlayerController().getTracker().setShowTickLabels(true);
     }
+    InvalidationListener teste = (Observable observable) -> {
+        if (getLastseekValue()>=getValorTrackerAnterior()) {
+            if(mp.getCurrentTime().toMinutes()>=getLastseekValue()){
+                setTrackerSliderPos();
+            }
+        }else{
+            if(mp.getCurrentTime().toMinutes()<=getValorTrackerAnterior()){
+                setTrackerSliderPos();
+            }
+        } 
+    };
 
     public void carregaMusica() {//Classe para carregar a música no Media e no MediaPlayer
         if (PosTocando >= Musicas.size()) { //Caso chegue na ultima música retorna ao inicio
@@ -140,7 +157,7 @@ public final class Mp3Buf {
         //Prepara o Slider
         mp.getMedia().durationProperty().addListener(listener -> setSeekerSlider());
         //Mantem o slider seguindo a música
-        mp.currentTimeProperty().addListener(listener -> setTrackerSliderPos());
+        mp.currentTimeProperty().addListener(teste);
         mp.getAudioEqualizer().getBands().clear();
         double mid = (EqualizerBand.MAX_GAIN - EqualizerBand.MIN_GAIN) / 2;
         double freq = 20;
@@ -157,8 +174,42 @@ public final class Mp3Buf {
         }
 
     }
+    private double lastseekValue;
 
+    public double getLastseekValue() {
+        return lastseekValue;
+    }
+
+    public void setLastseekValue(double lastseekValue) {
+        this.lastseekValue = lastseekValue;
+    }
+    
+    private double valorTrackerAnterior;
+
+    public double getValorTrackerAnterior() {
+        return valorTrackerAnterior;
+    }
+
+    public void setValorTrackerAnterior(double valorTrackerAnterior) {
+        this.valorTrackerAnterior = valorTrackerAnterior;
+    }
+    
     private void setTrackerSliderPos() {
         ControleUI.getInstance().getPlayerController().getTracker().setValue(mp.getCurrentTime().toMinutes());
+    }
+
+    public void removeListenerTracker() {
+        mp.currentTimeProperty().removeListener(teste);
+        ControleUI.getInstance().getPlayerController().getTracker().setValue(lastseekValue);
+    }
+
+    public void addListenerTracker() {
+        ControleUI.getInstance().getPlayerController().getTracker().setValue(lastseekValue);
+        mp.currentTimeProperty().addListener(teste);
+    }
+
+    public void seekTime(double time) {
+        //System.out.println(ControleUI.getInstance().getPlayerController().getTracker().getValue());
+        mp.seek(Duration.minutes(time));
     }
 }
