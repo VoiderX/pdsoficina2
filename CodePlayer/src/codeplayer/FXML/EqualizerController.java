@@ -13,7 +13,6 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,61 +32,140 @@ import javafx.scene.text.Text;
  * @author Gabriel
  */
 public class EqualizerController implements Initializable {
-    
+
+    /*
+        Inicio das variaveis do FXML
+     */
     @FXML
-    ArrayList<Slider> Sliders = new ArrayList<>();
+    private ArrayList<Slider> Sliders = new ArrayList<>();
     @FXML
-    ArrayList<Text> Freqs = new ArrayList<>();
+    private ArrayList<Text> Freqs = new ArrayList<>();
     @FXML
-    Slider Slider0; //Inicialização de Sliders
+    private Slider Slider0; //Inicialização de Sliders
     @FXML
-    Slider Slider1;
+    private Slider Slider1;
     @FXML
-    Slider Slider2;
+    private Slider Slider2;
     @FXML
-    Slider Slider3;
+    private Slider Slider3;
     @FXML
-    Slider Slider4;
+    private Slider Slider4;
     @FXML
-    Slider Slider5;
+    private Slider Slider5;
     @FXML
-    Slider Slider6;
+    private Slider Slider6;
     @FXML
-    Slider Slider7;
+    private Slider Slider7;
     @FXML
-    Slider Slider8;
+    private Slider Slider8;
     @FXML
-    Slider Slider9;
+    private Slider Slider9;
     @FXML
-    Text freq0; //Texto para mostrar as faixas de frequencias
+    private Text freq0; //Texto para mostrar as faixas de frequencias
     @FXML
-    Text freq1;
+    private Text freq1;
     @FXML
-    Text freq2;
+    private Text freq2;
     @FXML
-    Text freq3;
+    private Text freq3;
     @FXML
-    Text freq4;
+    private Text freq4;
     @FXML
-    Text freq5;
+    private Text freq5;
     @FXML
-    Text freq6;
+    private Text freq6;
     @FXML
-    Text freq7;
+    private Text freq7;
     @FXML
-    Text freq8;
+    private Text freq8;
     @FXML
-    Text freq9;
+    private Text freq9;
     @FXML
-    ChoiceBox<String> Seletor;
-    double freqn = 50;
+    private ChoiceBox<String> Seletor;
     @FXML
-    TextField NomePerfil;
+    private TextField NomePerfil;
     @FXML
-    Text HelperNomePerfil;
+    private Text HelperNomePerfil;
     @FXML
-    Button BotaoOk;
-    
+    private Button BotaoOk;
+    /*
+        Fim das variaveis do FXML
+     */
+
+ /*
+        Inicio das variaveis normais
+     */
+    private double freqn = 50;
+
+    /*
+        Fim das Variaveis normais
+     */
+    /**
+     * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        //Adiciona os sliders nos Arrays
+        Sliders.add(Slider0);
+        Freqs.add(freq0);
+
+        Sliders.add(Slider1);
+        Freqs.add(freq1);
+
+        Sliders.add(Slider2);
+        Freqs.add(freq2);
+
+        Sliders.add(Slider3);
+        Freqs.add(freq3);
+
+        Sliders.add(Slider4);
+        Freqs.add(freq4);
+
+        Sliders.add(Slider5);
+        Freqs.add(freq5);
+
+        Sliders.add(Slider6);
+        Freqs.add(freq6);
+
+        Sliders.add(Slider7);
+        Freqs.add(freq7);
+
+        Sliders.add(Slider8);
+        Freqs.add(freq8);
+
+        Sliders.add(Slider9);
+        Freqs.add(freq9);
+        if (Mp3Buf.getInstance().getBandas() == null) {
+            Mp3Buf.getInstance().setBandas(new ArrayList<>());
+            for (int i = 0; i < Sliders.size(); i++) {//Inicia todos os valores nos sliders com os valores do array de bandas
+                Banda aux = new Banda();
+                aux.setValor(0);
+                Mp3Buf.getInstance().getBandas().add(aux);
+                Freqs.get(i).setText(Double.toString(freqn));
+                freqn *= 2;
+            }
+        } else {
+            for (int i = 0; i < Sliders.size(); i++) {//Inicia todos os valores nos sliders com os valores do 
+                Sliders.get(i).setValue(Mp3Buf.getInstance().getBandas().get(i).getValor());
+            }
+        }
+        //Preaparação do choicebox para seleção de perfis
+        carregaPerfis();
+        //Preparação do TextField
+        NomePerfil.setDisable(true);
+        NomePerfil.setVisible(false);
+        HelperNomePerfil.setVisible(false);
+        BotaoOk.setDisable(true);
+        BotaoOk.setVisible(false);
+        Seletor.setValue(codeplayer.ExchangeInfos.getInstance().getPerfilEq());
+    }
+
+    /*
+        Inicio dos metodos FXML
+     */
     @FXML
     public void salvarPerfil() {
         HelperNomePerfil.setText("Digite um nome para o perfil:");
@@ -97,11 +175,11 @@ public class EqualizerController implements Initializable {
         BotaoOk.setVisible(true);
         BotaoOk.setDisable(false);
     }
-    
+
     @FXML
     public void confirmaSalvarPerfil() {
         BandaXML temp;
-        
+
         if (NomePerfil.getText().isEmpty()) {
             HelperNomePerfil.setText("O nome não pode ser vazio!");
         } else {
@@ -146,18 +224,18 @@ public class EqualizerController implements Initializable {
             }
         }
     }
-    
+
     @FXML
     public void excluirPerfil() {
         try {
-            new File("User"+codeplayer.ExchangeInfos.getInstance().getUseratual()+"/PerfEQ" + Seletor.getValue() + ".xml").delete();
+            new File("User" + codeplayer.ExchangeInfos.getInstance().getUseratual() + "/PerfEQ" + Seletor.getValue() + ".xml").delete();
             carregaPerfis();
             Seletor.setValue("Zerar");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     @FXML
     public void equalizar() { //Metodo para setar a equalização para o máximo
         for (int i = 0; i < Mp3Buf.getInstance().getBandas().size(); i++) {
@@ -166,7 +244,7 @@ public class EqualizerController implements Initializable {
         atualizaSlider(); //Metodo para atualizar a visualização dos sliders
         atualizaEqualizer();//Metodo para atualizar o equalizador do Media Player
     }
-    
+
     @FXML
     public void equalizar2() {//Metodo para equalizar ao minimo
         for (int i = 0; i < Mp3Buf.getInstance().getBandas().size(); i++) {
@@ -174,27 +252,42 @@ public class EqualizerController implements Initializable {
         }
         atualizaSlider();
         atualizaEqualizer();
-        
+
     }
-    
-    public void changeSlider(Event e) { //Metoodo para identificar caso o Slider seja alterado
+
+    @FXML
+    public void zeroAll() { //Metodo para retornar todas os ganhos nas faixas para zero
+        for (int i = 0; i < Mp3Buf.getInstance().getBandas().size(); i++) {
+            Mp3Buf.getInstance().getBandas().get(i).setValor(0);
+        }
+        atualizaSlider();//Atualiza a visualização dos sliders
+        atualizaEqualizer();//Atualiza o equalizador
+    }
+
+    /*
+        Fim dos metodos FXML
+     */
+ /*
+        Inicio dos metodos normais
+     */
+    public void changeSlider(Event e) { //Metodo para identificar caso o Slider seja alterado
         for (int i = 0; i < Sliders.size(); i++) {
             if (e.getSource() == Sliders.get(i)) {
                 //Seta o valor do slider no array
                 Mp3Buf.getInstance().getBandas().get(i).setValor(Sliders.get(i).getValue());
-                codeplayer.ExchangeInfos.getInstance().setPerfilEq("EqChanged");
+                codeplayer.ExchangeInfos.getInstance().setPerfilEq("Novo Perfil");
                 Seletor.setValue("Novo Perfil");
             }
         }
         atualizaEqualizer();//Atualiza o equalizador
     }
-    
+
     public void atualizaSlider() {//Metodo simples para mudar a visualização do Slider
         for (int i = 0; i < Sliders.size(); i++) {
             Sliders.get(i).setValue(Mp3Buf.getInstance().getBandas().get(i).getValor());
         }
     }
-    
+
     public void atualizaEqualizer() {//Metodo para transferir os dados do array para o equalizador
         ObservableList<EqualizerBand> bandseq;
         if (Mp3Buf.getInstance().checkmp() != null) {
@@ -206,16 +299,7 @@ public class EqualizerController implements Initializable {
             }
         }
     }
-    
-    @FXML
-    public void zeroAll() { //Metodo para retornar todas os ganhos nas faixas para zero
-        for (int i = 0; i < Mp3Buf.getInstance().getBandas().size(); i++) {
-            Mp3Buf.getInstance().getBandas().get(i).setValor(0);
-        }
-        atualizaSlider();//Atualiza a visualização dos sliders
-        atualizaEqualizer();//Atualiza o equalizador
-    }
-    
+
     public void carregaPerfis() { //Metodo para preparar o choicebox para seleção de perfis
         ObservableList<String> itemselect = FXCollections.observableArrayList();
         itemselect.add("Zerar"); //Valores hardcoded
@@ -223,7 +307,7 @@ public class EqualizerController implements Initializable {
         itemselect.add("Minimizar");
         itemselect.add("Novo Perfil");
         ArrayList<String> nomesperfis = BandastoXML.procuraArquivosXML();
-        
+
         for (int i = 0; i < nomesperfis.size(); i++) { //Limpa o nome do arquivo e deixa só o nome do pefil
             StringBuilder aux = new StringBuilder();
             aux.insert(0, nomesperfis.get(i));
@@ -234,8 +318,8 @@ public class EqualizerController implements Initializable {
             itemselect.add(aux.toString());
         }
         Seletor.setItems((ObservableList<String>) itemselect);
-        //Detectando alterações de estado no ChoiceBox
 
+        //Detectando alterações de estado no ChoiceBox
         Seletor.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends String> ov, String t, String t1) -> {
             codeplayer.ExchangeInfos.getInstance().setPerfilEq(Seletor.getValue());
             if (Seletor.getValue() == null) {
@@ -249,7 +333,7 @@ public class EqualizerController implements Initializable {
             } else if (Seletor.getValue().equals("Zerar")) {
                 zeroAll();
                 codeplayer.ExchangeInfos.getInstance().setPerfilEq("Zerar");
-            } else if (!codeplayer.ExchangeInfos.getInstance().getPerfilEq().equals("EqChanged")
+            } else if (!codeplayer.ExchangeInfos.getInstance().getPerfilEq().equals("Novo Perfil")
                     && !Seletor.getValue().equals("Novo Perfil")) {  //Obtendo valores do XML e passando para o Array de bandas na classe da Mp3
                 File arq = new File("User" + "" + codeplayer.ExchangeInfos.getInstance().getUseratual() + "/PerfEQ" + Seletor.getValue() + ".xml");
                 BandaXML bxml = new BandastoXML(Seletor.getValue()).xmltoBanda(arq);
@@ -273,67 +357,7 @@ public class EqualizerController implements Initializable {
         );
     }
 
-    /**
-     * Initializes the controller class.
-     *
-     * @param url
-     * @param rb
+    /*
+        Fim dos metodos normais
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        //Adiciona os sliders nos Arrays
-        Sliders.add(Slider0);
-        Freqs.add(freq0);
-        
-        Sliders.add(Slider1);
-        Freqs.add(freq1);
-        
-        Sliders.add(Slider2);
-        Freqs.add(freq2);
-        
-        Sliders.add(Slider3);
-        Freqs.add(freq3);
-        
-        Sliders.add(Slider4);
-        Freqs.add(freq4);
-        
-        Sliders.add(Slider5);
-        Freqs.add(freq5);
-        
-        Sliders.add(Slider6);
-        Freqs.add(freq6);
-        
-        Sliders.add(Slider7);
-        Freqs.add(freq7);
-        
-        Sliders.add(Slider8);
-        Freqs.add(freq8);
-        
-        Sliders.add(Slider9);
-        Freqs.add(freq9);
-        if (Mp3Buf.getInstance().getBandas() == null) {
-            Mp3Buf.getInstance().setBandas(new ArrayList<>());
-            for (int i = 0; i < Sliders.size(); i++) {//Inicia todos os valores nos sliders com os valores do array de bandas
-                Banda aux = new Banda();
-                aux.setValor(0);
-                Mp3Buf.getInstance().getBandas().add(aux);
-                Freqs.get(i).setText(Double.toString(freqn));
-                freqn *= 2;
-            }
-        } else {
-            for (int i = 0; i < Sliders.size(); i++) {//Inicia todos os valores nos sliders com os valores do 
-                Sliders.get(i).setValue(Mp3Buf.getInstance().getBandas().get(i).getValor());
-            }
-        }
-        //Preaparação do choicebox para seleção de perfis
-        carregaPerfis();
-        //Preparação do TextField
-        NomePerfil.setDisable(true);
-        NomePerfil.setVisible(false);
-        HelperNomePerfil.setVisible(false);
-        BotaoOk.setDisable(true);
-        BotaoOk.setVisible(false);
-        Seletor.setValue(codeplayer.ExchangeInfos.getInstance().getPerfilEq());
-    }
-    
 }
