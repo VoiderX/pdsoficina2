@@ -17,19 +17,31 @@ import java.util.ArrayList;
  */
 public class BandastoXML {
 
+    /*
+    Declaração de váriaveis
+     */
     private final XStream xstream;
     private final String NomePerfil;
 
+    /*
+        Fim da declaração das váriaveis
+     */
+ /*
+        Inicio dos metodos
+     */
+    //Metodo para inicializaçao da classe
     public BandastoXML(String NomePerfil) {
         this.NomePerfil = NomePerfil;
         xstream = new XStream(new DomDriver());
         xstream.alias(NomePerfil, BandaXML.class);
     }
 
+    //Metodo para gerar texto XML
     public String geraXMLString(BandaXML bandas) {
         return (xstream.toXML(bandas));
     }
 
+    //Metodo para gerar arquivo XML
     public void geraXMLfile(BandaXML bandas) {
         String textoxml = xstream.toXML(bandas);
         try {
@@ -42,14 +54,17 @@ public class BandastoXML {
         }
     }
 
+    //Metodo para gerar um objeto XML a partir de um texto
     public BandaXML xmltoBanda(String xml) {
         return (BandaXML) xstream.fromXML(xml);
     }
 
+    //Metodo para gerar um objeto xml a partir do arquivo
     public BandaXML xmltoBanda(File xml) {
         return (BandaXML) xstream.fromXML(xml);
     }
 
+    //Metodo para procurar os arquivos de perfil de equalização
     public static ArrayList<String> procuraArquivosXML() {
         ArrayList<String> nomesarq = new ArrayList<>();
         File aux = new File("User" + codeplayer.ExchangeInfos.getInstance().getUseratual());
@@ -61,4 +76,7 @@ public class BandastoXML {
         }
         return nomesarq;
     }
+    /*
+        Fim dos metodos
+     */
 }

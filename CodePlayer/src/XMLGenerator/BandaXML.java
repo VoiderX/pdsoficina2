@@ -10,16 +10,22 @@ package XMLGenerator;
  * @author Gabriel
  */
  public  class BandaXML {
-        private double ganho0;
-        private double ganho1;
-        private double ganho2;
-        private double ganho3;
-        private double ganho4;
-        private double ganho5;
-        private double ganho6;
-        private double ganho7;
-        private double ganho8;
-        private double ganho9;
+     /*
+        Inicio da declaração de váriaveis
+     */
+        private final double ganho0;
+        private final double ganho1;
+        private final double ganho2;
+        private final double ganho3;
+        private final double ganho4;
+        private final double ganho5;
+        private final double ganho6;
+        private final double ganho7;
+        private final double ganho8;
+        private final double ganho9;
+        /*
+            Fim da declaração de variaveis
+        */
 
         public BandaXML(double ganho0, double ganho1, double ganho2, double ganho3, double ganho4, double ganho5, double ganho6, double ganho7, double ganho8, double ganho9) {
             this.ganho0 = ganho0;
@@ -33,7 +39,9 @@ package XMLGenerator;
             this.ganho8 = ganho8;
             this.ganho9 = ganho9;
         }
-
+        /*
+            Inicio dos metodos getter e setter
+        */
         public double getGanho0() {
             return ganho0;
         }
@@ -72,6 +80,9 @@ package XMLGenerator;
 
         public double getGanho9() {
             return ganho9;
-        }       
+        }      
+        /*
+            Fim dos getter e setter
+        */
         
     }

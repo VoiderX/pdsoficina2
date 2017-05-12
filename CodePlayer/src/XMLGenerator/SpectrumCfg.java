@@ -10,6 +10,9 @@ package XMLGenerator;
  * @author Gabriel
  */
 public class SpectrumCfg {
+    /*
+        Inicio da declaração de váriaveis
+    */
     private String BackgroundColor;
     private String LabelColor;
     private String BarColor;
@@ -23,7 +26,12 @@ public class SpectrumCfg {
     private double stopColor1;
     private double stopColor2;
     private double stopColor3;
-
+    /*
+        Fim da declaração de váriaveis
+    */
+    /*
+        Inicio dos metodos getter e setter
+    */
     public double getStopColor1() {
         return stopColor1;
     }
@@ -130,10 +138,8 @@ public class SpectrumCfg {
     public void setNumBands(int numBands) {
         this.numBands = numBands;
     }
-
-    public SpectrumCfg(){
-        
-    }
-    
+    /*
+        Fim dos metodos  getter e setter
+    */
     
 }
