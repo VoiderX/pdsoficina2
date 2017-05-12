@@ -10,6 +10,7 @@ import XMLGenerator.SpectrumXML;
 import codeplayer.ControleUI;
 import java.io.File;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -30,6 +31,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.util.StringConverter;
 
 /**
  * FXML Controller class
@@ -149,11 +151,13 @@ public class SpecCfgController implements Initializable {
         } else if (TipoCor.getValue().equals("Solid")) {
             CorGrad.setDisable(true);
             NumeroGradiente.setDisable(true);
+            posCorGrad.setDisable(true);
             aux = 0;
 
         } else if (TipoCor.getValue().equals("Gradiente")) {
             CorGrad.setDisable(false);
             NumeroGradiente.setDisable(false);
+            posCorGrad.setDisable(false);
             aux = 1;
         }
         if (ControleUI.getInstance().getSpectrumControl() != null) {
@@ -180,9 +184,11 @@ public class SpecCfgController implements Initializable {
         } else if (NumeroGradiente.getValue() == 2) {
             aux = 2;
             CorGrad3.setDisable(true);
+            colorStop3.setDisable(true);
         } else if (NumeroGradiente.getValue() == 3) {
             aux = 3;
             CorGrad3.setDisable(false);
+            colorStop3.setDisable(false);
         }
         if (ControleUI.getInstance().getSpectrumControl() != null) {
             try {
@@ -353,6 +359,9 @@ public class SpecCfgController implements Initializable {
                 aux.setSegundacorgrad(CorGrad2.getValue().toString());
                 aux.setTerceiracorgrad(CorGrad3.getValue().toString());
                 aux.setTipoDesenho(TipoDesIndex);
+                aux.setStopColor1(getColorStop1V());
+                aux.setStopColor2(getColorStop2V());
+                aux.setStopColor3(getColorStop3V());
                 SpectrumXML xmltemp = new SpectrumXML(NomePerfil.getText());
                 xmltemp.geraXMLfile(aux);
                 carregarPerfis();
@@ -400,6 +409,9 @@ public class SpecCfgController implements Initializable {
             NumeroGradiente.setValue(cfg.getNumC());
             LabelColor.setValue(Color.web(cfg.getLabelColor()));
             Intervalo.setValue(cfg.getIntervalo());
+            colorStop1.setValue(invertSliderValue(cfg.getStopColor1()));
+            colorStop2.setValue(invertSliderValue(cfg.getStopColor2()));
+            colorStop3.setValue(invertSliderValue(cfg.getStopColor3()));
         } else {
             ativarPerfNSalvo = true;
             BackgroundColor.setValue(Color.web(codeplayer.ExchangeInfos.getInstance().
@@ -411,6 +423,9 @@ public class SpecCfgController implements Initializable {
             LabelColor.setValue(Color.web(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getLabelColor()));
             Numbands.setValue(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getNumBands());
             NumeroGradiente.setValue(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getNumC());
+            colorStop1.setValue(invertSliderValue(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getStopColor1()));
+            colorStop2.setValue(invertSliderValue(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getStopColor2()));
+            colorStop3.setValue(invertSliderValue(codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getStopColor3()));
             if (codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getTipoDesenho() == 0) {
                 this.TipoDesenho.setValue("Barras");
             } else if (codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().getTipoDesenho() == 1) {
@@ -484,9 +499,9 @@ public class SpecCfgController implements Initializable {
         NumeroGradiente.setValue(3);
         CorGrad2.setValue(Color.web("0000FF"));
         CorGrad3.setValue(Color.web("AACCFF"));
-        colorStop1.setValue(0.3);
-        colorStop2.setValue(0.5);
-        colorStop3.setValue(0.6);
+        colorStop1.setValue(invertSliderValue(0.3));
+        colorStop2.setValue(invertSliderValue(0.5));
+        colorStop3.setValue(invertSliderValue(0.6));
         codeplayer.ExchangeInfos.getInstance().setSpecCfg("Default");
         Perfil.setValue("Default");
         ativarPerfNSalvo = true;
@@ -495,7 +510,7 @@ public class SpecCfgController implements Initializable {
     @FXML
     public void setStop1() {
         if (ControleUI.getInstance().getSpectrumControl() != null) {
-            ControleUI.getInstance().getSpectrumControl().setColorStop1(colorStop1.getValue());
+            ControleUI.getInstance().getSpectrumControl().setColorStop1(getColorStop1V());
             try {
                 ControleUI.getInstance().getSpectrumControl().start(
                         ControleUI.getInstance().getSpectrumControl().getGc());
@@ -504,14 +519,14 @@ public class SpecCfgController implements Initializable {
                 //Faz nada
             }
         }
-        codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setStopColor1(colorStop1.getValue());
+        codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setStopColor1(getColorStop1V());
         setPerfNSalvo(ativarPerfNSalvo);
     }
     
     @FXML
     public void setStop2() {
         if (ControleUI.getInstance().getSpectrumControl() != null) {
-            ControleUI.getInstance().getSpectrumControl().setColorStop2(colorStop2.getValue());
+            ControleUI.getInstance().getSpectrumControl().setColorStop2(getColorStop2V());
             try {
                 ControleUI.getInstance().getSpectrumControl().start(
                         ControleUI.getInstance().getSpectrumControl().getGc());
@@ -520,14 +535,14 @@ public class SpecCfgController implements Initializable {
                 //Faz nada
             }
         }
-        codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setStopColor2(colorStop2.getValue());
+        codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setStopColor2(getColorStop2V());
         setPerfNSalvo(ativarPerfNSalvo);
     }
     
     @FXML
     public void setStop3() {
         if (ControleUI.getInstance().getSpectrumControl() != null) {
-            ControleUI.getInstance().getSpectrumControl().setColorStop3(colorStop3.getValue());
+            ControleUI.getInstance().getSpectrumControl().setColorStop3(getColorStop3V());
             try {
                 ControleUI.getInstance().getSpectrumControl().start(
                         ControleUI.getInstance().getSpectrumControl().getGc());
@@ -536,15 +551,39 @@ public class SpecCfgController implements Initializable {
                 //Faz nada
             }
         }
-        codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setStopColor3(colorStop3.getValue());
+        codeplayer.ExchangeInfos.getInstance().getSpecCfgObj().setStopColor3(getColorStop3V());
         setPerfNSalvo(ativarPerfNSalvo);
     }
     
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    private double invertSliderValue(double num){
+        return(1-num);
+    }
+    
+    private double getColorStop1V(){
+        return(invertSliderValue(colorStop1.getValue()));
+    }
+    
+    private double getColorStop2V(){
+        return(invertSliderValue(colorStop2.getValue()));
+    }
+    
+    private double getColorStop3V(){
+        return(invertSliderValue(colorStop3.getValue()));
+    }
+    
+    private void setColorStop1V(double v){
+        colorStop1.setValue(invertSliderValue(v));
+    }
+    
+    private void setColorStop2V(double v){
+        colorStop2.setValue(invertSliderValue(v));
+    }
+    
+    private void setColorStop3V(double v){
+        colorStop3.setValue(invertSliderValue(v));
+    }
+    
+    private void setupInterface(){
         //Configurações de interface
         root.prefWidthProperty().bind(ControleUI.getInstance().getSixthStage().widthProperty());
         root.prefHeightProperty().bind(ControleUI.getInstance().getSixthStage().heightProperty());
@@ -584,7 +623,46 @@ public class SpecCfgController implements Initializable {
         VBox.setVgrow(spacerRight4, Priority.ALWAYS);
         
         posCorGrad.setAlignment(Pos.CENTER);
-        //Fim das configurações de interface
+        DecimalFormat df = new DecimalFormat( "#,#0.0" );
+        colorStop1.setLabelFormatter(new StringConverter<Double>() {
+            @Override
+            public String toString(Double object) {
+                return df.format(1 - object + 0);
+            }
+            @Override
+            public Double fromString(String string) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        });
+        colorStop2.setLabelFormatter(new StringConverter<Double>() {
+            @Override
+            public String toString(Double object) {
+                return df.format(1 - object + 0);
+            }
+            @Override
+            public Double fromString(String string) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        });
+        colorStop3.setLabelFormatter(new StringConverter<Double>() {
+            @Override
+            public String toString(Double object) {
+                return df.format(1 - object + 0);
+            }
+            @Override
+            public Double fromString(String string) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        });
+    }
+    
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
+        setupInterface();
         
         codeplayer.ExchangeInfos.getInstance();
         
