@@ -149,7 +149,6 @@ public class EqualizerController implements Initializable {
     
     @FXML
     public void excluirPerfil() {
-        System.out.println("ExcluirPerfil");
         try {
             new File("User"+codeplayer.ExchangeInfos.getInstance().getUseratual()+"/PerfEQ" + Seletor.getValue() + ".xml").delete();
             carregaPerfis();
@@ -253,7 +252,6 @@ public class EqualizerController implements Initializable {
             } else if (!codeplayer.ExchangeInfos.getInstance().getPerfilEq().equals("EqChanged")
                     && !Seletor.getValue().equals("Novo Perfil")) {  //Obtendo valores do XML e passando para o Array de bandas na classe da Mp3
                 File arq = new File("User" + "" + codeplayer.ExchangeInfos.getInstance().getUseratual() + "/PerfEQ" + Seletor.getValue() + ".xml");
-                System.out.println(arq.getAbsolutePath());
                 BandaXML bxml = new BandastoXML(Seletor.getValue()).xmltoBanda(arq);
                 Mp3Buf.getInstance().getBandas().get(0).setValor(bxml.getGanho0());
                 Mp3Buf.getInstance().getBandas().get(1).setValor(bxml.getGanho1());

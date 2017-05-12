@@ -454,12 +454,15 @@ public class SpecCfgController implements Initializable {
         rightVBox.setAlignment(Pos.CENTER);
         mainHBox.setAlignment(Pos.CENTER);
         //Fim das configurações de interface
+        
         codeplayer.ExchangeInfos.getInstance();
+        
         //Configurando numero de bandas e intervalos  na inerface
         Numbands.valueProperty().addListener(listener -> setNumBands());
         Intervalo.valueProperty().addListener(listerner -> setIntervalo());
         //Carregando os perfis de usuario disponíveis
         carregarPerfis();
+        
         //Iniciando o choice box com os tipos de preenchimento
         ObservableList<String> TipoCor = FXCollections.observableArrayList();
         TipoCor.add("Solid");

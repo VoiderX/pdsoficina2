@@ -172,7 +172,7 @@ public class PlayerController implements Initializable {
             carregarTabela(); //Carrega a tabela de exibição de músicas
             prepararMusica();//Prepara a primeira música
         } catch (Exception e) { //Caso venha vazio(sem seleção) não faz nada
-            System.out.println("Sem musicas selecionadas!");
+           
         }
     }
     //Metodo chamado dentro da CheckMetada para exibir os metadados

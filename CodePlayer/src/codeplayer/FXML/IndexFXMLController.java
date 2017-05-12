@@ -84,7 +84,6 @@ public class IndexFXMLController implements Initializable {
             StringBuilder str = new StringBuilder();
             str.insert(0, aux.get(i));
             str.replace(0, 4, "");
-            System.err.println(str.toString());
             oal.add(str.toString());
         }
         perfExistente.setItems(oal);
