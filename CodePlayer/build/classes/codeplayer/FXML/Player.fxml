@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="520.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codeplayer.FXML.PlayerController">
+<AnchorPane id="AnchorPane" prefHeight="531.0" prefWidth="859.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codeplayer.FXML.PlayerController">
    <children>
       <Button layoutX="44.0" layoutY="438.0" mnemonicParsing="false" onAction="#play" prefHeight="25.0" prefWidth="93.0" text="Play" />
       <Button layoutX="391.0" layoutY="438.0" mnemonicParsing="false" onAction="#pause" prefHeight="25.0" prefWidth="93.0" text="Pause" />
@@ -64,5 +64,6 @@
                </items></Menu>
         </menus>
       </MenuBar>
+      <Slider fx:id="Tracker" layoutX="23.0" layoutY="216.0" prefHeight="14.0" prefWidth="736.0" />
    </children>
 </AnchorPane>

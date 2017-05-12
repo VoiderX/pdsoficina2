@@ -45,7 +45,7 @@ public final class ControleUI {
     private static Parent infoFXML;
     private static Parent spectrumcfgFXML;
     private static Parent indexFXML;
-    
+
     private static Scene playerScene; //Scenes (Interfaces já construídas)
     private static Scene equalizerScene;
     private static Scene osciloscopeScene;
@@ -73,7 +73,6 @@ public final class ControleUI {
         this.spectrumControl = spectrumControl;
     }
 
-
     public void setPlayControl(PlayerController playControl) {
         this.playControl = playControl;
     }
@@ -98,7 +97,7 @@ public final class ControleUI {
     public Stage getFifthStage() {
         return fifthStage;
     }
-    
+
     public Stage getSixthStage() {
         return sixthStage;
     }
@@ -201,8 +200,8 @@ public final class ControleUI {
             e.printStackTrace();
         }
     }
-    
-    public void mostraIndex(){
+
+    public void mostraIndex() {
         try {
             indexFXML = FXMLLoader.load(getClass().getResource("FXML/indexFXML.fxml"));
             indexScene = new Scene(indexFXML);
@@ -211,6 +210,6 @@ public final class ControleUI {
             fifthStage.show();
         } catch (Exception e) {
             e.printStackTrace();
-        }        
+        }
     }
 }

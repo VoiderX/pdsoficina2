@@ -10,6 +10,7 @@ import javafx.collections.MapChangeListener;
 import javafx.scene.media.EqualizerBand;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.StringConverter;
 
 /**
  *
@@ -89,6 +90,33 @@ public final class Mp3Buf {
     public void setBandas(ArrayList<Banda> bandas) {
         this.bandas = bandas;
     }
+    StringConverter<Double> conversorSliderLabel = new StringConverter<Double>() {
+        @Override
+        public String toString(Double object) {
+            int ValorMin = (int) (double) (object);
+            String ParteInt = Integer.toString(ValorMin);
+            int ValorSeg = (int) (60 * (object - ValorMin));
+            String ParteSegs = Integer.toString(ValorSeg);
+            if (ValorSeg > 9) {
+                return (ParteInt + ":" + ParteSegs);
+            } else {
+                return (ParteInt + ":0" + ParteSegs);
+            }
+        }
+
+        @Override
+        public Double fromString(String string) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    };
+
+    public void setSeekerSlider() {
+        ControleUI.getInstance().getPlayerController().getTracker().setMax(
+                mp.getMedia().getDuration().toMinutes());
+        ControleUI.getInstance().getPlayerController().getTracker().setMin(0);
+        ControleUI.getInstance().getPlayerController().getTracker().setLabelFormatter(conversorSliderLabel);
+        ControleUI.getInstance().getPlayerController().getTracker().setShowTickLabels(true);
+    }
 
     public void carregaMusica() {//Classe para carregar a música no Media e no MediaPlayer
         if (PosTocando >= Musicas.size()) { //Caso chegue na ultima música retorna ao inicio
@@ -109,6 +137,10 @@ public final class Mp3Buf {
             ControleUI.getInstance().getPlayerController().setInfos(
                     Mp3Buf.getInstance().getMedia().getMetadata());
         });
+        //Prepara o Slider
+        mp.getMedia().durationProperty().addListener(listener -> setSeekerSlider());
+        //Mantem o slider seguindo a música
+        mp.currentTimeProperty().addListener(listener -> setTrackerSliderPos());
         mp.getAudioEqualizer().getBands().clear();
         double mid = (EqualizerBand.MAX_GAIN - EqualizerBand.MIN_GAIN) / 2;
         double freq = 20;
@@ -124,5 +156,9 @@ public final class Mp3Buf {
             }
         }
 
+    }
+
+    private void setTrackerSliderPos() {
+        ControleUI.getInstance().getPlayerController().getTracker().setValue(mp.getCurrentTime().toMinutes());
     }
 }
