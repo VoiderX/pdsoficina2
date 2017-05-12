@@ -18,6 +18,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 /**
@@ -44,6 +46,9 @@ public class IndexFXMLController implements Initializable {
     public void criaUsuario() {
         new File("User" + newName.getText()).mkdir();
         carregaPerfis();
+        perfExistente.setValue(newName.getText());
+        newName.clear();
+        perfExistente.requestFocus();
     }
 
     @FXML
@@ -57,6 +62,20 @@ public class IndexFXMLController implements Initializable {
         }
     }
 
+    @FXML
+    private void goEnter(KeyEvent key){
+        if(key.getCode()==KeyCode.ENTER){
+            go();
+        }
+    }
+    
+    @FXML
+    private void criarUsuariaEnter(KeyEvent key){
+        if(key.getCode()==KeyCode.ENTER){
+            criaUsuario();
+        }
+    }
+    
     public void carregaPerfis() {
         try{
         ArrayList<String> aux = SpectrumXML.procuraArquivosXML("User");
@@ -69,6 +88,9 @@ public class IndexFXMLController implements Initializable {
             oal.add(str.toString());
         }
         perfExistente.setItems(oal);
+        if(!perfExistente.getItems().isEmpty()){
+            perfExistente.setValue(perfExistente.getItems().get(0));
+        }
         }
         catch(Exception e){
             e.printStackTrace();
