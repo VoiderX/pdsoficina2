@@ -38,7 +38,7 @@ public final class Mp3Buf {
     private double valorTrackerAnterior; //Valor no tracker antes da seleção
 
     //Classe para converter double em horário  
-    StringConverter<Double> conversorSliderLabel = new StringConverter<Double>() {
+    private StringConverter<Double> conversorSliderLabel = new StringConverter<Double>() {
         @Override
         public String toString(Double object) {
             int ValorMin = (int) (double) (object);

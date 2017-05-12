@@ -60,9 +60,9 @@ public final class ControleUI {
     private static Stage fifthStage;
     private static Stage sixthStage;
     
-    public PlayerController playControl; //Instanciação da classe controller do player para mudanças de interface
+    private PlayerController playControl; //Instanciação da classe controller do player para mudanças de interface
     //Em tempo real
-    public SpectrumController spectrumControl;
+    private SpectrumController spectrumControl;
     
     /*
         Fim das variáveis
