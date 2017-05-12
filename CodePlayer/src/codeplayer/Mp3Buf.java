@@ -22,12 +22,10 @@ import javafx.util.StringConverter;
 //Classe para manipulação do player MP3 também em singleton
 public final class Mp3Buf {
 
+    /*
+        Variáveis
+    */
     private static Mp3Buf INSTANCE = null;
-
-    public static Mp3Buf getInstance() {
-        return ((INSTANCE == null) ? INSTANCE = new Mp3Buf() : INSTANCE);
-    }
-
     ArrayList<Musica> Musicas; //ArrayList para guardar os caminhos das musicas a serem reproduzidas
     String pathMusic;//Caminho da música a ser reproduzida no momento
     Media media = null;//Classe Media uitlizada para iniciar o MediaPlayer e também para puxar os metadados
@@ -36,7 +34,23 @@ public final class Mp3Buf {
     ArrayList<Banda> bandas = null; //Array Contendo os valores das bandas
     private double lastseekValue; //Ultimo Valor selecionado no tracker
     private double valorTrackerAnterior; //Valor no tracker antes da seleção
-
+    /*
+        Fim variáveis
+    */
+    
+    /*
+        Construtor
+    */
+    public static Mp3Buf getInstance() {
+        return ((INSTANCE == null) ? INSTANCE = new Mp3Buf() : INSTANCE);
+    }
+    /*
+        Fim construtor
+    */
+    
+    /*
+        Métodos
+    */
     //Classe para converter double em horário  
     private StringConverter<Double> conversorSliderLabel = new StringConverter<Double>() {
         @Override
@@ -144,28 +158,33 @@ public final class Mp3Buf {
         startListenerSlider();
 
     }
-
+    
     //Códigos para controle dos trackers
-    private void setTrackerSliderPos() {
-        ControleUI.getInstance().getPlayerController().getTracker().setValue(mp.getCurrentTime().toMinutes());
-    }
-
     public void removeListenerTracker() {
         mp.currentTimeProperty().removeListener(teste);
         ControleUI.getInstance().getPlayerController().getTracker().setValue(lastseekValue);
     }
-
-    public void addListenerTracker() {
-        ControleUI.getInstance().getPlayerController().getTracker().setValue(lastseekValue);
-        mp.currentTimeProperty().addListener(teste);
-    }
-
+    
     public void seekTime(double time) {
         //System.out.println(ControleUI.getInstance().getPlayerController().getTracker().getValue());
         mp.seek(Duration.minutes(time));
     }
-
-    //Getter e setter das váriaveis
+    
+    public void addListenerTracker() {
+        ControleUI.getInstance().getPlayerController().getTracker().setValue(lastseekValue);
+        mp.currentTimeProperty().addListener(teste);
+    }
+    
+    private void setTrackerSliderPos() {
+        ControleUI.getInstance().getPlayerController().getTracker().setValue(mp.getCurrentTime().toMinutes());
+    }
+    /*
+        Fim métodos
+    */
+    
+    /*
+        Getters e Setters
+    */
     public double getLastseekValue() {
         return lastseekValue;
     }
@@ -239,6 +258,8 @@ public final class Mp3Buf {
 
     public StringConverter<Double> getConversorSliderLabel() {
         return conversorSliderLabel;
-    }  
-
+    }
+    /*
+        Fim Getter e Setter
+    */
 }

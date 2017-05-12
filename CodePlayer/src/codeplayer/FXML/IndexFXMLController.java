@@ -29,6 +29,9 @@ import javafx.scene.layout.Pane;
  */
 public class IndexFXMLController implements Initializable {
 
+    /*
+        Variáveis FXML
+    */
     @FXML
     ChoiceBox<String> perfExistente;
     @FXML
@@ -41,7 +44,24 @@ public class IndexFXMLController implements Initializable {
     Pane newUser;
     @FXML
     Pane login;
-
+    /*
+        Fim variáveis FXML
+    */
+    
+    /**
+     * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        carregaPerfis();
+    }
+    
+    /*
+        Métodos FXML
+    */
     @FXML
     public void criaUsuario() {
         new File("User" + newName.getText()).mkdir();
@@ -75,7 +95,13 @@ public class IndexFXMLController implements Initializable {
             criaUsuario();
         }
     }
+    /*
+        Fim métodos FXML
+    */
     
+    /*
+        Métodos
+    */
     public void carregaPerfis() {
         try{
         ArrayList<String> aux = SpectrumXML.procuraArquivosXML("User");
@@ -95,16 +121,7 @@ public class IndexFXMLController implements Initializable {
             e.printStackTrace();
         }
     }
-
-    /**
-     * Initializes the controller class.
-     *
-     * @param url
-     * @param rb
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        carregaPerfis();
-    }
-
+    /*
+        Fim métodos
+    */
 }
