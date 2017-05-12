@@ -5,6 +5,7 @@
  */
 package codeplayer.visualizations;
 
+import codeplayer.ResizableCanvas;
 import codeplayer.ControleUI;
 import codeplayer.Mp3Buf;
 import java.net.URL;
@@ -60,7 +61,7 @@ public class SpectrumController implements Initializable {
     //variáveis para o funcionamento(NÃO MEXER)
     private final int spaceX1 = 50, spaceX2 = 30, spaceY1 = 10, spaceY2 = 25, strokeW = 2;
     private final int maxf = 25600;
-    private double origin[] = new double[2];
+    private final double origin[] = new double[2];
     private boolean needScale = true;
     private GraphicsContext gc;
     ResizableCanvas specT = new ResizableCanvas();
@@ -69,7 +70,7 @@ public class SpectrumController implements Initializable {
     //número de bandas
     private int bands = 64;
     //sensibilidade do spectro
-    private int tresh = -80;
+    private final int tresh = -80;
     //tipo de preenchemento das formas
     private int typeFill = 1;
     //numero de cores do gradiente

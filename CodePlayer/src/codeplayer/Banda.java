@@ -11,9 +11,17 @@ package codeplayer;
  */
 //Classe simples para armazenar os valores de cada banda
 public class Banda {
-
+    /*
+        Variáveis
+    */
     double valor;
-
+    /*
+        Fim das variáveis
+    */
+    
+    /*
+        Getters e Setters
+    */
     public double getValor() {
         return valor;
     }
@@ -21,5 +29,7 @@ public class Banda {
     public void setValor(double valor) {
         this.valor = valor;
     }
-
+    /*
+        Fim Getters e Setters
+    */
 }
