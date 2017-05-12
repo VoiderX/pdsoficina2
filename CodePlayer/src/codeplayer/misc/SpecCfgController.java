@@ -26,6 +26,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
@@ -74,7 +76,23 @@ public class SpecCfgController implements Initializable {
     private VBox rightVBox;
     @FXML
     private HBox mainHBox;
-
+    @FXML
+    private HBox posCorGrad;
+    @FXML
+    private Region spacerCenter1;
+    @FXML
+    private Region spacerCenter2;
+    @FXML
+    private Region spacerCenter3;
+    @FXML
+    private Region spacerNorth1;
+    @FXML
+    private Region spacerNorth2;
+    @FXML
+    private Region spacerNorth3;
+    @FXML
+    private Region spacerNorth4;
+    
     private int IndexFill = 1;
 
     private int TipoDesIndex = 1;
@@ -440,6 +458,11 @@ public class SpecCfgController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    private void teste(){
+        System.out.println("mainHBox: "+mainHBox.getHeight()+" centerVBox: "+centerVBox.getHeight());
+        System.out.println("root: "+root.getHeight());
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Configurações de interface
@@ -453,6 +476,23 @@ public class SpecCfgController implements Initializable {
         centerVBox.setAlignment(Pos.CENTER);
         rightVBox.setAlignment(Pos.CENTER);
         mainHBox.setAlignment(Pos.CENTER);
+        
+        leftVBOX.prefHeightProperty().bind(mainHBox.prefHeightProperty());
+        centerVBox.prefHeightProperty().bind(mainHBox.prefHeightProperty());
+        rightVBox.prefHeightProperty().bind(mainHBox.prefHeightProperty());
+        
+        VBox.setVgrow(spacerCenter1, Priority.ALWAYS);
+        VBox.setVgrow(spacerCenter2, Priority.ALWAYS);
+        VBox.setVgrow(spacerCenter3, Priority.ALWAYS);
+        HBox.setHgrow(spacerNorth1, Priority.ALWAYS);
+        HBox.setHgrow(spacerNorth2, Priority.ALWAYS);
+        HBox.setHgrow(spacerNorth3, Priority.ALWAYS);
+        HBox.setHgrow(spacerNorth4, Priority.ALWAYS);
+        
+        root.prefHeightProperty().addListener(e->teste());
+        mainHBox.prefHeightProperty().addListener(e->teste());
+        
+        posCorGrad.setAlignment(Pos.CENTER);
         //Fim das configurações de interface
         
         codeplayer.ExchangeInfos.getInstance();
