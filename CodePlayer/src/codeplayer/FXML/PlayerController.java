@@ -85,7 +85,12 @@ public class PlayerController implements Initializable {
         // TODO
         imagem.setSmooth(true);
         SlidVol.setValue(100);
-        Tracker.valueProperty().addListener(listener -> atualizaTracker());
+        try {
+            Tracker.valueProperty().addListener(listener -> atualizaTracker());
+        } catch (Exception e) {
+
+        }
+        imagem.setImage(new Image(new File("placeholder.jpg").toURI().toString()));
     }
 
     /*
@@ -240,15 +245,34 @@ public class PlayerController implements Initializable {
 
     @FXML
     private void startScroll() {
-        Mp3Buf.getInstance().removeListenerTracker();
-        Mp3Buf.getInstance().setValorTrackerAnterior(Tracker.getValue());
+        try {
+            Mp3Buf.getInstance().removeListenerTracker();
+            Mp3Buf.getInstance().setValorTrackerAnterior(Tracker.getValue());
+        } catch (Exception e) {
+            ///
+        }
     }
 
     @FXML
     private void finishScroll() {
-        Mp3Buf.getInstance().setLastseekValue(Tracker.getValue());
-        Mp3Buf.getInstance().seekTime(Tracker.getValue());
-        Mp3Buf.getInstance().addListenerTracker();
+        try {
+            Mp3Buf.getInstance().setLastseekValue(Tracker.getValue());
+            Mp3Buf.getInstance().seekTime(Tracker.getValue());
+            Mp3Buf.getInstance().addListenerTracker();
+        } catch (Exception e) {
+            ///
+        }
+    }
+
+    @FXML
+    private void mostraImg(MouseEvent evt) {
+        try {
+            if (evt.getClickCount() == 2) {
+                ControleUI.getInstance().mostraImagem();
+            }
+        } catch (Exception e) {
+            //
+        }
     }
 
     /*
@@ -275,9 +299,13 @@ public class PlayerController implements Initializable {
 
     //Realiza as alterações baseadas no listener do slider para o visualizador da duração
     private void atualizaTracker() {
-        Duration.setText(Mp3Buf.getInstance().getConversorSliderLabel().toString(Tracker.getValue())
-                + "/" + Mp3Buf.getInstance().getConversorSliderLabel().toString(
-                        Mp3Buf.getInstance().getMp().getMedia().getDuration().toMinutes()));
+        try {
+            Duration.setText(Mp3Buf.getInstance().getConversorSliderLabel().toString(Tracker.getValue())
+                    + "/" + Mp3Buf.getInstance().getConversorSliderLabel().toString(
+                            Mp3Buf.getInstance().getMp().getMedia().getDuration().toMinutes()));
+        } catch (Exception e) {
+            ////
+        }
     }
 
     //Carrega a tabela a para exibição
@@ -324,6 +352,8 @@ public class PlayerController implements Initializable {
         if (metadata.get("image") != null) {
             CapaAlbum = (Image) metadata.get("image");
             imagem.setImage(CapaAlbum);
+        } else {
+            imagem.setImage(new Image(new File("placeholder.jpg").toURI().toString()));
         }
     }
 
@@ -336,6 +366,10 @@ public class PlayerController implements Initializable {
      */
     public Slider getTracker() {
         return Tracker;
+    }
+
+    public Image getImageAlbum() {
+        return imagem.getImage();
     }
     /*
         Fim dos getter e Setter

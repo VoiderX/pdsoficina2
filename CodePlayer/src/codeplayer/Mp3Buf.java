@@ -143,7 +143,13 @@ public final class Mp3Buf {
                 (MapChangeListener.Change<? extends String, ? extends Object> change) -> {
                     ControleUI.getInstance().getPlayerController().setInfos(
                             Mp3Buf.getInstance().getMedia().getMetadata());
+                    updateImage();
                 });
+    }
+
+    //Metodo para setar nova imagem na tela aberta
+    private void updateImage() {
+        ControleUI.getInstance().getImageControl().setImage();
     }
 
     public void carregaMusica() {//Classe para carregar a música no Media e no MediaPlayer
