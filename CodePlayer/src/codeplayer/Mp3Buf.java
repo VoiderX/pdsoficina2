@@ -149,7 +149,11 @@ public final class Mp3Buf {
 
     //Metodo para setar nova imagem na tela aberta
     private void updateImage() {
-        ControleUI.getInstance().getImageControl().setImage();
+        try {
+            ControleUI.getInstance().getImageControl().setImage();
+        } catch (Exception e) {
+            //
+        }
     }
 
     public void carregaMusica() {//Classe para carregar a música no Media e no MediaPlayer
