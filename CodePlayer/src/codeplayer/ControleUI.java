@@ -46,6 +46,7 @@ public final class ControleUI {
     private static Parent spectrumcfgFXML;
     private static Parent indexFXML;
     private static Parent imgvisualizerFXML;
+    private static Parent locFilesFXML;
 
     private static Scene playerScene; //Scenes (Interfaces já construídas)
     private static Scene equalizerScene;
@@ -55,7 +56,8 @@ public final class ControleUI {
     private static Scene spectrumcfgScene;
     private static Scene indexScene;
     private static Scene imgvisualizerScene;
-
+    private static Scene locFilesScene;
+    
     private static Stage mainStage; //Stages: Janelas Abertas
     private static Stage secondStage;
     private static Stage thirdStage;
@@ -194,7 +196,7 @@ public final class ControleUI {
             sixthStage.setScene(spectrumcfgScene);
             sixthStage.setTitle(("Configurações do Visualizador Espectral"));
             sixthStage.show();
-            sixthStage.setMinHeight(550);
+            sixthStage.setMinHeight(600);
             sixthStage.setMinWidth(650);
         } catch (Exception e) {
             e.printStackTrace();
@@ -227,7 +229,17 @@ public final class ControleUI {
             e.printStackTrace();
         }
     }
-
+    public void mostraLocFiles(){
+         try {
+            locFilesFXML = FXMLLoader.load(getClass().getResource("FXML/LocFiles.fxml"));
+            locFilesScene = new Scene(locFilesFXML);
+            mainStage.setScene(locFilesScene);
+            mainStage.setTitle(("Index"));
+            mainStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /*
         Fim dos métodos
      */
@@ -271,8 +283,13 @@ public final class ControleUI {
     public Stage getSeventhStage() {
         return seventhStage;
     }
+    
     /*
         Fim Getters e Setters
      */
+
+    public  Stage getMainStage() {
+        return mainStage;
+    }
 
 }

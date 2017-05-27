@@ -8,6 +8,7 @@ package codeplayer.FXML;
 import XMLGenerator.BandaXML;
 import XMLGenerator.BandastoXML;
 import codeplayer.Banda;
+import codeplayer.ControleUI;
 import codeplayer.Mp3Buf;
 import java.io.File;
 import java.net.URL;
@@ -166,6 +167,10 @@ public class EqualizerController implements Initializable {
     /*
         Inicio dos metodos FXML
      */
+    @FXML
+    private void fecharStage(){
+        ControleUI.getInstance().getSecondStage().hide();
+    }
     @FXML
     private void salvarPerfil() {
         HelperNomePerfil.setText("Digite um nome para o perfil:");

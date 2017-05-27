@@ -167,11 +167,11 @@ public class PlayerController implements Initializable {
     }
 
     //Chama o File Chooser para carregar as músicas
-    @FXML
+  /*  @FXML
     private void loadMusicDialog() {
         FileChooser fc = new FileChooser();
         try {
-            List musicas = fc.showOpenMultipleDialog(null); //Chama o FileChooser e armazena os FIles num list
+            List musicas = fc.showOpenMultipleDialog(ControleUI.getInstance().getMainStage()); //Chama o FileChooser e armazena os FIles num list
             Musica aux;//Objeto Musica para auxiliar a inserção
             ArrayList<Musica> temp = new ArrayList<>();
             for (int i = 0; i < musicas.size(); i++) {//Enquanto houver File's carrega as músicas
@@ -186,6 +186,10 @@ public class PlayerController implements Initializable {
         } catch (Exception e) { //Caso venha vazio(sem seleção) não faz nada
 
         }
+    }*/
+    @FXML
+    private void loadMusicDialog(){
+        ControleUI.getInstance().mostraLocFiles();
     }
 
     //Metodo para reproduzir uma música selecionada na tabela a partir do Index
@@ -284,7 +288,7 @@ public class PlayerController implements Initializable {
      */
     //Metodo para preparação da musica
     //Caso esteja tocando e uma nova musica seja carregada encerra o MediaPlayer atual
-    private void prepararMusica() {
+    public void prepararMusica() {
         try {
             if (Mp3Buf.getInstance().getMp() != null && Mp3Buf.getInstance().getPathMusic() != null) {
                 Mp3Buf.getInstance().getMp().dispose();
@@ -309,7 +313,7 @@ public class PlayerController implements Initializable {
     }
 
     //Carrega a tabela a para exibição
-    private void carregarTabela() {
+    public void carregarTabela() {
         //Array temporário para armazenar os  dados
         ArrayList<Musica> tempdados = Mp3Buf.getInstance().getMusicas();
         //ObservableList para carregar os dados na tabela

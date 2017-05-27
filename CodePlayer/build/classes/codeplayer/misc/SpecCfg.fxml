@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codeplayer.misc.SpecCfgController">
+<AnchorPane id="AnchorPane" prefHeight="523.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codeplayer.misc.SpecCfgController">
    <children>
       <BorderPane fx:id="root" prefHeight="480.0" prefWidth="640.0">
          <top>
@@ -76,6 +76,7 @@
                            <children>
                               <Label layoutX="37.0" layoutY="23.0" text="Cor dos rótulos" />
                               <ColorPicker fx:id="LabelColor" layoutX="37.0" layoutY="40.0" />
+                              <Button layoutX="37.0" layoutY="79.0" mnemonicParsing="false" onAction="#fecharStage" prefHeight="25.0" prefWidth="141.0" text="Fechar" />
                            </children>
                         </Pane>
                         <Region fx:id="spacerLeft5" />
