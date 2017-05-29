@@ -243,8 +243,8 @@ public class PlayerController implements Initializable {
     }
 
     @FXML
-    private void testIndex() {
-        ControleUI.getInstance().mostraIndex();
+    private void closeAll() {
+        System.exit(0);
     }
 
     @FXML
