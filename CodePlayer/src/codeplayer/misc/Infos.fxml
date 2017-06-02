@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
@@ -9,6 +8,5 @@
       <Text layoutX="40.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Este programa é dedicado ao nosso senhor das trevas:" wrappingWidth="288.0703125" />
       <Text fill="#d02222" layoutX="132.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exu Caveirinha" wrappingWidth="79.12109375" />
       <Text layoutX="14.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2017- Todos os direitos reservados" wrappingWidth="212.13671875" />
-      <Button layoutX="263.0" layoutY="167.0" mnemonicParsing="false" onAction="#fecharStage" text="Fechar" />
    </children>
 </AnchorPane>

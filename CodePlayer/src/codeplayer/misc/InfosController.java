@@ -5,10 +5,8 @@
  */
 package codeplayer.misc;
 
-import codeplayer.ControleUI;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 /**
@@ -25,8 +23,4 @@ public class InfosController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }    
     
-    @FXML
-    private void fecharStage(){
-        ControleUI.getInstance().getFifthStage().hide();
-    }
 }

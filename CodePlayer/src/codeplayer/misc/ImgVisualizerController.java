@@ -38,10 +38,7 @@ public class ImgVisualizerController implements Initializable {
         Imagem.setImage(codeplayer.ControleUI.getInstance().getPlayerController().getImageAlbum());
         ControleUI.getInstance().getSeventhStage().setResizable(false);
     }
-    @FXML
-    private void fechaStage(){
-        ControleUI.getInstance().getSeventhStage().hide();
-    }
+
     /*
         Metodos normais
      */

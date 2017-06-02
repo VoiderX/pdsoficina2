@@ -145,11 +145,6 @@ public class SpecCfgController implements Initializable {
             codeplayer.ExchangeInfos.getInstance().setSpecCfg("Novo Perfil");
         }
     }
-    
-    @FXML
-    private void fecharStage(){
-        ControleUI.getInstance().getSixthStage().close();
-    }
 
     @FXML
     public void setTipoCor() {
